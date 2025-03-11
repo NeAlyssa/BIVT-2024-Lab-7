@@ -185,14 +185,14 @@ namespace Lab_7
                 {
                     new int[_judges.Length], new int[_judges.Length], new int[_judges.Length], new int[_judges.Length]
                 };
-                for(int jump = 0; jump < 4; jump++)
+                for (int jump = 0; jump < 4; jump++)
                 {
-                    for(int judge = 0; judge < _judges.Length; judge++)
+                    for (int judge = 0; judge < _judges.Length; judge++)
                     {
                         marks[jump][judge] = _judges[judge].CreateMark();
                     }
                 }
-                for(int jump = 0; jump < 4; jump++)
+                for (int jump = 0; jump < 4; jump++)
                 {
                     jumper.Jump(marks[jump]);
                 }
@@ -206,19 +206,9 @@ namespace Lab_7
                 _participants[_participants.Length - 1] = jumper;
             }
 
-            public void Add(Participant[] jumpers) //I dont even know if you should remove nulls because they *technically* will have TotalScore = 0
+            public void Add(Participant[] jumpers)
             {
-                //Remove all null objects 
-                int nulls = 0;
-                foreach (var jumper in jumpers) if (jumper == null) nulls++;
-                Participant[] jumpersNoNulls = new Participant[jumpers.Length - nulls];
-                int k = 0;
-                for (int i = 0; i < jumpers.Length; i++) if (jumpers[i] != null) jumpersNoNulls[k++] = jumpers[i];
-                //Add everything thats not null
-                int oldLength = _participants.Length;
-                Array.Resize(ref _participants, _participants.Length + jumpersNoNulls.Length);
-                foreach (var jumper in jumpers) Evaluate(jumper);
-                for (int i = 0; i < jumpersNoNulls.Length; i++) _participants[oldLength + i] = jumpersNoNulls[i];
+                foreach (var jumper in jumpers) Add(jumper);
             }
 
             public void Sort()

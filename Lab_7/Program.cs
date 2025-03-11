@@ -65,7 +65,7 @@ namespace Lab_7
                 participants[i] = new Purple_1.Participant(participantNames[i * 2], participantNames[i * 2 + 1]);
             }
 
-            //Make a list of the judges
+            //Create a list of the judges
             Purple_1.Judge[] judges = new Purple_1.Judge[7];
             for (int i = 0; i < judges.Length; i++)
             {
@@ -84,8 +84,8 @@ namespace Lab_7
             foreach (Purple_1.Participant var in competition.Participants)
             {
                 Console.WriteLine(var.Name + " " + var.Surname + "  " + var.TotalScore);
-                //Console.WriteLine(String.Join(", ", var.Coefs));
-
+                
+                //Prints every mark:
                 /*Console.WriteLine(string.Join(Environment.NewLine,
                 Enumerable.Range(0, var.Marks.GetLength(0))
                 .Select(i => string.Join(" ", Enumerable.Range(0, var.Marks.GetLength(1))

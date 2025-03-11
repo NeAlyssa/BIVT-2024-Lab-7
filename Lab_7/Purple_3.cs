@@ -134,5 +134,76 @@ namespace Lab_7
                 Console.WriteLine(_name);
             }
         }
+
+        public abstract class Skating
+        {
+            protected Participant[] _participants;
+            protected double[] _moods;
+
+            public Participant[] Participants => _participants;
+            public double[] Moods => _moods;
+
+            public Skating(double[] moods)
+            {
+                _moods = moods;
+                ModificateMood();
+            }
+
+            protected abstract void ModificateMood();
+
+
+            public void Evaluate(double[] marks)
+            {
+                foreach(var participant in _participants)
+                {
+                    if (participant.Score == 0)
+                    {
+                        for (int i = 0; i < marks.Length; i++)
+                        {
+                            participant.Evaluate(marks[i]*Moods[i]);
+                        }
+                        break;
+                    }
+                }
+            }
+
+
+
+            public void Add(Participant skater)
+            {
+                Array.Resize(ref _participants, _participants.Length + 1);
+                _participants[_participants.Length - 1] = skater;
+            }
+            public void Add(Participant[] skaters)
+            {
+                foreach (var skater in skaters) Add(skater);
+            }
+        }
+
+        public class FigureSkating : Skating
+        {
+            public FigureSkating(double[] moods) : base(moods) { }
+
+            protected override void ModificateMood()
+            {
+                for (int i = 0; i < _moods.Length; i++)
+                {
+                    _moods[i] += (i + 1) / 10.0;  
+                }
+            }
+        }
+
+        public class IceSkating : Skating
+        {
+            public IceSkating(double[] moods) : base (moods) { }
+
+            protected override void ModificateMood()
+            {
+                for (int i = 0; i < _moods.Length; i++)
+                {
+                    _moods[i] *= 1 + (i + 1) / 100.0;
+                }
+            }
+        }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Lab_7
 {
-    public class Purple_2
+    public class Purple_2 //1) Hell knows how you should calculate total score 2) No test data to figure out either
     {
         public struct Participant
         {
@@ -16,7 +13,7 @@ namespace Lab_7
             private int _distance;
             private int[] _marks;
 
-
+            private bool _hasJumpedStandard;
 
 
             public string Name => _name;
@@ -40,7 +37,8 @@ namespace Lab_7
                 {
                     if (_marks == null) return 0;
                     int sum = _marks.Sum() - _marks.Max() - _marks.Min(); ;
-                    sum += 60 + (_distance-120) * 2 > 0 ? 60 + (_distance-120) * 2 : 0;
+                    sum += 60 + (_distance - 120) * 2 > 0 ? 60 + (_distance - 120) * 2 : 0;
+                    if (_hasJumpedStandard) sum += 60;
                     return sum;
                 }
             }
@@ -51,18 +49,20 @@ namespace Lab_7
                 _surname = surname;
                 _distance = 0;
                 _marks = new int[5];
+                _hasJumpedStandard = false;
             }
 
-            public void Jump(int distance, int[] marks)
+            public void Jump(int distance, int[] marks, int target)
             {
                 if (_distance != 0 || marks == null || _marks == null || marks.Length != 5) return; //needed or not?
                 _distance = distance;
+                if (distance > target) _hasJumpedStandard = true;
                 Array.Copy(marks, _marks, marks.Length);
             }
 
             public static void Sort(Participant[] array)
             {
-                if (array == null) return;  
+                if (array == null) return;
                 for (int i = 0; i < array.Length; i++)
                 {
                     Participant key = array[i];
@@ -90,7 +90,63 @@ namespace Lab_7
                 Console.WriteLine();
             }
         }
-        
+
+        public abstract class SkiJumping
+        {
+            private string _name;
+            private int _standard;
+            private Participant[] _participants;
+
+            public string Name => _name;
+            public int Standard => _standard;
+            public Participant[] Participants => _participants;
+
+            public SkiJumping(string name, int standard)
+            {
+                _name = name;
+                _standard = standard;
+                _participants = new Participant[0];
+            }
+
+            public void Add(Participant jumper)
+            {
+                Array.Resize(ref _participants, _participants.Length + 1);
+                _participants[_participants.Length - 1] = jumper;
+            }
+            public void Add(Participant[] jumpers)
+            {
+                foreach (var jumper in jumpers) Add(jumper);
+            }
+
+            public void Jump(int distance, int[] marks)
+            {
+                foreach (var jumper in _participants)
+                {
+                    if (jumper.Distance == 0)
+                    {
+                        jumper.Jump(distance, marks, Standard);
+                        break;
+                    }
+                }
+            }
+
+            public void Print()
+            {
+                Console.WriteLine(Name);
+                Console.WriteLine(Standard);
+                foreach (var participant in _participants) participant.Print();
+            }
+        }
+
+        public class JuniorSkiJumping : SkiJumping
+        {
+            public JuniorSkiJumping() : base("100m", 100) { }
+        }
+
+        public class ProSkiJumping : SkiJumping
+        {
+            public ProSkiJumping() : base("150", 150) { }
+        }
     }
 }
 
