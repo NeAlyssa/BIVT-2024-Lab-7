@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Runtime.Remoting.Messaging;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_1
     {
-        public struct Participant
+        public class Participant //TODO check if the change to class broke anything
         {
             private string _name;
             private string _surname;
@@ -67,7 +61,7 @@ namespace Lab_6
                     return totalScore;
                 }
             }
-            
+
 
 
             public Participant(string name, string surname)
@@ -98,7 +92,7 @@ namespace Lab_6
 
             public static void Sort(Participant[] array)
             {
-                if( array == null ) return;
+                if (array == null) return;
                 for (int i = 0; i < array.Length; i++)
                 {
                     Participant key = array[i];
@@ -135,10 +129,114 @@ namespace Lab_6
             }
         }
 
-        
+        public class Judge
+        {
+            private string _name;
+            private int[] _marks;
 
+            private int indexInMarks;
 
+            public string Name => _name;
 
-        
+            public Judge(string name, int[] marks)
+            {
+                _name = name;
+                _marks = (int[])marks.Clone(); //Because reference type
+                indexInMarks = 0;
+            }
+
+            public int CreateMark()
+            {
+                if (indexInMarks >= _marks.Length) indexInMarks = 0; //should work?
+                return _marks[indexInMarks++];
+            }
+
+            public void Print()
+            {
+                Console.WriteLine(Name);
+                foreach (var num in _marks)
+                {
+                    Console.Write(num + " ");
+                }
+                Console.WriteLine();
+            }
+
+        }
+
+        public class Competition
+        {
+            private Participant[] _participants;
+            private Judge[] _judges;
+
+            public Participant[] Participants => _participants; //Because incapsulated.....or is it?
+            public Judge[] Judges => _judges;
+
+            public Competition(Judge[] judges)
+            {
+                _judges = (Judge[])judges.Clone(); //I have no idea whether this works, how it does if yes or if its needed at all
+                _participants = new Participant[0];
+            }
+
+            public void Evaluate(Participant jumper)
+            {
+                if (jumper == null) return;
+
+                int[][] marks = new int[][]
+                {
+                    new int[_judges.Length], new int[_judges.Length], new int[_judges.Length], new int[_judges.Length]
+                };
+                for(int jump = 0; jump < 4; jump++)
+                {
+                    for(int judge = 0; judge < _judges.Length; judge++)
+                    {
+                        marks[jump][judge] = _judges[judge].CreateMark();
+                    }
+                }
+                for(int jump = 0; jump < 4; jump++)
+                {
+                    jumper.Jump(marks[jump]);
+                }
+            }
+
+            public void Add(Participant jumper)
+            {
+                if (jumper == null) return;
+                Array.Resize(ref _participants, _participants.Length + 1);
+                Evaluate(jumper);
+                _participants[_participants.Length - 1] = jumper;
+            }
+
+            public void Add(Participant[] jumpers) //I dont even know if you should remove nulls because they *technically* will have TotalScore = 0
+            {
+                //Remove all null objects 
+                int nulls = 0;
+                foreach (var jumper in jumpers) if (jumper == null) nulls++;
+                Participant[] jumpersNoNulls = new Participant[jumpers.Length - nulls];
+                int k = 0;
+                for (int i = 0; i < jumpers.Length; i++) if (jumpers[i] != null) jumpersNoNulls[k++] = jumpers[i];
+                //Add everything thats not null
+                int oldLength = _participants.Length;
+                Array.Resize(ref _participants, _participants.Length + jumpersNoNulls.Length);
+                foreach (var jumper in jumpers) Evaluate(jumper);
+                for (int i = 0; i < jumpersNoNulls.Length; i++) _participants[oldLength + i] = jumpersNoNulls[i];
+            }
+
+            public void Sort()
+            {
+                if (_participants == null) return;
+                for (int i = 0; i < _participants.Length; i++)
+                {
+                    Participant key = _participants[i];
+                    int j = i - 1;
+
+                    while (j >= 0 && _participants[j].TotalScore < key.TotalScore)
+                    {
+                        _participants[j + 1] = _participants[j];
+                        j = j - 1;
+                    }
+                    _participants[j + 1] = key;
+                }
+            }
+        }
     }
 }

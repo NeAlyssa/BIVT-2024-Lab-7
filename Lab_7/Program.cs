@@ -1,49 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Lab_6
+namespace Lab_7
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             Program program = new Program();
-            //program.Test1();
-
-            Purple_2.Participant participant = new Purple_2.Participant("John", "Smith");
-
-            participant.Jump(115, new int[] { 1, 2, 3, 4, 5 });
-            //participant.Print();
-
-            //program.Test2();
-
-            //program.Test4();
-            
-            //program.Test5();
-        }
-
-        public void Test1()
-        {
-            string[] names = new string[] {"Дарья", "Тихонова", "Александр", "Козлов", "Никита",
-                "Павлов", "Юрий", "Луговой", "Юрий", "Степанов", "Мария", "Луговая", "Виктор",
-                "Жарков", "Марина", "Иванова", "Марина", "Полевая", "Максим", "Тихонов"};
-
-            double[][] coefs = new double[][]
-            {
-                new double[] {2.58, 2.9, 3.04, 3.43},
-                new double[] {2.95, 2.63, 3.16, 2.89},
-                new double[] {2.56, 3.4, 2.91, 2.69},
-                new double[] {2.86, 2.9, 3.19, 3.14},
-                new double[] {2.81, 2.64, 2.76, 3.2},
-                new double[] {2.74, 3.3, 2.94, 3.27},
-                new double[] {2.57, 2.79, 2.71, 3.46},
-                new double[] {3.09, 2.67, 2.9, 3.5},
-                new double[] {2.65, 3.47, 3.11, 3.39},
-                new double[] {3.14, 3.46, 2.96, 2.76}
-            };
+            program.Test1();
 
             int[,] jumps = new int[,]
             {
@@ -56,43 +21,78 @@ namespace Lab_6
                 {4, 6, 1, 4, 5, 3, 4}, {1, 2, 3, 1, 5, 4, 3}, {3, 6, 2, 3, 1, 6, 3}, {3, 3, 6, 6, 3, 6, 6},
                 {6, 5, 3, 2, 6, 5, 3}, {5, 4, 4, 2, 1, 2, 4}, {4, 2, 2, 5, 1, 3, 1}, {6, 5, 6, 1, 6, 3, 3},
                 {3, 6, 3, 5, 4, 2, 3}, {4, 6, 1, 4, 2, 1, 5}, {1, 1, 3, 1, 3, 2, 6}, {1, 4, 4, 6, 6, 2, 5},
-                {3, 3, 1, 4, 5, 6, 2}, {6, 4, 5, 4, 2, 3, 1}, {3, 3, 4, 2, 2, 3, 6}, {5, 1, 5, 5, 1, 3, 4} 
+                {3, 3, 1, 4, 5, 6, 2}, {6, 4, 5, 4, 2, 3, 1}, {3, 3, 4, 2, 2, 3, 6}, {5, 1, 5, 5, 1, 3, 4}
+            };
+            int[] judge1 = new int[] { 3, 5, 2, 6, 3, 1, 6, 6, 1, 4, 5, 3, 3, 5, 6, 5, 4, 5, 2, 3, 6, 5, 1, 3, 4, 1, 3, 3, 6, 5, 4, 6, 3, 4, 1, 1, 3, 6, 3, 5 };
+            int[] judge2 = new int[] { 4, 3, 4, 4, 5, 6, 2, 5, 1, 1, 2, 1, 3, 5, 3, 1, 3, 3, 2, 2, 5, 4, 1, 1, 6, 2, 6, 3, 5, 4, 2, 5, 6, 6, 1, 4, 3, 4, 3, 1 };
+            int[] judge3 = new int[] { 1, 4, 1, 3, 4, 5, 4, 2, 3, 1, 3, 3, 5, 4, 1, 6, 5, 4, 4, 1, 5, 3, 3, 5, 1, 3, 2, 6, 3, 4, 2, 6, 3, 1, 3, 4, 1, 5, 4, 5 };
+            int[] judge4 = new int[] { 2, 3, 5, 2, 4, 2, 1, 2, 5, 2, 3, 4, 2, 2, 2, 6, 4, 2, 2, 3, 4, 2, 4, 1, 4, 1, 3, 6, 2, 2, 5, 1, 5, 4, 1, 6, 4, 4, 2, 5 };
+            int[] judge5 = new int[] { 1, 3, 6, 2, 5, 1, 2, 4, 5, 2, 2, 2, 1, 3, 2, 3, 5, 1, 6, 5, 2, 4, 4, 4, 5, 5, 1, 3, 6, 1, 1, 6, 4, 2, 3, 6, 5, 2, 2, 1 };
+            int[] judge6 = new int[] { 3, 3, 1, 1, 1, 4, 6, 3, 5, 2, 2, 4, 2, 2, 6, 2, 1, 1, 3, 1, 6, 6, 1, 3, 3, 4, 6, 6, 5, 2, 3, 3, 2, 1, 2, 2, 6, 3, 3, 3 };
+            int[] judge7 = new int[] { 1, 3, 2, 1, 4, 1, 5, 4, 2, 5, 3, 5, 4, 2, 6, 5, 1, 2, 4, 5, 4, 1, 6, 1, 4, 3, 3, 6, 3, 4, 1, 3, 3, 5, 6, 5, 2, 1, 6, 4 };
+            //int judgeIndex = 6;
+            for (int i = 0; i < jumps.GetLength(0); i++)
+            {
+                //Console.Write(jumps[i, judgeIndex] + ", ");
+            }
+
+            Console.ReadLine();
+
+        }
+        public void Test1()
+        {
+            string[] participantNames = new string[] {"Дарья", "Тихонова", "Александр", "Козлов", "Никита",
+                "Павлов", "Юрий", "Луговой", "Юрий", "Степанов", "Мария", "Луговая", "Виктор",
+                "Жарков", "Марина", "Иванова", "Марина", "Полевая", "Максим", "Тихонов"};
+
+            string[] judgeNames = new string[] { "Александр", "Екатерина", "Дмитрий", "Ольга", "Иван", "Мария", "Сергей" };
+
+
+            int[][] judgeMarks = new int[][] {
+                new int[] { 3, 5, 2, 6, 3, 1, 6, 6, 1, 4, 5, 3, 3, 5, 6, 5, 4, 5, 2, 3, 6, 5, 1, 3, 4, 1, 3, 3, 6, 5, 4, 6, 3, 4, 1, 1, 3, 6, 3, 5 },
+                new int[] { 4, 3, 4, 4, 5, 6, 2, 5, 1, 1, 2, 1, 3, 5, 3, 1, 3, 3, 2, 2, 5, 4, 1, 1, 6, 2, 6, 3, 5, 4, 2, 5, 6, 6, 1, 4, 3, 4, 3, 1 },
+                new int[] { 1, 4, 1, 3, 4, 5, 4, 2, 3, 1, 3, 3, 5, 4, 1, 6, 5, 4, 4, 1, 5, 3, 3, 5, 1, 3, 2, 6, 3, 4, 2, 6, 3, 1, 3, 4, 1, 5, 4, 5 },
+                new int[] { 2, 3, 5, 2, 4, 2, 1, 2, 5, 2, 3, 4, 2, 2, 2, 6, 4, 2, 2, 3, 4, 2, 4, 1, 4, 1, 3, 6, 2, 2, 5, 1, 5, 4, 1, 6, 4, 4, 2, 5 },
+                new int[] { 1, 3, 6, 2, 5, 1, 2, 4, 5, 2, 2, 2, 1, 3, 2, 3, 5, 1, 6, 5, 2, 4, 4, 4, 5, 5, 1, 3, 6, 1, 1, 6, 4, 2, 3, 6, 5, 2, 2, 1 },
+                new int[] { 3, 3, 1, 1, 1, 4, 6, 3, 5, 2, 2, 4, 2, 2, 6, 2, 1, 1, 3, 1, 6, 6, 1, 3, 3, 4, 6, 6, 5, 2, 3, 3, 2, 1, 2, 2, 6, 3, 3, 3 },
+                new int[] { 1, 3, 2, 1, 4, 1, 5, 4, 2, 5, 3, 5, 4, 2, 6, 5, 1, 2, 4, 5, 4, 1, 6, 1, 4, 3, 3, 6, 3, 4, 1, 3, 3, 5, 6, 5, 2, 1, 6, 4 }
             };
 
-            //Make a list for the participants
-            Purple_1.Participant[] leaderboard = new Purple_1.Participant[10];
+            //Create a list of the participants
+            Purple_1.Participant[] participants = new Purple_1.Participant[10];
+            for (int i = 0; i < participants.Length; i++)
+            {
+                participants[i] = new Purple_1.Participant(participantNames[i * 2], participantNames[i * 2 + 1]);
+            }
 
-            //Initialize with names
-            for (int i = 0; i < leaderboard.Length; i++)
+            //Make a list of the judges
+            Purple_1.Judge[] judges = new Purple_1.Judge[7];
+            for (int i = 0; i < judges.Length; i++)
             {
-                leaderboard[i] = new Purple_1.Participant(names[i*2], names[i*2+1]);
+                judges[i] = new Purple_1.Judge(judgeNames[i], judgeMarks[i]);
             }
-                    
-            //Set criterias/coefficients 
-            //and jumps
-            for (int i = 0; i < leaderboard.Length; i++)
-            {
-                leaderboard[i].SetCriterias(coefs[i]);
-                for (int k = 0; k < 4; k++)
-                {
-                    int[] newJump = new int[7];
-                    for(int j = 0; j < 7; j++)
-                    {
-                        newJump[j] = jumps[i*4+k, j];
-                    }
-                    leaderboard[i].Jump(newJump);
-                }
-            }
+
+
+            //Create a competition with the judges and assign all the participants to it
+            Purple_1.Competition competition = new Purple_1.Competition(judges);
+            competition.Add(participants);
 
             //Sort the leaderboard
-            Purple_1.Participant.Sort(leaderboard);
+            competition.Sort();
 
             //Print the leaderboard
-            foreach (Purple_1.Participant var in leaderboard)
+            foreach (Purple_1.Participant var in competition.Participants)
             {
                 Console.WriteLine(var.Name + " " + var.Surname + "  " + var.TotalScore);
+                //Console.WriteLine(String.Join(", ", var.Coefs));
+
+                /*Console.WriteLine(string.Join(Environment.NewLine,
+                Enumerable.Range(0, var.Marks.GetLength(0))
+                .Select(i => string.Join(" ", Enumerable.Range(0, var.Marks.GetLength(1))
+                .Select(j => var.Marks[i, j])))));*/
             }
         }
+        /*
         public void Test2()
         {
             string[] names = new string[] { "Оксана", "Сидорова", "Полина", "Полевая","Дмитрий", 
@@ -305,5 +305,6 @@ namespace Lab_6
                 Console.WriteLine(response);
             }
         }
+        */
     }
 }
