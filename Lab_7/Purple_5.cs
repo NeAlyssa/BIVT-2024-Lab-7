@@ -31,7 +31,7 @@ namespace Lab_7
                 int answered = 0;
                 for (int i = 0; i < responses.Length; i++)
                 {
-                    switch (questionNumber) 
+                    switch (questionNumber)
                     {
                         case 1:
                             if (responses[i].Animal != null && responses[i].Animal != "") answered++;
@@ -134,7 +134,7 @@ namespace Lab_7
                                 }
                                 else count[Array.IndexOf(responses, response.Concept)]++;
                             }
-                            break;                     
+                            break;
                     }
                 }
 
@@ -142,7 +142,7 @@ namespace Lab_7
 
                 string[] topResponses = new string[responses.Length];
                 int i = 0;
-                foreach(var pair in responses)
+                foreach (var pair in responses)
                 {
                     topResponses[i] = responses[i];
                     i++;
@@ -180,6 +180,126 @@ namespace Lab_7
                 foreach (var response in _responses)
                 {
                     response.Print();
+                }
+            }
+        }
+
+        public class Report
+        {
+            private Research[] _researches;
+            private static int _nextID;
+
+            public Research[] Researches => _researches;
+
+            static Report()
+            {
+                _nextID = 1;
+            }
+
+            public Report()
+            {
+                _researches = new Research[0];
+            }
+
+            public Research MakeResearch()
+            {
+                string today = DateTime.Today.ToString();
+                string MM = today.Substring(5, 2);
+                string YY = today.Substring(2, 2);
+                Research research = new Research($"No_{_nextID}_{MM}/{YY}");
+                Array.Resize(ref _researches, _researches.Length + 1);
+                _researches[_researches.Length - 1] = research;
+                return research;
+            }
+
+            public (string, double)[] GetGeneralReport(int question)
+            {
+
+                string[] responses = new string[0];
+                int[] count = new int[0];
+
+
+                foreach (var research in Researches) {
+                    if (research.Responses == null) continue;
+
+                    foreach (var response in research.Responses)
+                    {
+                        switch (question)
+                        {
+                            case 1:
+                                if (response.Animal != null && response.Animal != "")
+                                {
+                                    if (!responses.Contains(response.Animal))
+                                    {
+                                        Array.Resize(ref responses, responses.Length + 1);
+                                        Array.Resize(ref count, count.Length + 1);
+                                        responses[responses.Length - 1] = response.Animal;
+                                        count[responses.Length - 1] = 1;
+                                    }
+                                    else count[Array.IndexOf(responses, response.Animal)]++;
+                                }
+                                break;
+                            case 2:
+                                if (response.CharacterTrait != null && response.CharacterTrait != "")
+                                {
+                                    if (!responses.Contains(response.CharacterTrait))
+                                    {
+                                        Array.Resize(ref responses, responses.Length + 1);
+                                        Array.Resize(ref count, count.Length + 1);
+                                        responses[responses.Length - 1] = response.CharacterTrait;
+                                        count[responses.Length - 1] = 1;
+                                    }
+                                    else count[Array.IndexOf(responses, response.CharacterTrait)]++;
+                                }
+                                break;
+                            case 3:
+                                if (response.Concept != null && response.Concept != "")
+                                {
+                                    if (!responses.Contains(response.Concept))
+                                    {
+                                        Array.Resize(ref responses, responses.Length + 1);
+                                        Array.Resize(ref count, count.Length + 1);
+                                        responses[responses.Length - 1] = response.Concept;
+                                        count[responses.Length - 1] = 1;
+                                    }
+                                    else count[Array.IndexOf(responses, response.Concept)]++;
+                                }
+                                break;
+                        }
+                    }
+                }
+
+
+                DictionariesAreForTheWeak(responses, count);
+
+
+                //Make the faux dictionary into (string, double)[]
+                double totalResponses = 0;
+                foreach (int n in count) totalResponses += n;
+
+                (string, double)[] responsesWithPercentages = new (string, double)[responses.Length];
+                for (int i = 0; i < responses.Length; i++)
+                {
+                    responsesWithPercentages[i] = (responses[i], count[i]/totalResponses);
+                }
+                return responsesWithPercentages;
+            }
+            private static void DictionariesAreForTheWeak(string[] keys, int[] values)
+            {
+                for (int i = 1; i < values.Length; i++)
+                {
+                    string key = keys[i];
+                    int value = values[i];
+                    int j = i - 1;
+
+                    while (j >= 0 && values[j] < value)
+                    {
+                        keys[j + 1] = keys[j];
+                        values[j + 1] = values[j];
+                        j--;
+                    }
+                    keys[j + 1] = key;
+                    values[j + 1] = value;
                 }
             }
         }

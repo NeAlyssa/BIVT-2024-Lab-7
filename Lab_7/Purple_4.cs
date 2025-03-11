@@ -8,7 +8,7 @@ namespace Lab_7
 {
     public class Purple_4
     {
-        public struct Sportsman {
+        public class Sportsman {
             private string _name;
             private string _surname;
             private double _time;
@@ -31,6 +31,22 @@ namespace Lab_7
                 _time = time;
             }
 
+            public static void Sort(Sportsman[] array)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Sportsman key = array[i];
+                    int j = i - 1;
+
+                    while (j >= 0 && array[j].Time > key.Time) //ascending
+                    {
+                        array[j + 1] = array[j];
+                        j = j - 1;
+                    }
+                    array[j + 1] = key;
+                }
+            }
+
             public void Print()
             {
                 Console.WriteLine(_name + " " + _surname);
@@ -39,7 +55,27 @@ namespace Lab_7
             }
         }
 
-        public struct Group {
+        public class SkiMan : Sportsman
+        {
+            public SkiMan(string name, string surname) : base(name, surname) {  }
+
+            public SkiMan(string name, string surname, double time) : base(name, surname)
+            {
+                this.Run(time);
+            }
+        }
+
+        public class SkiWoman : Sportsman
+        {
+            public SkiWoman(string name, string surname) : base(name, surname) { }
+
+            public SkiWoman(string name, string surname, double time) : base(name, surname)
+            {
+                this.Run(time);
+            }
+        }
+
+        public class Group {
             private string _name;
             private Sportsman[] _teammates;
 
@@ -63,6 +99,8 @@ namespace Lab_7
             }
             public Group(Group group)
             {
+                if (group == null) return;
+
                 _name = group.Name;
                 if (group.Sportsmen == null)//no sportsmen to copy
                 {
@@ -138,6 +176,50 @@ namespace Lab_7
                     finalists.Add(group2.Sportsmen[j++]);
 
                 return finalists;
+            }
+
+            public void Split(out Sportsman[] men, out Sportsman[] women)
+            {
+                int m = 0, w = 0;
+                foreach(var s in Sportsmen)
+                {
+                    if (s is SkiMan) m++;
+                    else if (s is SkiWoman) w++;
+                }
+                men = new Sportsman[m];
+                women = new Sportsman[w];
+
+                m = 0;
+                w = 0;
+                for(int i = 0; i < Sportsmen.Length; i++)
+                {
+                    if (Sportsmen[i] is SkiMan) men[m++] = Sportsmen[i];
+                    else if (Sportsmen[i] is SkiWoman) women[w++] = Sportsmen[i];
+                }
+            }
+
+            public void Shuffle()//NEEDS TESTING
+            {
+                this.Sort();
+                Sportsman[] men, women;
+                this.Split(out men, out women);
+                int w = 0, m = 0;   
+                if (men[0].Time < women[0].Time) //first is man
+                {
+                    for (int i = 0; i < _teammates.Length; i++)
+                    {
+                        if (i % 2 == 0) _teammates[i] = men[m++];
+                        else _teammates[i] = women[w++];
+                    }
+                }
+                else //first is woman
+                {
+                    for (int i = 0; i < _teammates.Length; i++)
+                    {
+                        if (i % 2 != 0) _teammates[i] = men[m++];
+                        else _teammates[i] = women[w++];
+                    }
+                } 
             }
 
             public void Print()

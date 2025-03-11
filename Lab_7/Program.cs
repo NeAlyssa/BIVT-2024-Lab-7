@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Lab_7
 {
@@ -84,7 +83,7 @@ namespace Lab_7
             foreach (Purple_1.Participant var in competition.Participants)
             {
                 Console.WriteLine(var.Name + " " + var.Surname + "  " + var.TotalScore);
-                
+
                 //Prints every mark:
                 /*Console.WriteLine(string.Join(Environment.NewLine,
                 Enumerable.Range(0, var.Marks.GetLength(0))
@@ -192,60 +191,45 @@ namespace Lab_7
                 Console.WriteLine(var.Name + " " + var.Surname + "  " + var.Score + " "
                     + var.Places.Min() + " " + var.Marks.Sum());
             }
-        }
+        }*/
         public void Test4()
         {
-            string[] names1 = new string[] { "Полина", "Луговая", "Савелий", "Козлов", "Екатерина",
-                "Жаркова", "Дмитрий", "Иванов", "Дмитрий", "Полевой", "Савелий", "Петров", "Евгения",
-                "Распутина", "Екатерина", "Луговая", "Мария", "Иванова", "Степан", "Павлов", "Ольга",
-                "Павлова", "Ольга", "Полевая", "Дарья", "Павлова", "Дарья", "Свиридова", "Евгения",
-                "Свиридова" };
+
 
             double[] times1 = new double[] { 422.64, 142.05, 185.23, 294.32, 79.26, 230.63, 35.16, 376.12,
                 279.20, 292.38, 467.60, 473.82, 290.14, 368.60, 212.67 };
 
-            string[] names2 = new string[] { "Анастасия", "Жаркова", "Александр", "Павлов", "Степан",
-                "Свиридов", "Игорь", "Сидоров", "Евгения", "Сидорова", "Мария", "Сидорова", "Лев",
-                "Петров", "Савелий", "Козлов", "Егор", "Свиридов", "Оксана", "Жаркова", "Светлана",
-                "Петрова", "Полина", "Петрова", "Екатерина", "Павлова", "Юлия", "Полевая", "Евгения",
-                "Павлова" };
 
             double[] times2 = new double[] { 112.49, 472.11, 213.92, 102.13, 263.21, 350.75, 248.68, 325.28,
                 300.00, 252.16, 402.20, 397.33, 384.94, 8.09, 480.52 };
 
-            //Create a list of the 1st group
-            Purple_4.Sportsman[] team1 = new Purple_4.Sportsman[15];
-            //Set their data
-            for (int i = 0; i < team1.Length; i++)
-            {
-                team1[i] = new Purple_4.Sportsman(names1[i * 2], names1[i * 2 + 1]);
-                team1[i].Run(times1[i]);
-            }
 
-            //Create a list of the 2nd group
-            Purple_4.Sportsman[] team2 = new Purple_4.Sportsman[15];
-            //Set their data
-            for (int i = 0; i < team2.Length; i++)
-            {
-                team2[i] = new Purple_4.Sportsman(names2[i * 2], names2[i * 2 + 1]);
-                team2[i].Run(times2[i]);
-            }
 
-            //Create the two groups
-            Purple_4.Group group1 = new Purple_4.Group("Spartak");
-            Purple_4.Group group2 = new Purple_4.Group("CSKA");
 
-            //Add the sportsmen to groups
-            group1.Add(team1);
-            group2.Add(team2);
+            string[] men1 = new string[]
+            { "Савелий", "Козлов", "Дмитрий", "Иванов", "Дмитрий",
+                "Полевой", "Савелий", "Петров", "Степан", "Павлов" };
 
-            //Merge
-            var finalists = Purple_4.Group.Merge(group1, group2);
+            string[] women1 = new string[]
+            { "Полина", "Луговая", "Екатерина", "Жаркова", "Евгения",
+                "Распутина", "Екатерина", "Луговая", "Мария", "Иванова",
+                "Ольга", "Павлова", "Ольга", "Полевая", "Дарья", "Павлова",
+                "Дарья", "Свиридова", "Евгения", "Свиридова"};
 
-            //Print the group
-            finalists.Print();
+
+            string[] men2 = new string[]
+            {"Александр", "Павлов", "Степан", "Свиридов", "Игорь", "Сидоров",
+                "Лев", "Петров", "Савелий", "Козлов", "Егор", "Свиридов"};
+
+            string[] women2 = new string[]
+            {"Анастасия", "Жаркова", "Евгения", "Сидорова", "Мария", "Сидорова",
+                "Оксана", "Жаркова", "Светлана", "Петрова", "Полина", "Петрова",
+                "Екатерина", "Павлова", "Юлия", "Полевая", "Евгения", "Павлова"};
+
 
         }
+
+        /*
         public void Test5()
         {
             string[][] responses = new string[][]
