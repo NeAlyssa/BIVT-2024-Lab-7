@@ -180,6 +180,13 @@ namespace Lab_7
 
             public void Split(out Sportsman[] men, out Sportsman[] women)
             {
+                if (Sportsmen == null)
+                {
+                    men = null;
+                    women = null;
+                    return;
+                }
+
                 int m = 0, w = 0;
                 foreach(var s in Sportsmen)
                 {
@@ -200,9 +207,12 @@ namespace Lab_7
 
             public void Shuffle()//NEEDS TESTING
             {
-                this.Sort();
+                Sort();
                 Sportsman[] men, women;
-                this.Split(out men, out women);
+                Split(out men, out women);
+
+                if (men.Length == 0 || men == null || women == null || women.Length == 0) return;
+
                 int w = 0, m = 0;   
                 if (men[0].Time < women[0].Time) //first is man
                 {

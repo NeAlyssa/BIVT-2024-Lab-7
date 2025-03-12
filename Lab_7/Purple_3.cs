@@ -46,7 +46,7 @@ namespace Lab_7
                 get
                 {
                     if (_places == null) return 0;
-                    return _places.Sum(); //or nah?
+                    return _places.Sum();
                 }
             }
             public Participant(string name, string surname)
@@ -141,12 +141,23 @@ namespace Lab_7
             protected double[] _moods;
 
             public Participant[] Participants => _participants;
-            public double[] Moods => _moods;
+            public double[] Moods
+            {
+                get
+                {
+                    if (_moods == null) return default(double[]);
+
+                    var newArray = new double[_moods.Length];
+                    Array.Copy(_moods, newArray, _moods.Length);
+                    return newArray;
+                }
+            }
 
             public Skating(double[] moods)
             {
-                _moods = moods;
+                _moods = (double[])moods.Clone();
                 ModificateMood();
+                _participants = new Participant[0];
             }
 
             protected abstract void ModificateMood();
@@ -154,6 +165,7 @@ namespace Lab_7
 
             public void Evaluate(double[] marks)
             {
+                if (_participants == null) return;
                 foreach(var participant in _participants)
                 {
                     if (participant.Score == 0)
@@ -171,6 +183,7 @@ namespace Lab_7
 
             public void Add(Participant skater)
             {
+                if (_participants == null) return;
                 Array.Resize(ref _participants, _participants.Length + 1);
                 _participants[_participants.Length - 1] = skater;
             }
@@ -186,6 +199,7 @@ namespace Lab_7
 
             protected override void ModificateMood()
             {
+                if (_moods == null) return;
                 for (int i = 0; i < _moods.Length; i++)
                 {
                     _moods[i] += (i + 1) / 10.0;  
@@ -199,6 +213,7 @@ namespace Lab_7
 
             protected override void ModificateMood()
             {
+                if (_moods == null) return;
                 for (int i = 0; i < _moods.Length; i++)
                 {
                     _moods[i] *= 1 + (i + 1) / 100.0;

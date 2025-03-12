@@ -82,10 +82,10 @@ namespace Lab_7
 
             public void Jump(int[] marks)
             {
-                if (_amount_of_jumps > 4 || marks == null || _marks == null || marks.Length != 7) return; //needed or not?
+                if (_amount_of_jumps >= 4 || marks == null || _marks == null || marks.Length != 7) return; //needed or not?
                 for (int j = 0; j < _marks.GetLength(1); j++)
                 {
-                    _marks[_amount_of_jumps, j] = marks[j];
+                    _marks[_amount_of_jumps, j] = marks[j]; //index out of range exception
                 }
                 _amount_of_jumps++;
             }
@@ -181,21 +181,15 @@ namespace Lab_7
             {
                 if (jumper == null) return;
 
-                int[][] marks = new int[][]
+                int[] marks = new int[_judges.Length];
+
+                for (int judge = 0; judge < _judges.Length; judge++)
                 {
-                    new int[_judges.Length], new int[_judges.Length], new int[_judges.Length], new int[_judges.Length]
-                };
-                for (int jump = 0; jump < 4; jump++)
-                {
-                    for (int judge = 0; judge < _judges.Length; judge++)
-                    {
-                        marks[jump][judge] = _judges[judge].CreateMark();
-                    }
+                    marks[judge] = _judges[judge].CreateMark();
                 }
-                for (int jump = 0; jump < 4; jump++)
-                {
-                    jumper.Jump(marks[jump]);
-                }
+
+                jumper.Jump(marks);
+
             }
 
             public void Add(Participant jumper)
@@ -206,7 +200,7 @@ namespace Lab_7
                 _participants[_participants.Length - 1] = jumper;
             }
 
-            public void Add(Participant[] jumpers)
+            public void Add(Participant[] jumpers) //should you just skip nulls or not
             {
                 foreach (var jumper in jumpers) Add(jumper);
             }

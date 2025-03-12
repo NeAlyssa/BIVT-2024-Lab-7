@@ -206,7 +206,7 @@ namespace Lab_7
                 string today = DateTime.Today.ToString();
                 string MM = today.Substring(5, 2);
                 string YY = today.Substring(2, 2);
-                Research research = new Research($"No_{_nextID}_{MM}/{YY}");
+                Research research = new Research($"No_{_nextID++}_{MM}/{YY}");
                 Array.Resize(ref _researches, _researches.Length + 1);
                 _researches[_researches.Length - 1] = research;
                 return research;
@@ -214,12 +214,14 @@ namespace Lab_7
 
             public (string, double)[] GetGeneralReport(int question)
             {
+                if (_researches == null) return null;
 
                 string[] responses = new string[0];
                 int[] count = new int[0];
 
 
-                foreach (var research in Researches) {
+                foreach (var research in Researches)
+                {
                     if (research.Responses == null) continue;
 
                     foreach (var response in research.Responses)
@@ -280,7 +282,7 @@ namespace Lab_7
                 (string, double)[] responsesWithPercentages = new (string, double)[responses.Length];
                 for (int i = 0; i < responses.Length; i++)
                 {
-                    responsesWithPercentages[i] = (responses[i], count[i]/totalResponses);
+                    responsesWithPercentages[i] = (responses[i], count[i] * 100.0 / totalResponses);
                 }
                 return responsesWithPercentages;
             }

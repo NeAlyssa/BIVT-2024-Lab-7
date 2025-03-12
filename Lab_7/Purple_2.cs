@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Lab_7
 {
-    public class Purple_2 //1) Hell knows how you should calculate total score 2) No test data to figure out either
+    public class Purple_2 
     {
         public struct Participant
         {
@@ -12,8 +12,9 @@ namespace Lab_7
             private string _surname;
             private int _distance;
             private int[] _marks;
+            private int _target;
+            
 
-            private bool _hasJumpedStandard;
 
 
             public string Name => _name;
@@ -37,8 +38,7 @@ namespace Lab_7
                 {
                     if (_marks == null) return 0;
                     int sum = _marks.Sum() - _marks.Max() - _marks.Min(); ;
-                    sum += 60 + (_distance - 120) * 2 > 0 ? 60 + (_distance - 120) * 2 : 0;
-                    if (_hasJumpedStandard) sum += 60;
+                    sum += 60 + (_distance - _target) * 2 > 0 ? 60 + (_distance - _target) * 2 : 0;
                     return sum;
                 }
             }
@@ -49,14 +49,14 @@ namespace Lab_7
                 _surname = surname;
                 _distance = 0;
                 _marks = new int[5];
-                _hasJumpedStandard = false;
+                _target = 0;
             }
 
             public void Jump(int distance, int[] marks, int target)
             {
                 if (_distance != 0 || marks == null || _marks == null || marks.Length != 5) return; //needed or not?
                 _distance = distance;
-                if (distance > target) _hasJumpedStandard = true;
+                _target = target;
                 Array.Copy(marks, _marks, marks.Length);
             }
 
@@ -145,7 +145,7 @@ namespace Lab_7
 
         public class ProSkiJumping : SkiJumping
         {
-            public ProSkiJumping() : base("150", 150) { }
+            public ProSkiJumping() : base("150m", 150) { }
         }
     }
 }
