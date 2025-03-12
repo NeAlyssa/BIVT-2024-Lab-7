@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,10 +23,10 @@ namespace Lab_7
             {
                 get { return _participants != null ? (Participant[])_participants.Clone() : null; }
             }
-            public Discipline(Participant[] participants, string name) // Публичный конструктор дисциплины.
+            public Discipline(string name) // Публичный конструктор дисциплины.
             {
                 _name = name;
-                _participants = participants;
+                _participants = new Participant[0];
                 _participantCount = 0;
             }
             public void Add(Participant participant) // Метод добавления одного студента.
@@ -66,6 +66,17 @@ namespace Lab_7
                     Console.WriteLine("Нет участниц.");
                 }
             }
+            private protected Participant GetParticipantAt(int index) // Защищённый метод для получения участницы из массива.
+            {
+                if (_participants != null && index >= 0 && index < _participantCount)
+                    return _participants[index];
+                return default(Participant);
+            }
+            private protected void SetParticipant(int index, Participant participant) // Защищённый метод для обновления участницы в массиве.
+            {
+                if (_participants != null && index >= 0 && index < _participantCount)
+                    _participants[index] = participant;
+            }
             public abstract void Retry(int index); // Публично-абстрактный метод перезачёта.
         }
         public struct Participant // Публичная структура участницы. Здесь находятся:
@@ -73,7 +84,7 @@ namespace Lab_7
             private string _name; // Имя.
             private string _surname; // Фамилия.
             private double[] _jumps; // Прыжки.
-            private int _index = 0;
+            private int _index;
             public string Name // Свойство имени.
             {
                 get { return _name; }
@@ -103,6 +114,7 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _jumps = new double[3];
+                _index = 0;
             }
             public void Jump(double result) // Прыыыыжок.
             {
@@ -140,39 +152,34 @@ namespace Lab_7
         }
         public class LongJump : Discipline // Длинный прыыыыыжок.
         {
-            private Participant[] __participants;
-            public LongJump(Participant[] participants) : base(participants, "Long jump")
+            public LongJump() : base("Long jump")
             {
-                __participants = participants;
             }
             public override void Retry(int index)
             {
-                Participant participant = __participants[index];
-                string Name = participant.Name;
-                string Surname = participant.Surname;
+                Participant participant = GetParticipantAt(index);
                 double BestJump = participant.BestJump;
-                participant = new Participant(Name, Surname);
+                participant = new Participant(participant.Name, participant.Surname);
                 participant.Jump(BestJump);
-                __participants[index] = participant;
+                SetParticipant(index, participant);
             }
         }
         public class HighJump : Discipline // Высокий прыыыыжок.
         {
-            private Participant[] __participants;
-            public HighJump(Participant[] participants) : base(participants, "High jump")
+            public HighJump() : base("High jump")
             {
-                __participants = participants;
             }
             public override void Retry(int index)
             {
-                Participant participant = __participants[index];
-                string Name = participant.Name;
-                string Surname = participant.Surname;
-                double[] Jumps = participant.Jumps;
-                participant = new Participant(Name, Surname);
-                participant.Jump(Jumps[0]);
-                participant.Jump(Jumps[1]);
-                __participants[index] = participant;
+                Participant participant = GetParticipantAt(index);
+                double[] jumps = participant.Jumps;
+                int count = jumps.Length;
+                Participant newParticipant = new Participant(participant.Name, participant.Surname);
+                for (int i = 0; i < count - 1; i++)
+                {
+                    newParticipant.Jump(jumps[i]);
+                }
+                SetParticipant(index, newParticipant);
             }
         }
     }
