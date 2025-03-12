@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -146,46 +146,43 @@ namespace Lab_7
                     Add(participant);
                 }
             }
-
-            public class WaterJump3m : WaterJump
+        }
+        public class WaterJump3m : WaterJump
+        {
+            public WaterJump3m(string name, int bank) : base(name, bank) { }
+            public override double[] Prize
             {
-                public WaterJump3m(string name, int bank) : base(name, bank) { }
-                public override double[] Prize
+                get
                 {
-                    get
-                    {
-                        if (_participants.Length < 3 || _participants == null) return null;
-                        double first = Bank * 0.5;
-                        double second = Bank * 0.3;
-                        double third = Bank * 0.2;
-                        return new double[] { first, second, third };
-                    }
+                    if (Participants.Length < 3 || Participants == null) return null;
+                    double first = Bank * 0.5;
+                    double second = Bank * 0.3;
+                    double third = Bank * 0.2;
+                    return new double[] { first, second, third };
                 }
-                public class WaterJump5m : WaterJump
+            }
+        }
+        public class WaterJump5m : WaterJump
+        {
+            public WaterJump5m(string name, int bank) : base(name, bank) { }
+            public override double[] Prize
+            {
+                get
                 {
-                    public WaterJump5m(string name, int bank) : base(name, bank) { }
-
-                    public override double[] Prize
+                    if (Participants.Length < 3 || Participants == null) return null;
+                    int mid = Participants.Length / 2;
+                    var topParticipants = new double[mid];
+                    Array.Copy(Participants, mid, topParticipants, 0, mid);
+                    double N = 20.0 / Math.Min(topParticipants.Length, 10);
+                    double[] prizes = new double[mid];
+                    for (int i = 3; i < mid - 1; i++)
                     {
-                        get
-                        {
-                            if (_participants.Length < 3 || _participants == null) return null;
-                            int mid = _participants.Length / 2;
-                            var topParticipants = new double[mid];
-                            Array.Copy(_participants, mid, topParticipants, 0, mid);
-                            double N = 20.0 / Math.Min(topParticipants.Length, 10);
-                            double[] prizes = new double[mid];
-                            for (int i = 3; i < mid - 1; i++)
-                            {
-                                prizes[i] += Bank * (N / 100);
-                            }
-                            prizes[0] = Bank * 0.4;
-                            prizes[1] = Bank * 0.25;
-                            prizes[2] = Bank * 0.15;
-                            return prizes;
-                        }
+                        prizes[i] += Bank * (N / 100);
                     }
-
+                    prizes[0] = Bank * 0.4;
+                    prizes[1] = Bank * 0.25;
+                    prizes[2] = Bank * 0.15;
+                    return prizes;
                 }
             }
         }
