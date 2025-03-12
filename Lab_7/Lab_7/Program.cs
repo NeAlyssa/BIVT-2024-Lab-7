@@ -18,8 +18,8 @@ namespace MyApp
 
             // 2
             //Blue_2.Participant[] participants = new Blue_2.Participant[50];
-            //Blue_2.WaterJump3m waterJump3 = new Blue_2.WaterJump3m("name1", 1000);
-            //Blue_2.WaterJump5m waterJump5 = new Blue_2.WaterJump5m("name2", 1000);
+            //Blue_2.WaterJump3m waterJump3 = new Blue_2.WaterJump3m("name1", 10001);
+            //Blue_2.WaterJump5m waterJump5 = new Blue_2.WaterJump5m("name2", 1009);
             //waterJump3.Add(null);
             //waterJump3.Print();
             //waterJump3.Add(participants);
@@ -28,46 +28,46 @@ namespace MyApp
             //waterJump5.Print();
 
             // 3
-            //Blue_3.BasketballPlayer[] basketballPlayers = new Blue_3.BasketballPlayer[6];
-            //for (int n = 1; n < 6; n++)
-            //{
-            //    string num = n.ToString();
-            //    basketballPlayers[n] = new Blue_3.BasketballPlayer("basketall", "num");
-            //}
-            //Blue_3.BasketballPlayer.Sort(basketballPlayers);
-            //basketballPlayers[0].PlayMatch(6);
-            //for (int count = 0; count < 10; count++)
-            //{
-            //    for (int k = 0; k < 5; k++)
-            //    {
-            //        int penalty = new Random().Next(6);
-            //        basketballPlayers[k].PlayMatch(penalty);
-            //    }
-            //}
-            //Blue_3.BasketballPlayer.Sort(basketballPlayers);
-            //for (int k = 0; k < 5; k++)
-            //{
-            //    basketballPlayers[k].Print();
-            //}
+            Blue_3.BasketballPlayer[] basketballPlayers = new Blue_3.BasketballPlayer[6];
+            for (int n = 1; n < 6; n++)
+            {
+                string num = n.ToString();
+                basketballPlayers[n] = new Blue_3.BasketballPlayer("basketall", "num");
+            }
+            Blue_3.BasketballPlayer.Sort(basketballPlayers);
+            basketballPlayers[0].PlayMatch(6);
+            for (int count = 0; count < 10; count++)
+            {
+                for (int k = 0; k < 5; k++)
+                {
+                    int penalty = new Random().Next(6);
+                    basketballPlayers[k].PlayMatch(penalty);
+                }
+            }
+            Blue_3.BasketballPlayer.Sort(basketballPlayers);
+            for (int k = 0; k < 5; k++)
+            {
+                basketballPlayers[k].Print();
+            }
 
-            //Blue_3.HockeyPlayer[] hockeyPlayers = new Blue_3.HockeyPlayer[6];
-            //for (int n = 0; n < 6; n++)
-            //{
-            //    string num = n.ToString();
-            //    hockeyPlayers[n] = new Blue_3.HockeyPlayer("hockey", num);
-            //}
-            //for (int count = 0; count < 10; count++)
-            //{
-            //    for (int k = 0; k < 6; k++)
-            //    {
-            //        int penalty = new Random().Next(10);
-            //        hockeyPlayers[k].PlayMatch(penalty);
-            //    }
-            //}
-            //for (int k = 0; k < 6; k++)
-            //{
-            //    hockeyPlayers[k].Print();
-            //}
+            Blue_3.HockeyPlayer[] hockeyPlayers = new Blue_3.HockeyPlayer[6];
+            for (int n = 0; n < 6; n++)
+            {
+                string num = n.ToString();
+                hockeyPlayers[n] = new Blue_3.HockeyPlayer("hockey", num);
+            }
+            for (int count = 0; count < 10; count++)
+            {
+                for (int k = 0; k < 6; k++)
+                {
+                    int penalty = new Random().Next(11);
+                    hockeyPlayers[k].PlayMatch(penalty);
+                }
+            }
+            for (int k = 0; k < 6; k++)
+            {
+                hockeyPlayers[k].Print();
+            }
 
             // 4
             //Blue_4.Group group1 = new Blue_4.Group("group 1");

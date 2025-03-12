@@ -49,7 +49,7 @@ namespace Lab_7
         {
             private string _surname;
 
-            private string Surname => _surname;
+            public string Surname => _surname;
 
             public HumanResponse(string name, string surname) : base(name)
             {
