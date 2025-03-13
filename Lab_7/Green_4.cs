@@ -32,14 +32,17 @@ namespace Lab_7
             public void Add(Participant participant) // Метод добавления одного студента.
             {
                 if (_participants == null)
+                {
                     _participants = new Participant[0];
+                }
                 Array.Resize(ref _participants, _participantCount + 1);
                 _participants[_participantCount] = participant;
                 _participantCount++;
             }
             public void Add(Participant[] participants) // Метод добавления студентов.
             {
-                for (int i = 0; i < _participants.Length; i++)
+                int count = participants.Length;
+                for (int i = 0; i < count; i++)
                 {
                     Add(_participants[i]);
                 }
@@ -69,13 +72,17 @@ namespace Lab_7
             private protected Participant GetParticipantAt(int index) // Защищённый метод для получения участницы из массива.
             {
                 if (_participants != null && index >= 0 && index < _participantCount)
+                {
                     return _participants[index];
+                }
                 return default(Participant);
             }
             private protected void SetParticipant(int index, Participant participant) // Защищённый метод для обновления участницы в массиве.
             {
                 if (_participants != null && index >= 0 && index < _participantCount)
+                {
                     _participants[index] = participant;
+                }
             }
             public abstract void Retry(int index); // Публично-абстрактный метод перезачёта.
         }
@@ -95,17 +102,16 @@ namespace Lab_7
             }
             public double[] Jumps // Свойство прыжков.
             {
-                get
-                {
-                    return _jumps != null ? (double[])_jumps.Clone() : null;
-                }
+                get { return _jumps; }
             }
             public double BestJump // Свойство лучшего из них.
             {
                 get
                 {
                     if (_jumps == null || _jumps.Length == 0)
+                    {
                         return 0;
+                    }
                     return _jumps.Max();
                 }
             }
@@ -118,7 +124,10 @@ namespace Lab_7
             }
             public void Jump(double result) // Прыыыыжок.
             {
-                if (_jumps == null || _jumps.Length == 0) return;
+                if (_jumps == null || _jumps.Length == 0)
+                {
+                    return;
+                }
                 if (_index < 3 && result >= 0)
                 {
                     _jumps[_index] = result;
@@ -128,7 +137,9 @@ namespace Lab_7
             public static void Sort(Participant[] array) // Сортируем.
             {
                 if (array == null || array.Length == 0)
+                {
                     return;
+                }
                 bool swapped;
                 do
                 {
