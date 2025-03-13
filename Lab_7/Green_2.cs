@@ -48,10 +48,7 @@ namespace Lab_7
             }
             public static int ExcellentAmount // Свойтсво кол-ва отличников.
             {
-                get
-                {
-                    return _excellentAmount;
-                }
+                get { return _excellentAmount; }
             }
             public int[] Marks // Свойство оценок.
             {
@@ -114,7 +111,9 @@ namespace Lab_7
             public static void SortByAvgMark(Student[] array) // Публично-статичный метод сортировки студентов.
             {
                 if (array == null || array.Length == 0)
+                {
                     return;
+                }
                 bool swapped;
                 do
                 {
