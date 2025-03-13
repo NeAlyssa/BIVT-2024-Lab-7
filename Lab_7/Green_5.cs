@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +25,7 @@ namespace Lab_7
             }
             public int[] Marks // Свойство оценок.
             {
-                get { return _marks != null ? (int[])_marks.Clone() : null; }
+                get { return _marks; }
             }
             public Student(string name, string surname)  // Публичный конструктор, принимающий имя и фамилию, инициализирует массив оценок по нулям.
             {
@@ -82,18 +82,18 @@ namespace Lab_7
             {
                 get { return _name; }
             }
-
             public Green_5.Student[] Students // Свойство студентов.
             {
-                get { return _students; }
+                get { return _students != null ? (Student[])_students.Clone() : null; }
             }
             public virtual double AvgMark // Высчитываем средний балл в группе.
             {
                 get
                 {
                     if (_students == null || _studentCount == 0)
+                    {
                         return 0;
-
+                    }
                     double totalSum = 0;
                     int totalCount = 0;
                     for (int i = 0; i < _studentCount; i++)
@@ -116,7 +116,9 @@ namespace Lab_7
             public void Add(Green_5.Student student) // Метод добавления одного студента.
             {
                 if (_students == null)
+                {
                     _students = new Green_5.Student[0];
+                }
                 Array.Resize(ref _students, _studentCount + 1);
                 _students[_studentCount] = student;
                 _studentCount++;
@@ -124,10 +126,13 @@ namespace Lab_7
             public void Add(Green_5.Student[] newStudents) // Метод добавления нескольких студентов.
             {
                 if (newStudents == null)
+                {
                     return;
+                }
                 if (_students == null)
+                {
                     _students = new Green_5.Student[0];
-
+                }
                 int newLength = _studentCount + newStudents.Length;
                 Array.Resize(ref _students, newLength);
                 for (int i = 0; i < newStudents.Length; i++)
@@ -139,7 +144,9 @@ namespace Lab_7
             public static void SortByAvgMark(Group[] array) // Сортировка.
             {
                 if (array == null || array.Length == 0)
+                {
                     return;
+                }
                 bool swapped;
                 do
                 {
@@ -173,7 +180,9 @@ namespace Lab_7
                 get
                 {
                     if (Students == null || Students.Length == 0)
+                    {
                         return 0;
+                    }
                     double totalWeightedSum = 0;
                     double totalWeight = 0;
                     foreach (Student student in Students)
@@ -224,13 +233,14 @@ namespace Lab_7
             {
                 _name = name;
             }
-
             public override double AvgMark // Среднее взвешненное значение.
             {
                 get
                 {
                     if (Students == null || Students.Length == 0)
+                    {
                         return 0;
+                    }
                     double totalWeightedSum = 0;
                     double totalWeight = 0;
                     foreach (Student student in Students)
