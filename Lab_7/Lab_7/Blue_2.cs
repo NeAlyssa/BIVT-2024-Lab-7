@@ -188,14 +188,14 @@ namespace Lab_7
                     if (this.Participants == null || this.Participants.Length < 3) return null;
 
                     double[] prizes = new double[3];
-                    double remainder = (double)this.Bank;
-                    prizes[0] = 0.5 * (double)this.Bank;
-                    remainder -= prizes[0]; 
-                    //prizes[1] = 0.3 * (double)this.Bank;
-                    prizes[1] = 0.6 * remainder;
-                    remainder -= prizes[1];
-                    //prizes[2] = 0.2 * (double)this.Bank;
-                    prizes[2] = remainder;
+                    //double remainder = (double)this.Bank;
+                    //remainder -= prizes[0]; 
+                    //prizes[1] = 0.6 * remainder;
+                    //remainder -= prizes[1];
+                    //prizes[2] = remainder;
+                    prizes[0] = Math.Round(0.5 * (double)this.Bank, 5);
+                    prizes[1] = Math.Round(0.3 * (double)this.Bank, 5);
+                    prizes[2] = Math.Round(0.2 * (double)this.Bank, 5);
                     return prizes;
                 }
             }
@@ -224,24 +224,25 @@ namespace Lab_7
                     double reminder = (double)this.Bank;
                     for (int k = 0; k < prizesNum; k++)
                     {
-                        prizes[k] = degN * (double)this.Bank;
-                        reminder -= prizes[k];
-                        reminder = Math.Round(reminder, 5);
+                        prizes[k] = Math.Round(degN * (double)this.Bank, 5);
+                        //reminder -= prizes[k];
+                        //reminder = Math.Round(reminder, 5);
                     }
-                    //reminder -= 0.2 * (double)this.Bank;
-
-                    //prizes[0] += 0.4 * (double)this.Bank;
-                    prizes[0] += 0.5 * reminder;
+                    //prizes[0] += 0.5 * reminder;
+                    //prizes[0] = Math.Round(prizes[0], 5);
+                    //reminder -= 0.5 * reminder;
+                    //reminder = Math.Round(reminder, 5);
+                    //prizes[1] += 0.625 * reminder;
+                    //prizes[1] = Math.Round(prizes[1], 5);
+                    //reminder -= 0.625 * reminder;
+                    //reminder = Math.Round(reminder, 5);
+                    //prizes[2] += reminder;
+                    //prizes[2] = Math.Round(prizes[2], 5);
+                    prizes[0] += 0.4 * (double)this.Bank;
                     prizes[0] = Math.Round(prizes[0], 5);
-                    reminder -= 0.5 * reminder;
-                    reminder = Math.Round(reminder, 5);
-                    //prizes[1] += 0.25 * (double)this.Bank;
-                    prizes[1] += 0.625 * reminder;
+                    prizes[1] += 0.25 * (double)this.Bank;
                     prizes[1] = Math.Round(prizes[1], 5);
-                    reminder -= 0.625 * reminder;
-                    reminder = Math.Round(reminder, 5);
-                    //prizes[2] += 0.15 * (double)this.Bank;
-                    prizes[2] += reminder;
+                    prizes[2] += 0.15 * (double)this.Bank;
                     prizes[2] = Math.Round(prizes[2], 5);
                     return prizes;
                 }
