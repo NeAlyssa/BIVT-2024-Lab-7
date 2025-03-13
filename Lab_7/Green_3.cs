@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,7 +59,9 @@ namespace Lab_7
                 get
                 {
                     if (_marks == null || _examCount == 0)
+                    {
                         return 0;
+                    }
                     double sum = 0;
                     for (int i = 0; i < _examCount; i++)
                     {
@@ -73,25 +75,39 @@ namespace Lab_7
                 get
                 {
                     if (_restored)
-                    { return false; }
+                    {
+                        return false;
+                    }
                     if (_examCount == 0)
-                    { return false; }
+                    {
+                        return false;
+                    }
                     for (int i = 0; i < _examCount; i++)
                     {
                         if (_marks[i] < 3)
-                        { return true; }
+                        {
+                            return true;
+                        }
                     }
-                    { return false; }
+                    {
+                        return false;
+                    }
                 }
             }
             public void Exam(int mark) // Экзамен.
             {
                 if (_marks == null || _marks.Length == 0)
+                {
                     return;
+                }
                 if (_examCount >= 3)
+                {
                     return;
+                }
                 if (_isExpelled && !_restored)
+                {
                     return;
+                }
                 if (_restored)
                 {
                     _restored = false;
@@ -100,7 +116,9 @@ namespace Lab_7
                 _marks[_examCount] = mark;
                 _examCount++;
                 if (mark < 3)
+                {
                     _isExpelled = true;
+                }
             }
             public void Restore() // Изменяем с "отчисленного" на "не отчисленного".
             {
@@ -110,7 +128,9 @@ namespace Lab_7
             public static void SortByAvgMark(Student[] array) // Метод сортировки по средней оценке.
             {
                 if (array == null || array.Length == 0)
+                {
                     return;
+                }
                 bool swapped;
                 do
                 {
@@ -179,11 +199,13 @@ namespace Lab_7
                 foreach (Student student in students)
                 {
                     if (student.ID == restored.ID)
-                    { return; }
+                    {
+                        return;
+                    }
                 }
-                if (restored.IsExpelled || restored.ID >= 1)
+                if (restored.IsExpelled && restored.ID >= 1)
                 {
-                    int insertPos = restored.ID - 1;
+                    int insertPos = Math.Min(restored.ID - 1, students.Length);
                     Student[] newStudents = new Student[students.Length + 1];
                     for (int i = 0; i < insertPos; i++)
                     {
@@ -196,7 +218,10 @@ namespace Lab_7
                     }
                     students = newStudents;
                 }
-                else { return; }
+                else
+                {
+                    return;
+                }
             }
         }
     }
