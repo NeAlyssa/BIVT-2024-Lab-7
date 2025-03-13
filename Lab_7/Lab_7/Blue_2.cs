@@ -193,9 +193,9 @@ namespace Lab_7
                     //prizes[1] = 0.6 * remainder;
                     //remainder -= prizes[1];
                     //prizes[2] = remainder;
-                    prizes[0] = Math.Round(0.5 * (double)this.Bank, 5);
-                    prizes[1] = Math.Round(0.3 * (double)this.Bank, 5);
-                    prizes[2] = Math.Round(0.2 * (double)this.Bank, 5);
+                    prizes[0] = 0.5 * (double)this.Bank;
+                    prizes[1] = 0.3 * (double)this.Bank;
+                    prizes[2] = 0.2 * (double)this.Bank;
                     return prizes;
                 }
             }
@@ -239,11 +239,11 @@ namespace Lab_7
                     //prizes[2] += reminder;
                     //prizes[2] = Math.Round(prizes[2], 5);
                     prizes[0] += 0.4 * (double)this.Bank;
-                    prizes[0] = Math.Round(prizes[0], 5);
+                    //prizes[0] = Math.Round(prizes[0], 5);
                     prizes[1] += 0.25 * (double)this.Bank;
-                    prizes[1] = Math.Round(prizes[1], 5);
+                    //prizes[1] = Math.Round(prizes[1], 5);
                     prizes[2] += 0.15 * (double)this.Bank;
-                    prizes[2] = Math.Round(prizes[2], 5);
+                    //prizes[2] = Math.Round(prizes[2], 5);
                     return prizes;
                 }
             }
