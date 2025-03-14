@@ -38,7 +38,7 @@ namespace Lab_7
                 {
                     if (_marks == null) return 0;
                     int sum = _marks.Sum() - _marks.Max() - _marks.Min(); ;
-                    sum += 60 + (_distance - _target) * 2 > 0 ? 60 + (_distance - _target) * 2 : 0;
+                    sum += (60 + (_distance - _target) * 2) > 0 ? (60 + (_distance - _target) * 2) : 0;
                     return sum;
                 }
             }
@@ -120,11 +120,13 @@ namespace Lab_7
 
             public void Jump(int distance, int[] marks)
             {
-                foreach (var jumper in _participants)
+                for (int i = 0; i < _participants.Length; i++)
                 {
-                    if (jumper.Distance == 0)
+                    if (_participants[i].Distance == 0)
                     {
-                        jumper.Jump(distance, marks, Standard);
+                        var jumper = _participants[i];
+                        jumper.Jump(distance, marks, Standard); 
+                        _participants[i] = jumper;
                         break;
                     }
                 }

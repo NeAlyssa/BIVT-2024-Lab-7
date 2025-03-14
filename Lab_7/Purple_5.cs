@@ -34,18 +34,19 @@ namespace Lab_7
                     switch (questionNumber)
                     {
                         case 1:
-                            if (responses[i].Animal != null && responses[i].Animal != "") answered++;
+                            if (responses[i].Animal != null && responses[i].Animal != "" && responses[i].Animal == Animal) answered++;
                             break;
                         case 2:
-                            if (responses[i].CharacterTrait != null && responses[i].CharacterTrait != "") answered++;
+                            if (responses[i].CharacterTrait != null && responses[i].CharacterTrait != "" && responses[i].CharacterTrait == CharacterTrait) answered++;
                             break;
                         case 3:
-                            if (responses[i].Concept != null && responses[i].Concept != "") answered++;
+                            if (responses[i].Concept != null && responses[i].Concept != "" && responses[i].Concept == Concept) answered++;
                             break;
                         default:
                             return 0;
                     }
                 }
+                
                 return answered;
             }
 
@@ -214,7 +215,7 @@ namespace Lab_7
 
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (_researches == null) return null;
+                if (_researches == null || question < 1 || question > 3) return null;
 
                 string[] responses = new string[0];
                 int[] count = new int[0];

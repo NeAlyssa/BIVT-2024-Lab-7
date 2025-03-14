@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab_7
 {
@@ -60,23 +57,34 @@ namespace Lab_7
 
             public void Evaluate(double result)
             {
-                if (_marks == null || _marksAcquired >= 7) return; 
+                if (_marks == null || _marksAcquired >= 7) return;
                 _marks[_marksAcquired++] = result;
             }
 
             public static void SetPlaces(Participant[] participants)
             {
                 if (participants == null) return;
-                foreach (var part in participants)
-                {
-                    if (part.Marks == null) return;
-                }
+
                 for (int judgeIndex = 0; judgeIndex < 7; judgeIndex++)
                 {
-                    SortByJudge(participants, judgeIndex);
-                    for (int i = 0; i < participants.Length; i++)
+                    var sortedParticipants = participants
+                        .Where(p => p.Marks != null) 
+                        .OrderByDescending(p => p.Marks[judgeIndex])  
+                        .ToArray();
+
+                    for (int i = 0; i < sortedParticipants.Length; i++)
                     {
-                        participants[i]._places[judgeIndex] = i+1;
+                        sortedParticipants[i]._places[judgeIndex] = i + 1;
+                    }
+
+
+                    if (judgeIndex == 6)
+                    {
+                        sortedParticipants = sortedParticipants
+                            .Concat(participants.Where(p => p.Marks == null))
+                            .ToArray();
+
+                        Array.Copy(sortedParticipants, participants, sortedParticipants.Length);
                     }
                 }
             }
@@ -91,7 +99,7 @@ namespace Lab_7
                     Participant key = array[i];
                     int j = i - 1;
 
-                    while (j >= 0 && array[j].Marks[judgeIndex] < key.Marks[judgeIndex]) 
+                    while (j >= 0 && array[j].Marks[judgeIndex] < key.Marks[judgeIndex])
                     {
                         array[j + 1] = array[j];
                         j = j - 1;
@@ -120,11 +128,11 @@ namespace Lab_7
                     array[j + 1] = key;
                 }
             }
-            private static bool CompareParticipants(Participant p1, Participant p2) 
+            private static bool CompareParticipants(Participant p1, Participant p2)
             {
                 //True: p1>p2
                 //False: p1<p2
-                if (p1.Score != p2.Score) return p1.Score > p2.Score; 
+                if (p1.Score != p2.Score) return p1.Score < p2.Score;
                 if (p1.Places.Min() != p2.Places.Min()) return p1.Places.Min() < p2.Places.Min(); //Parity by sum of places
                 return p1.Marks.Sum() > p2.Marks.Sum(); //Parity by max judge place
             }
@@ -155,6 +163,8 @@ namespace Lab_7
 
             public Skating(double[] moods)
             {
+                if (moods == null) return;
+
                 _moods = (double[])moods.Clone();
                 ModificateMood();
                 _participants = new Participant[0];
@@ -165,14 +175,15 @@ namespace Lab_7
 
             public void Evaluate(double[] marks)
             {
-                if (_participants == null) return;
-                foreach(var participant in _participants)
+                if (_participants == null || marks == null) return;
+
+                foreach (var participant in _participants)
                 {
                     if (participant.Score == 0)
                     {
                         for (int i = 0; i < marks.Length; i++)
                         {
-                            participant.Evaluate(marks[i]*Moods[i]);
+                            participant.Evaluate(marks[i] * Moods[i]);
                         }
                         break;
                     }
@@ -183,12 +194,13 @@ namespace Lab_7
 
             public void Add(Participant skater)
             {
-                if (_participants == null) return;
+                if (_participants == null) _participants = new Participant[0];
                 Array.Resize(ref _participants, _participants.Length + 1);
                 _participants[_participants.Length - 1] = skater;
             }
             public void Add(Participant[] skaters)
             {
+                if (skaters == null) return;
                 foreach (var skater in skaters) Add(skater);
             }
         }
@@ -202,14 +214,14 @@ namespace Lab_7
                 if (_moods == null) return;
                 for (int i = 0; i < _moods.Length; i++)
                 {
-                    _moods[i] += (i + 1) / 10.0;  
+                    _moods[i] += (i + 1) / 10.0;
                 }
             }
         }
 
         public class IceSkating : Skating
         {
-            public IceSkating(double[] moods) : base (moods) { }
+            public IceSkating(double[] moods) : base(moods) { }
 
             protected override void ModificateMood()
             {

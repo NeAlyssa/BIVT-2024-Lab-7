@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab_7
 {
     public class Purple_4
     {
-        public class Sportsman {
+        public class Sportsman
+        {
             private string _name;
             private string _surname;
             private double _time;
@@ -26,7 +23,10 @@ namespace Lab_7
 
             public void Run(double time)
             {
-                if (_time != default(double)) return;
+                if (_time != default(double))
+                {
+                    return;
+                }
 
                 _time = time;
             }
@@ -57,11 +57,11 @@ namespace Lab_7
 
         public class SkiMan : Sportsman
         {
-            public SkiMan(string name, string surname) : base(name, surname) {  }
+            public SkiMan(string name, string surname) : base(name, surname) { }
 
             public SkiMan(string name, string surname, double time) : base(name, surname)
             {
-                this.Run(time);
+                Run(time);
             }
         }
 
@@ -71,11 +71,12 @@ namespace Lab_7
 
             public SkiWoman(string name, string surname, double time) : base(name, surname)
             {
-                this.Run(time);
+                Run(time);
             }
         }
 
-        public class Group {
+        public class Group
+        {
             private string _name;
             private Sportsman[] _teammates;
 
@@ -85,7 +86,10 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_teammates == null) return default(Sportsman[]);
+                    if (_teammates == null)
+                    {
+                        return default(Sportsman[]);
+                    }
 
                     var newArray = new Sportsman[_teammates.Length];
                     Array.Copy(_teammates, newArray, _teammates.Length);
@@ -93,13 +97,17 @@ namespace Lab_7
                 }
             }
 
-            public Group(string name){
+            public Group(string name)
+            {
                 _name = name;
                 _teammates = new Sportsman[0]; //zero because we resize the array everytime Add() is called
             }
             public Group(Group group)
             {
-                if (group == null) return;
+                if (group == null)
+                {
+                    return;
+                }
 
                 _name = group.Name;
                 if (group.Sportsmen == null)//no sportsmen to copy
@@ -113,14 +121,22 @@ namespace Lab_7
 
             public void Add(Sportsman newSportsman)
             {
-                if (_teammates == null) return;
+                if (_teammates == null)
+                {
+                    return;
+                }
+
                 Array.Resize(ref _teammates, _teammates.Length + 1); //resize to n+1
-                _teammates[_teammates.Length-1] = newSportsman; //add new sportsman to the end of new array
+                _teammates[_teammates.Length - 1] = newSportsman; //add new sportsman to the end of new array
             }
 
             public void Add(Sportsman[] newSportsmen)
             {
-                if (newSportsmen == null || _teammates == null) return;
+                if (newSportsmen == null || _teammates == null)
+                {
+                    return;
+                }
+
                 int oldLength = _teammates.Length;
                 Array.Resize(ref _teammates, _teammates.Length + newSportsmen.Length); //resize to n+k
                 Array.Copy(newSportsmen, 0, _teammates, oldLength, newSportsmen.Length); //add the new sportsmen to the end of the new array  
@@ -128,7 +144,11 @@ namespace Lab_7
 
             public void Add(Group group) //copy ALL the group members of the given group? Seems so
             {
-                if (group.Sportsmen == null || _teammates == null) return;
+                if (group.Sportsmen == null || _teammates == null)
+                {
+                    return;
+                }
+
                 int oldLength = _teammates.Length;
                 Array.Resize(ref _teammates, _teammates.Length + group.Sportsmen.Length); //resize to n+k
                 Array.Copy(group.Sportsmen, 0, _teammates, oldLength, group.Sportsmen.Length); //add the new sportsmen to the end of the new array 
@@ -136,7 +156,11 @@ namespace Lab_7
 
             public void Sort()
             {
-                if (_teammates == null) return;
+                if (_teammates == null)
+                {
+                    return;
+                }
+
                 for (int i = 0; i < _teammates.Length; i++)
                 {
                     Sportsman key = _teammates[i];
@@ -153,27 +177,38 @@ namespace Lab_7
 
             public static Group Merge(Group group1, Group group2)
             {
-                if (group1.Sportsmen == null || group2.Sportsmen == null) return default(Group); //Should non-empty group + empty group = the non-empty group?
+                if (group1.Sportsmen == null || group2.Sportsmen == null)
+                {
+                    return default(Group);
+                }
+
                 Group finalists = new Group("Финалисты");
 
                 group1.Sort();
                 group2.Sort();
-                
+
                 int i = 0, j = 0;
                 while (i < group1.Sportsmen.Length && j < group2.Sportsmen.Length)
                 {
                     if (group1.Sportsmen[i].Time <= group2.Sportsmen[j].Time)
+                    {
                         finalists.Add(group1.Sportsmen[i++]);
-                    
+                    }
                     else
+                    {
                         finalists.Add(group2.Sportsmen[j++]);
+                    }
                 }
 
                 while (i < group1.Sportsmen.Length)
+                {
                     finalists.Add(group1.Sportsmen[i++]);
+                }
 
                 while (j < group2.Sportsmen.Length)
+                {
                     finalists.Add(group2.Sportsmen[j++]);
+                }
 
                 return finalists;
             }
@@ -188,54 +223,82 @@ namespace Lab_7
                 }
 
                 int m = 0, w = 0;
-                foreach(var s in Sportsmen)
+                foreach (var s in Sportsmen)
                 {
-                    if (s is SkiMan) m++;
-                    else if (s is SkiWoman) w++;
+                    if (s is SkiMan)
+                    {
+                        m++;
+                    }
+                    else if (s is SkiWoman)
+                    {
+                        w++;
+                    }
                 }
                 men = new Sportsman[m];
                 women = new Sportsman[w];
 
                 m = 0;
                 w = 0;
-                for(int i = 0; i < Sportsmen.Length; i++)
+                for (int i = 0; i < Sportsmen.Length; i++)
                 {
-                    if (Sportsmen[i] is SkiMan) men[m++] = Sportsmen[i];
-                    else if (Sportsmen[i] is SkiWoman) women[w++] = Sportsmen[i];
+                    if (Sportsmen[i] is SkiMan)
+                    {
+                        men[m++] = Sportsmen[i];
+                    }
+                    else if (Sportsmen[i] is SkiWoman)
+                    {
+                        women[w++] = Sportsmen[i];
+                    }
                 }
             }
 
-            public void Shuffle()//NEEDS TESTING
+            public void Shuffle()
             {
-                Sort();
+                Sort(); //whole team is sorted by time
                 Sportsman[] men, women;
-                Split(out men, out women);
+                Split(out men, out women); //men and women sorted by time 
 
-                if (men.Length == 0 || men == null || women == null || women.Length == 0) return;
-
-                int w = 0, m = 0;   
-                if (men[0].Time < women[0].Time) //first is man
+                if (men.Length == 0 || men == null || women == null || women.Length == 0) //solved the null problem
                 {
-                    for (int i = 0; i < _teammates.Length; i++)
-                    {
-                        if (i % 2 == 0) _teammates[i] = men[m++];
-                        else _teammates[i] = women[w++];
-                    }
+                    return;
                 }
-                else //first is woman
+
+                int matching = Math.Min(men.Length, women.Length);
+                int remaining = men.Length - women.Length;
+
+                int i = 0, w = 0, m = 0;
+
+                if (men[0].Time < women[0].Time)//man first
                 {
-                    for (int i = 0; i < _teammates.Length; i++)
+                    while (i < matching * 2)
                     {
-                        if (i % 2 != 0) _teammates[i] = men[m++];
-                        else _teammates[i] = women[w++];
-                    }
-                } 
+                        _teammates[i++] = men[m++];
+                        _teammates[i++] = women[w++];
+                    }//finishing with a woman
+                }
+                else//woman first
+                {
+                    while (i < matching * 2)
+                    {
+                        _teammates[i++] = women[w++];
+                        _teammates[i++] = men[m++];
+                    }//finishing with a man
+                }
+
+                if (remaining > 0 && m < men.Length) //more men => add extra men
+                {
+                    _teammates[i++] = men[w++];
+                }
+                else if (remaining < 0 && w < women.Length) //more women => add extra women
+                {
+                    _teammates[i++]=women[w++];
+                }
             }
 
             public void Print()
             {
                 Console.WriteLine($"Group name: {_name}");
-                foreach(Sportsman sportsman in _teammates)
+                foreach (Sportsman sportsman in _teammates)
                 {
                     sportsman.Print();
                 }
