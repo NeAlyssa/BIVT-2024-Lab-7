@@ -58,14 +58,18 @@ namespace Lab_7
                     int score = 0;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        switch (sportsman.Place)
+                        if (sportsman.Place>0 && sportsman.Place <= 5)
                         {
-                            case 1: score += 5; break;
-                            case 2: score += 4; break;
-                            case 3: score += 3; break;
-                            case 4: score += 2; break;
-                            case 5: score += 1; break;
+                            score += 6 - sportsman.Place;
                         }
+                        //switch (sportsman.Place)
+                        //{
+                        //    case 1: score += 5; break;
+                        //    case 2: score += 4; break;
+                        //    case 3: score += 3; break;
+                        //    case 4: score += 2; break;
+                        //    case 5: score += 1; break;
+                        //}
                     }
                     return score;
                 }
