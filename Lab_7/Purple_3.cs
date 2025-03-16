@@ -163,8 +163,8 @@ namespace Lab_7
 
             public Skating(double[] moods)
             {
-                if (moods == null) return;
-
+                if (moods == null || moods.Length < 7) return;
+                Array.Resize(ref moods, 7);
                 _moods = (double[])moods.Clone();
                 ModificateMood();
                 _participants = new Participant[0];

@@ -82,20 +82,7 @@ namespace Lab_7
 
             public string Name => _name;
 
-            public Sportsman[] Sportsmen
-            {
-                get
-                {
-                    if (_teammates == null)
-                    {
-                        return default(Sportsman[]);
-                    }
-
-                    var newArray = new Sportsman[_teammates.Length];
-                    Array.Copy(_teammates, newArray, _teammates.Length);
-                    return newArray;
-                }
-            }
+            public Sportsman[] Sportsmen => _teammates;
 
             public Group(string name)
             {

@@ -37,8 +37,8 @@ namespace Lab_7
                 get
                 {
                     if (_marks == null) return 0;
-                    int sum = _marks.Sum() - _marks.Max() - _marks.Min(); ;
-                    sum += (60 + (_distance - _target) * 2) > 0 ? (60 + (_distance - _target) * 2) : 0;
+                    int sum = _marks.Sum() - _marks.Max() - _marks.Min();
+                    sum += Math.Max(0, 60 + (_distance - _target) * 2);
                     return sum;
                 }
             }
@@ -54,7 +54,7 @@ namespace Lab_7
 
             public void Jump(int distance, int[] marks, int target)
             {
-                if (_distance != 0 || marks == null || _marks == null || marks.Length != 5) return; //needed or not?
+                if (_distance != 0 || marks == null || _marks == null || marks.Length != 5) return;
                 _distance = distance;
                 _target = target;
                 Array.Copy(marks, _marks, marks.Length);
