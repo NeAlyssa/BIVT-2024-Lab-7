@@ -60,7 +60,7 @@ namespace Lab_7
             //method
             public void Jump(int[] result) //заполняет результат прыжка оценками, массив - прыжок
             {
-                if (result == null || _marks == null) return;
+                if (result == null || _marks == null || _marks.GetLength(0)==0 || _marks.GetLength(1)==0 || result.Length==0) return;
                 for (int i = 0; i < 2; i++)
                 {
                     if (_marks[i, 0] == 0)
