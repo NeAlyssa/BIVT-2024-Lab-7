@@ -46,7 +46,7 @@ namespace Lab_7
 
             public void PlayMatch(int result) //добавляем результат матча
             {
-                if (_scores == null || _scores.Length==0) return;
+                if (_scores == null) return;
                 int[] newscores = new int[_scores.Length + 1];
                 for (int i = 0; i < _scores.Length; i++)
                 {
