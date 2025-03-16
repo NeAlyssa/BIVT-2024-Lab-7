@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +22,7 @@ namespace Lab_7
                 get
                 {
                     if (_scores == null) return null;
-                    return _scores; //чтобы массив дальше менялся, а не его копия
+                    return _scores; 
                 }
             }
             public int TotalScore
@@ -46,7 +46,7 @@ namespace Lab_7
 
             public void PlayMatch(int result) //добавляем результат матча
             {
-                if (_scores == null) return;
+                if (_scores == null || _scores.Length==0) return;
                 int[] newscores = new int[_scores.Length + 1];
                 for (int i = 0; i < _scores.Length; i++)
                 {
@@ -146,6 +146,7 @@ namespace Lab_7
                             continue;
                         }
                     }
+                    else break;
                     if (_womanCnt < _womanteams.Length)
                     {
                         WomanTeam womanTeam = team as WomanTeam;
@@ -155,6 +156,7 @@ namespace Lab_7
                             continue;
                         }
                     }
+                    else break;
                 }
             }
             public void Sort() //пузырьком <3 по убыванию суммарных очков
@@ -186,6 +188,7 @@ namespace Lab_7
 
                 result.Add(manTeam);
                 result.Add(womanTeam);
+
                 return result;
 
             }
