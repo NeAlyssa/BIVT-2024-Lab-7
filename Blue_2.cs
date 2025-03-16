@@ -60,16 +60,21 @@ namespace Lab_7
             //method
             public void Jump(int[] result) //заполняет результат прыжка оценками, массив - прыжок
             {
-                if (result == null || _marks == null || _marks.GetLength(0)==0 || _marks.GetLength(1)==0 || result.Length==0) return;
+                if (result == null || _marks == null) return;
+                int jumpIndex = -1;
                 for (int i = 0; i < 2; i++)
                 {
                     if (_marks[i, 0] == 0)
                     {
-                        for (int j = 0; j < 5; j++)
-                        {
-                            _marks[i, j] = result[j];
-                        }
-                        return;
+                        jumpIndex = i;
+                        break;
+                    }
+                }
+                if (jumpIndex != -1)
+                {
+                    for (int j=0;j<5; j++)
+                    {
+                        _marks[jumpIndex, j] = result[j];
                     }
                 }
             }
@@ -140,7 +145,7 @@ namespace Lab_7
             }
             public void Add(Participant[] participants) //добавление массива объектов типа Тим в массив тимс
             {
-                if (_participants == null || participants.Length == 0 || participants == null) return;
+                if (_participants == null || participants == null) return;
                 foreach (var participant in participants)
                 {
                     Add(participant);
