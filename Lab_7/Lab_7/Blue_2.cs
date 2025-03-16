@@ -218,7 +218,7 @@ namespace Lab_7
                     else
                         prizesNum= numAboveTheMiddle;
                     double[] prizes = new double[prizesNum];
-                    double N = 20 / prizesNum;  
+                    double N = 20 / (double)prizesNum;  
                     double degN = N / 100;
 
                     double reminder = (double)this.Bank;
