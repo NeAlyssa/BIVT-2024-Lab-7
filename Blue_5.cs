@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace Lab_7
 
             public void SetPlace(int place) //устанавливает место спортсмена в таблице
             {
-                if (place > 0)
+                if (place > 0 && _place==0)
                 {
                     _place = place;
                 }
@@ -47,14 +47,7 @@ namespace Lab_7
             private int _cnt;
 
             public string Name => _name;
-            public Sportsman[] Sportsmen
-            {
-                get
-                {
-                    if (_sportsmen == null) return null;
-                    return _sportsmen;
-                }
-            }
+            public Sportsman[] Sportsmen => _sportsmen;
 
 
             public int SummaryScore
@@ -82,7 +75,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || Sportsmen.Length == 0) return 0;
+                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
                     int topplace = int.MaxValue;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
@@ -116,7 +109,7 @@ namespace Lab_7
 
             public void Add(Sportsman[] newSportsmen)
             {
-                if (_sportsmen == null || _sportsmen.Length == 0) return;
+                if (_sportsmen == null || _sportsmen.Length == 0 || Sportsmen==null || Sportsmen.Length==0 || _cnt>=_sportsmen.Length) return;
                 foreach (Sportsman sportsman in newSportsmen)
                 {
                     Add(sportsman);
@@ -152,6 +145,7 @@ namespace Lab_7
 
                 foreach (var team in teams)
                 {
+                    if (team==null) continue;
                     double strength = team.GetTeamStrength();
                     if (strength > maxStrength)
                     {
