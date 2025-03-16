@@ -133,8 +133,8 @@ namespace Lab_7
                 //True: p1>p2
                 //False: p1<p2
                 if (p1.Score != p2.Score) return p1.Score < p2.Score;
-                if (p1.Places.Min() != p2.Places.Min()) return p1.Places.Min() < p2.Places.Min(); //Parity by sum of places
-                return p1.Marks.Sum() > p2.Marks.Sum(); //Parity by max judge place
+                if (p1.Places.Min() != p2.Places.Min()) return p1.Places.Min() > p2.Places.Min(); //Parity by sum of places
+                return p1.Marks.Sum() < p2.Marks.Sum(); //Parity by max judge place
             }
 
             public void Print()
