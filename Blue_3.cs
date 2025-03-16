@@ -32,7 +32,7 @@ namespace Lab_7
                 get
                 {
                     int s = 0;
-                    if (_penalties == null || _penalties.Length==0) return 0;
+                    if (_penalties == null) return 0;
                     for (int i = 0; i < _penalties.Length; i++)
                     {
                         s += _penalties[i];
@@ -46,7 +46,7 @@ namespace Lab_7
                 get
                 {
                     bool ex = false;
-                    if (_penalties == null || _penalties.Length==0) return false;
+                    if (_penalties == null) return false;
                     for (int i = 0; i < _penalties.Length; i++)
                     {
                         if (_penalties[i] == 10)
@@ -68,7 +68,7 @@ namespace Lab_7
             //методы
             public virtual void PlayMatch(int time) //добавляет штрафное время в массив штрафов
             {
-                if (_penalties == null || _penalties.Length==0) return;
+                if (_penalties == null) return;
 
                 int[] newpenaltytimes = new int[_penalties.Length + 1];
 
@@ -111,7 +111,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penalties == null || _penalties.Length == 0) return false;
+                    if (_penalties == null) return false;
                     int cnt=_penalties.Length;
                     int falls = 0;
                     foreach (int penalty in _penalties)
@@ -144,7 +144,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penalties == null || _penalties.Length == 0) return false;
+                    if (_penalties == null) return false;
                     foreach (int penalty in _penalties)
                     {
                         if (penalty >= 10)
@@ -164,7 +164,7 @@ namespace Lab_7
             }
             public override void PlayMatch(int penaltyMinutes)
             {
-                if (_penalties == null || _penalties.Length==0) return;
+                if (_penalties == null) return;
                 base.PlayMatch(penaltyMinutes);
                 if (penaltyMinutes >= 0)
                 {
