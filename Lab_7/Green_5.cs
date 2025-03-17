@@ -84,7 +84,7 @@ namespace Lab_7
             }
             public Green_5.Student[] Students // Свойство студентов.
             {
-                get { return _students != null ? (Student[])_students.Clone() : null; }
+                get { return _students; }
             }
             public virtual double AvgMark // Высчитываем средний балл в группе.
             {
