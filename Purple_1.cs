@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static Lab_6.Purple_4;
 using System.Timers;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_1
     {
