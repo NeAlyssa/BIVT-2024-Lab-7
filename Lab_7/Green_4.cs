@@ -21,7 +21,7 @@ namespace Lab_7
             }
             public Participant[] Participants // Свойство участниц.
             {
-                get { return _participants != null ? (Participant[])_participants.Clone() : null; }
+                get { return _participants; }
             }
             public Discipline(string name) // Публичный конструктор дисциплины.
             {
