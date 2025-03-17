@@ -138,11 +138,11 @@ namespace Lab_7
             var concepts = "Манга,Манга,Кимоно,Суши,Кимоно,Самурай,Манга,Суши,Сакура,Кимоно,Сакура,Кимоно,Сакура,Фудзияма,Аниме,-,Манга,Фудзияма,Самурай,Сакура".Split(',');
             
             var rep = new Purple_5.Report();
-            var research = rep.MakeResearch();
-            Console.WriteLine(research.Name);
+            rep.MakeResearch();
+            Console.WriteLine(rep.Researches[0].Name);
             for (int i = 0; i < 20; i++)
             {
-                research.Add(new string[] { animals[i], characterTraits[i], concepts[i] });
+                rep.Researches[0].Add(new string[] { animals[i], characterTraits[i], concepts[i] });
             }
             var cor = rep.GetGeneralReport(1);
             foreach (var x in cor) {

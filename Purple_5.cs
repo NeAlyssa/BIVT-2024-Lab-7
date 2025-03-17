@@ -51,7 +51,7 @@ namespace Lab_7
             }
         }
 
-        public class Research
+        public struct Research
         {
             private string _name;
             private Response[] _responses;
