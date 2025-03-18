@@ -75,14 +75,14 @@ namespace Lab_7
         public class Group 
         {
             private string _name;
-            private ManTeam[] _manteams;
+            private Team[] _manteams;
             private int _manCnt; //счетчик команд для добавления
-            private WomanTeam[] _womanteams;
+            private Team[] _womanteams;
             private int _womanCnt; //счетчик команд для добавления
 
             // свойства
             public string Name => _name;
-            public ManTeam[] ManTeams
+            public Team[] ManTeams
             {
                 get
                 {
@@ -90,7 +90,7 @@ namespace Lab_7
                     return _manteams;
                 }
             }
-            public WomanTeam[] WomanTeams
+            public Team[] WomanTeams
             {
                 get
                 {
@@ -104,9 +104,9 @@ namespace Lab_7
             public Group(string name)
             {
                 _name = name;
-                _manteams = new ManTeam[12];
+                _manteams = new Team[12];
                 _manCnt = 0;
-                _womanteams = new WomanTeam[12];
+                _womanteams = new Team[12];
                 _womanCnt = 0;
             }
 
@@ -116,72 +116,76 @@ namespace Lab_7
             {
                 if (team == null) return;
 
-                ManTeam manTeam = team as ManTeam;
-                if (manTeam != null && _manCnt < _manteams.Length) //проверяем заполненность массива и добавляем команду в массив
-                { 
-                     _manteams[_manCnt] = manTeam;
-                     _manCnt++;
-                }
-                else return;
-
-                WomanTeam womanTeam = team as WomanTeam;
-                if (womanTeam != null && _womanCnt < _womanteams.Length) //проверяем заполненность массива и добавляем команду в массив
+                if (team is ManTeam)
                 {
-                    _womanteams[_womanCnt] = womanTeam;
-                    _womanCnt++;
+                    if (_manteams != null && _manCnt < 12 && team != null)
+                    {
+                        _manteams[_manCnt] = team;
+                        _manCnt++;
+                    }
+                    else return;
                 }
-                else return;
+                else if (team is WomanTeam)
+                {
+                    if (_womanteams != null && _womanCnt < 12 && team != null)
+                    {
+                        _womanteams[_womanCnt] = team;
+                        _womanCnt++;
+                    }
+                    else return;
+                }
+                //ManTeam manTeam = team as ManTeam;
+                //if (manTeam!=null && _manteams != null && _manCnt < _manteams.Length) //проверяем заполненность массива и добавляем команду в массив
+                //{
+                //        _manteams[_manCnt] = manTeam;
+                //        _manCnt++;
+                //}
+                //else return;
+
+                //WomanTeam womanTeam = team as WomanTeam;
+                //if (womanTeam!=null && _womanteams != null && _womanCnt < _womanteams.Length) //проверяем заполненность массива и добавляем команду в массив
+                //{
+                //    _womanteams[_womanCnt] = womanTeam;
+                //    _womanCnt++;
+                //}
+                //else return;
             }
             public void Add(Team[] teams) //добавление массива объектов типа Тим в массив тимс
             {
-                if (_manteams == null || _womanteams==null || teams.Length == 0 || teams == null) return;
+                if (teams.Length == 0 || teams == null) return;
                 foreach (var team in teams)
                 {
-                    if (_manCnt < _manteams.Length)
-                    {
-                        ManTeam manTeam = team as ManTeam;
-                        if (manTeam != null)
-                        {
-                            Add(manTeam);
-                            continue;
-                        }
-                    }
-                    else break;
-                    if (_womanCnt < _womanteams.Length)
-                    {
-                        WomanTeam womanTeam = team as WomanTeam;
-                        if (womanTeam != null)
-                        {
-                            Add(womanTeam);
-                            continue;
-                        }
-                    }
-                    else break;
+                    Add(team);
                 }
             }
-            public void Sort() //пузырьком <3 по убыванию суммарных очков
+          
+            private Team[] SortTeams(Team[] teams)
             {
-                if (_manteams == null || _womanteams == null || _manteams.Length == 0 || _womanteams.Length==0) return;
-                SortTeams(_manteams);
-                SortTeams(_womanteams);
-            }
-            private void SortTeams(Team[] teams)
-            {
-                for (int i = 0; i < teams.Length; i++)
+                if (teams == null) return null;
+                if (teams.Length <= 1) return teams;
+                for (int i = 0; i < teams.Length-1; i++)
                 {
                     for (int j = 0; j < teams.Length - i - 1; j++)
                     {
                         if (teams[j].TotalScore < teams[j + 1].TotalScore)
                         {
-                            var temp = teams[j];
+                            Team temp = teams[j];
                             teams[j] = teams[j + 1];
                             teams[j + 1] = temp;
                         }
                     }
                 }
+                return teams;
+            }
+            public void Sort() //пузырьком <3 по убыванию суммарных очков
+            {
+                if (_manteams == null || _womanteams == null) return;
+                _manteams=SortTeams(_manteams);
+                _womanteams=SortTeams(_womanteams);
             }
             public static Group Merge(Group group1, Group group2, int size) // сайз-ограничение по размеру (6) слияние массивов в новую группу
             { 
+                if (size<1) return null;
                 Group result = new Group("Финалисты");
                 Team[] manTeam=MergeTeams(group1._manteams, group2._manteams, size);
                 Team[] womanTeam = MergeTeams(group1._womanteams, group2._womanteams, size);
