@@ -31,8 +31,8 @@ namespace Lab_7
             {
                 get
                 {
-                    int s = 0;
                     if (_penalties == null) return 0;
+                    int s = 0;
                     for (int i = 0; i < _penalties.Length; i++)
                     {
                         s += _penalties[i];
@@ -45,17 +45,15 @@ namespace Lab_7
             {
                 get
                 {
-                    bool ex = false;
                     if (_penalties == null) return false;
                     for (int i = 0; i < _penalties.Length; i++)
                     {
                         if (_penalties[i] == 10)
                         {
-                            ex = true;
-                            break;
+                            return true;
                         }
                     }
-                    return ex;
+                    return false;
                 }
             }
             //конструктор
@@ -66,7 +64,7 @@ namespace Lab_7
                 _penalties = new int[0];
             }
             //методы
-            public virtual void PlayMatch(int time) //добавляет штрафное время в массив штрафов
+            public virtual void PlayMatch(int time) // <3 добавляет штрафное время в массив штрафов
             {
                 if (_penalties == null) return;
 
@@ -89,6 +87,13 @@ namespace Lab_7
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
+                        if (array[j + 1] == null) continue;
+                        else if (array[j] == null)
+                        {
+                            Participant temp = array[j];
+                            array[j] = array[j+1];
+                            array[j+1] = temp;
+                        }
                         if (array[j].Total > array[j + 1].Total)
                         {
                             Participant temp = array[j];
@@ -111,7 +116,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penalties == null) return false;
+                    if (_penalties == null || _penalties.Length==0) return false;
                     int cnt=_penalties.Length;
                     int falls = 0;
                     foreach (int penalty in _penalties)
@@ -144,7 +149,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penalties == null) return false;
+                    if (_penalties == null || _penalties.Length==0) return false;
                     foreach (int penalty in _penalties)
                     {
                         if (penalty >= 10)
