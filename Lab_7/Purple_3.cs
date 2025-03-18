@@ -68,7 +68,7 @@ namespace Lab_7
                 for (int judgeIndex = 0; judgeIndex < 7; judgeIndex++)
                 {
                     var sortedParticipants = participants
-                        .Where(p => p.Marks != null) 
+                        .Where(p => p.Marks != null && p.Places != null) 
                         .OrderByDescending(p => p.Marks[judgeIndex])  
                         .ToArray();
 
@@ -127,6 +127,14 @@ namespace Lab_7
                     }
                     array[j + 1] = key;
                 }
+                foreach (var part in array)
+                {
+                    part.Print();
+                }
+            }
+            public void Print()
+            {
+                Console.WriteLine($"{_name} {Score} {Places.Min()} {Marks.Sum()}");
             }
             private static bool CompareParticipants(Participant p1, Participant p2)
             {
@@ -135,11 +143,6 @@ namespace Lab_7
                 if (p1.Score != p2.Score) return p1.Score > p2.Score;
                 if (p1.Places.Min() != p2.Places.Min()) return p1.Places.Min() > p2.Places.Min(); //Parity by sum of places
                 return p1.Marks.Sum() < p2.Marks.Sum(); //Parity by max judge place
-            }
-
-            public void Print()
-            {
-                Console.WriteLine(_name);
             }
         }
 
