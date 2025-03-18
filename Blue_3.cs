@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace Lab_6;
+namespace Lab_7;
 public class Blue_3
 {
     public class Participant 
@@ -45,13 +45,13 @@ public class Blue_3
             get 
             {
                 if (_penaltyTimes == null || _penaltyTimes.Length == 0) 
-                    return true;
+                    return false;
                 foreach (int time in _penaltyTimes)
                 {
                     if (time == 10)
-                        return false;
+                        return true;
                 }
-                return true;
+                return false;
             }
         }
 
@@ -96,15 +96,15 @@ public class Blue_3
         {
             get
             {
-                if (Penalties == null || Penalties.Length == 0)
+                if (_penaltyTimes == null || _penaltyTimes.Length == 0)
                     return false;
                 int countFalls = 0;
-                foreach (int penalty in Penalties)
+                foreach (int penalty in _penaltyTimes)
                 {
-                    if (penalty == 5)
+                    if (penalty >= 5)
                         countFalls++;
                 }
-                return 0.1*Penalties.Length < countFalls || Total >= 2*Penalties.Length;
+                return 0.1*_penaltyTimes.Length < countFalls || Total >= 2*_penaltyTimes.Length;
             }
         }
 
@@ -131,9 +131,9 @@ public class Blue_3
         {
             get
             {
-                if (Penalties == null || Penalties.Length == 0)
+                if (_penaltyTimes == null || _penaltyTimes.Length == 0)
                     return false;
-                foreach (int penalty in Penalties)
+                foreach (int penalty in _penaltyTimes)
                 {
                     if (penalty >= 10)
                         return true;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace Lab_6;
+namespace Lab_7;
 public class Blue_2
 {
     public struct Participant
@@ -141,7 +141,7 @@ public class Blue_2
             {
                 if (this.Participants == null || this.Participants.Length < 3)
                     return default(double[]);
-                double[] prize = new double[3] {0.5*Bank, 0.3*Bank, 0.1*Bank};
+                double[] prize = new double[3] {0.5*Bank, 0.3*Bank, 0.2*Bank};
                 return prize;
             }
         }
@@ -160,7 +160,7 @@ public class Blue_2
                 double[] prize = new double[n];
                 prize[0] = 0.4*Bank; prize[1] = 0.25*Bank; prize[2] = 0.15*Bank;
 
-                double N = 20/n * Bank/100;
+                double N = 20.0/n * Bank/100;
                 for (int i = 3; i<n; i++)
                 {
                     prize[i] = N;

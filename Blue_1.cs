@@ -58,7 +58,7 @@ public class Blue_1
             
             foreach (var response in responses)
             {
-                if (response != null && Surname == _surname && response.Name == Name)
+                if (response != null && response is HumanResponse && Surname == _surname && response.Name == Name)
                     _votes++;
             }
             return _votes;        

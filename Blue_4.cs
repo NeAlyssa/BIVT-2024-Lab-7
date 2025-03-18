@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace Lab_6;
+namespace Lab_7;
 public class Blue_4
 {
     public abstract class Team
@@ -152,6 +152,8 @@ public class Blue_4
         public static Group Merge(Group group1, Group group2, int size)
         {
             if (size <= 0) return default(Group);
+            group1.Sort();
+            group2.Sort();
             Group manTeam = MergeTeam(group1.ManTeams, group2.ManTeams, group1.ManTeams.Length+group2.ManTeams.Length);
             Group womanTeam = MergeTeam(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length+group2.WomanTeams.Length);
             Group total = new Group("Финалисты");
@@ -207,6 +209,5 @@ public class Blue_4
     public class WomanTeam : Team
     {
         public WomanTeam(string name) : base(name) {}
-
     }
 }

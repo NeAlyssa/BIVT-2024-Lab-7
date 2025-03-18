@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace Lab_6;
+namespace Lab_7;
 public class Blue_5
 {
     public class Sportsman
@@ -54,7 +54,11 @@ public class Blue_5
                     return 0;
                 int sum = 0;
                 foreach (Sportsman sportsman in _sportsmen)
+                {
+                    if (sportsman == null)
+                        continue;
                     sum += (sportsman.Place <=5 && sportsman.Place != 0)? 6-sportsman.Place : 0;
+                }
                 return sum;
             }
         }
@@ -66,13 +70,10 @@ public class Blue_5
                 int topPlace = 18;
                 foreach (Sportsman sportsman in _sportsmen)
                 {
-                    if (sportsman.Place < topPlace && sportsman.Place != 0)
+                    if (sportsman != null && sportsman.Place < topPlace && sportsman.Place != 0)
                         topPlace = sportsman.Place;
                 }
-                // if (topPlace != 19)
-                    return topPlace;
-                // else
-                    // return 0;
+                return topPlace;
             }
         }
         
@@ -85,7 +86,7 @@ public class Blue_5
 
         public void Add(Sportsman sportsman)
         {
-            if (_sportsmen == null || _count == 6)
+            if (_sportsmen == null || _count == 6 || sportsman == null)
                 return;
             _sportsmen[_count++] = sportsman;
         }
@@ -124,32 +125,23 @@ public class Blue_5
         protected abstract double GetTeamStrength();
         public static Team GetChampion(Team[] teams)
         {
-            if (teams == null || teams.Length == 0)
+            if (teams == null)
                 return null;
-            if (teams.Length == 1)
-                return teams[0];
-            
-            int ind = 0; bool existChampion = false; double maxStrength = 0;
-            if (teams[0] != null) 
+            Team champion = null;
+            double maxStrength = double.MinValue;
+            foreach (Team team in teams)
             {
-                existChampion = true;
-                maxStrength = teams[0].GetTeamStrength();
-            }
-
-            for (int i = 0; i < teams.Length; i++)
-            {
-                if (teams[i] != null && teams[i].GetTeamStrength() >= maxStrength)
+                if (team != null)
                 {
-                    ind = i;
-                    maxStrength = teams[i].GetTeamStrength();
-                    if (!existChampion)
-                        existChampion = true;
+                    double strength = team.GetTeamStrength();
+                    if (strength > maxStrength)
+                    {
+                        maxStrength = strength;
+                        champion = team;
+                    }
                 }
             }
-            if (existChampion)
-                return teams[ind];
-            else
-                return null;
+            return champion;
         }
     }
 
