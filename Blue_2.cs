@@ -18,7 +18,7 @@ namespace Lab_7
             //svoystva
             public string Name => _name;
             public string Surname => _surname;
-            public int[,] Marks //копия массива оценок каждого спортсмена для чтения, берем столько, сколько нам нужно
+            public int[,] Marks //копия массива оценок каждого спортсмена для чтения
             {
                 get //для чтения значения свойства
                 {
@@ -82,7 +82,7 @@ namespace Lab_7
             public static void Sort(Participant[] array) //пузырьком <3 суммарного результата спортсмена по местам
             {
                 if (array == null || array.Length == 0) return;
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < array.Length -1; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
@@ -137,15 +137,17 @@ namespace Lab_7
             {
                 if (_participants == null) return;
 
-                if (_cnt < _participants.Length) //проверяем заполненность массива и добавляем команду в массив
+                Participant[] newArr=new Participant[_participants.Length+1];
+                int i = 0;
+                foreach(Participant x in _participants)
                 {
-                    _participants[_cnt] = participant;
-                    _cnt++;
+                    newArr[i++] = x;
                 }
+                newArr[newArr.Length-1] = participant;
             }
             public void Add(Participant[] participants) //добавление массива объектов типа Тим в массив тимс
             {
-                if (_participants == null || participants == null) return;
+                if (_participants == null || participants == null || participants.Length==0) return;
                 foreach (var participant in participants)
                 {
                     Add(participant);
@@ -159,11 +161,12 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants.Length < 3 || Participants == null) return null;
-                    double first = Bank * 0.5;
-                    double second = Bank * 0.3;
-                    double third = Bank * 0.2;
-                    return new double[] { first, second, third };
+                    if (this.Participants.Length < 3 || this.Participants == null) return null;
+                    double[] prizes = new double[3];
+                    prizes[0] = (double)this.Bank * 0.5;
+                    prizes[1] = (double)this.Bank * 0.3;
+                    prizes[2] = (double)this.Bank * 0.2;
+                    return prizes;
                 }
             }
         }
@@ -174,19 +177,19 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants.Length < 3 || Participants == null) return null;
-                    int mid = Participants.Length / 2;
+                    if (this.Participants.Length < 3 || this.Participants == null) return null;
+                    int mid = this.Participants.Length / 2;
                     var topParticipants = new double[mid];
-                    Array.Copy(Participants, mid, topParticipants, 0, mid);
+                    Array.Copy(this.Participants, mid, topParticipants, 0, mid);
                     double N = 20.0 / Math.Min(topParticipants.Length, 10);
                     double[] prizes = new double[mid];
                     for (int i = 3; i < mid - 1; i++)
                     {
-                        prizes[i] += Bank * (N / 100);
+                        prizes[i] += (double)Bank * (N / 100);
                     }
-                    prizes[0] = Bank * 0.4;
-                    prizes[1] = Bank * 0.25;
-                    prizes[2] = Bank * 0.15;
+                    prizes[0] = (double)Bank * 0.4;
+                    prizes[1] = (double)Bank * 0.25;
+                    prizes[2] = (double)Bank * 0.15;
                     return prizes;
                 }
             }
