@@ -95,7 +95,7 @@ namespace Lab_7
 
             public void Evaluate(double result)
             {
-                if (_marks == null || _marks.Length <= _amount || result < 0 || result > 6) return;
+                if (_marks == null ||  _amount >= 7|| result < 0 || result > 6) return;
                 _marks[_amount] = result; _amount += 1;
             }
             public static void SetPlaces(Participant[] participants)
@@ -158,6 +158,7 @@ namespace Lab_7
 
             public Skating(double[] moods)
             {
+                if (moods == null) return; 
                 _moods = moods.ToArray();
                 ModificateMood();
             }
@@ -198,9 +199,10 @@ namespace Lab_7
         {
             public FigureSkating(double[] moods) : base(moods) { }
             protected override void ModificateMood() {
+                if (_moods == null) return;
                 for ( int j = 0; j < _moods.Length; j++)
                 {
-                    _moods[j] += (double)j / 10;
+                    _moods[j] += (double)(j+1.0) / 10;
                 }
             }
         }
@@ -210,9 +212,10 @@ namespace Lab_7
             public IceSkating(double[] moods) : base(moods) { }
             protected override void ModificateMood()
             {
+                if (_moods == null) return;
                 for ( int j = 0; j < _moods.Length; j++)
                 {
-                    _moods[j] *= 1 + (double)j / 100;
+                    _moods[j] +=  _moods[j] *  (double)(j+1.0) / 100;
                 }
             }
             }

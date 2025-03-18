@@ -219,7 +219,7 @@ namespace Lab_7
 
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (_researches == null || _researches.Length == 0) return null;
+                if (_researches == null || _researches.Length == 0 || question < 1 || question > 3) return null;
 
                 string[] answer = new string[0];
 

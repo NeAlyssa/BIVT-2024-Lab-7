@@ -37,7 +37,7 @@ namespace Lab_7
 
             public Participant(string name, string surname)
             {
-                _name = name; _surname = surname; _distance = 0;
+                _name = name; _surname = surname; _distance = -500;
                 _marks = new int[] { 0, 0, 0, 0, 0 };
                 _result = 0; _jumping = false;
             }
@@ -60,8 +60,10 @@ namespace Lab_7
                     if (_marks[i] < _marks[imin]) { imin = i; }
                 }
                 result -= _marks[imin]; result -= _marks[imax];
-                int x = Math.Max(0, 60 + 2 * (_distance - target));
+          
+                int x = 60 + 2 * (_distance - target);
                 result += x;
+                result = Math.Max(0, result);
                 _result = result;
             }
 
@@ -105,11 +107,11 @@ namespace Lab_7
             }
             public void Jump(int distance, int[] marks)
             {
-                if (marks == null || _participants == null) return;
+                if (_participants == null || marks == null ) return;
 
                 for (int i = 0; i < _participants.Length; i++)
                 {
-                    if (_participants[i].Distance == 0)
+                    if (_participants[i].Distance == -500)
                     {
                         _participants[i].Jump(distance, marks, _standard);
                         break;
@@ -124,7 +126,7 @@ namespace Lab_7
         }
         public class ProSkiJumping : SkiJumping
         {
-            public ProSkiJumping() : base("150m",150) { } // sending to father-class
+            public ProSkiJumping() : base("150m", 150) { } // sending to father-class
         }
 
     }

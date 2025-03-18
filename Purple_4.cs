@@ -31,8 +31,9 @@ namespace Lab_7
             }
             public static void Sort(Sportsman[] array)
             {
-                if (array == null || array.Length == 0) return;
-                array = array.OrderBy(x => x.Time).ToArray();
+                if (array == null) return;
+                Sportsman[] helping = array.OrderBy(time => time.Time).ToArray();
+                Array.Copy(helping,0,array,0,helping.Length);
             }
             public void Print()
             {
@@ -74,7 +75,7 @@ namespace Lab_7
             public Group(string naming)
             {
                 _name = naming;
-                _sportsmen = new Sportsman[] { };
+                _sportsmen = new Sportsman[0];
             }
             public Group(Group elem)
             {
@@ -92,41 +93,71 @@ namespace Lab_7
             }
             public void Split(out Sportsman[] men, out Sportsman[] women)
             {
-                var SkiMen = new SkiMan[_sportsmen.Length]; int indMAN = -1;
-                var SkiWomen = new SkiWoman[_sportsmen.Length]; int indWOMAN = -1;
-
+                if (_sportsmen == null) {
+                    men = null; women = null;
+                    return; }
+                men = new Sportsman[0]; int manind = 0;
+                women = new Sportsman[0]; int womanind = 0;
+              
                 foreach ( var spperson in _sportsmen)
                 {
                     if ( spperson is SkiMan)
                     {
-                        SkiMen[indMAN++] = (SkiMan)spperson;
+                        manind++;
                     }
-                    if ( spperson is SkiWoman) {
-                        SkiWomen[indWOMAN++] = (SkiWoman)spperson;
+                    else if ( spperson is SkiWoman) {
+                        womanind++;
                     }
                 }
-                men = new Sportsman[indMAN];
-                women = new Sportsman[indWOMAN];
 
-                Array.Copy(SkiMen, men, indMAN);
-                Array.Copy(SkiWomen, women, indWOMAN);
+                Array.Resize(ref men, manind); int counterman = 0;
+                Array.Resize(ref women, womanind); int counterwomen = 0;
+
+                foreach (var spperson in _sportsmen)
+                {
+                    if (spperson is SkiMan) {
+                        men[counterman] = spperson; counterman++;
+                    }
+                    else if (spperson is SkiWoman)
+                    {
+                        women[counterwomen] = spperson; counterwomen++;
+                    }
+                }
             }
             public void Shuffle()
             {
                 if (_sportsmen == null) return;
-                Sportsman[] men, women;
+                Sportsman[] men;
+                Sportsman[] women;
                 Split(out men, out women);
 
                 if (men.Length == 0 || women.Length == 0) return;
                 Sportsman.Sort(men);
                 Sportsman.Sort(women);
 
+   
+                bool man_or_woman = men[0].Time  <= women[0].Time;
                 Sportsman[] result = new Sportsman[men.Length + women.Length];
+
+
                 int i = 0, jm = 0, jwm = 0;
-                while (jm < men.Length && jwm < women.Length)
+
+                if (man_or_woman == true)
                 {
-                    result[i++] = men[jm++];
-                    result[i++] = women[jwm++];
+                    while (jm < men.Length && jwm < women.Length)
+                    {
+                        result[i++] = men[jm++];
+                        result[i++] = women[jwm++];
+                    }
+                }
+                else
+                {
+                    while (jm < men.Length && jwm < women.Length)
+                    {
+                        result[i++] = women[jwm++];
+                        result[i++] = men[jm++];
+                        
+                    }
                 }
                 while (jm < men.Length)
                 {
