@@ -149,7 +149,13 @@ namespace Lab_7
             public double[] Moods => moods;
             public Skating(double[] moods)
             {
-                this.moods = moods.ToArray();
+                participants = new Participant[0];
+                if (moods == null) return;
+                this.moods = new double[7];
+                for (int i = 0; i < Math.Min(moods.Length, 7); i++)
+                {
+                    this.moods[i] = moods[i];
+                }
                 ModificateMood();
             }
             protected abstract void ModificateMood();
