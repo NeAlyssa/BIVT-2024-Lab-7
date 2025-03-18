@@ -44,7 +44,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return default;
+                    if (_penaltyTimes == null) return false;
                     for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
                         if (_penaltyTimes[k] == 10)
@@ -111,16 +111,19 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return default;
+                    if (_penaltyTimes == null) return false;
                     int n = 0;
                     for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
-                        if (_penaltyTimes[k] > 10)
+                        if (_penaltyTimes[k] >= 5)
                         {
                             n++;
                         }
                     }
-                    if (n > 0.1 * _penaltyTimes.Length || this.Total >= 2 * _penaltyTimes.Length) return true;
+                    if (n > 0.1 * _penaltyTimes.Length || this.Total >= 2 * _penaltyTimes.Length)
+                    {
+                        return true;
+                    }
                     return false;
                 }
 
@@ -149,7 +152,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return default;
+                    if (_penaltyTimes == null) return false;
                     for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
                         if (_penaltyTimes[k] >= 10)
@@ -157,7 +160,10 @@ namespace Lab_7
                             return true;
                         }
                     }
-                    if (this.Total > 0.1 * _time / _player) return true;
+                    if (this.Total > 0.1 * _time / _player)
+                    {
+                        return true;
+                    }
                     return false;
                 }
 

@@ -67,8 +67,6 @@ namespace Lab_7
                 {
                     if (_sportsmen == null) return 0;
 
-                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
-
                     int[] scores = { 0, 5, 4, 3, 2, 1 };
 
                     return _sportsmen.Sum(s => (s.Place >= 1 && s.Place <= 5) ? scores[s.Place] : 0);
@@ -79,7 +77,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
+                    if (_sportsmen == null) return ;
 
                     int topPlace = 18;
                     for (int i = 0; i < _count; i++)

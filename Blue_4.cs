@@ -74,16 +74,16 @@ namespace Lab_7
         public class Group
         {
             private string _name;
-            private Team[] _man;
-            private Team[] _woman;
+            private ManTeam[] _manteams;
+            private WomanTeam[] _womanteams;
             private int _index; //индекс команды
             private int _manind;
             private int _womanind;
 
             // свойства
             public string Name => _name;
-            public Team[] Man => _man;
-            public Team[] Woman => _woman;
+            public ManTeam[] ManTeams => _manteams;
+            public WomanTeam[] WomanTeams => _womanteams;
 
 
             // конструктор
@@ -91,8 +91,8 @@ namespace Lab_7
             public Group(string name)
             {
                 _name = name;
-                _man = new Team[12];
-                _woman = new Team[12];
+                _manteams = new ManTeam[12];
+                _womanteams = new WomanTeam[12];
                 _index = 0;
                 _manind = 0;
                 _womanind = 0;
@@ -102,28 +102,28 @@ namespace Lab_7
 
             public void Add(Team team) // одна команда в группу
             {
-                if (team == null || _man == null || _woman == null) return;
+                if (team == null || _manteams == null || _womanteams == null) return;
 
                 if (team is ManTeam manteam)
                 {
-                    if (_manind < _man.Length)
+                    if (_manind < _manteams.Length)
                     {
-                        _man[_manind] = manteam;
+                        _manteams[_manind] = manteam;
                         _manind++;
                     }
                 }
                 else if (team is WomanTeam womanteam)
                 {
-                    if (_womanind < _woman.Length)
+                    if (_womanind < _womanteams.Length)
                     {
-                        _woman[_womanind++] = womanteam;
+                        _womanteams[_womanind++] = womanteam;
                         _womanind++;
                     }
                 }
             }
             public void Add(Team[] teams) // несколько
             {
-                if (_man == null || _woman == null || teams.Length == 0 || teams == null) return;
+                if (_manteams == null || _womanteams == null) return;
 
                 foreach (var team in teams)
                 {
@@ -132,10 +132,10 @@ namespace Lab_7
             }
             public void Sort()
             {
-                if (_man == null || _woman == null || _man.Length == 0 || _woman.Length == 0) return;
+                if (_manteams == null || _womanteams == null) return;
                 // делаем сортировку
-                SortOneTeam(_man);
-                SortOneTeam(_woman);
+                SortOneTeam(_manteams);
+                SortOneTeam(_womanteams);
 
             }
 
@@ -155,8 +155,8 @@ namespace Lab_7
             public static Group Merge(Group group1, Group group2, int size) // слияния двух отсортированных массивов команд двух групп в новую группу с ограничением по размеру
             {
                 Group resultat = new Group("Финалисты");
-                Team[] mans = OneMerge(group1._man, group2._man, size);
-                Team[] womans = OneMerge(group1._woman, group2._woman, size);
+                Team[] mans = OneMerge(group1._manteams, group2._manteams, size);
+                Team[] womans = OneMerge(group1._womanteams, group2._womanteams, size);
 
                 resultat.Add(mans);
                 resultat.Add(womans);
@@ -201,11 +201,11 @@ namespace Lab_7
             {
                 Console.WriteLine(_name);
 
-                foreach(Team i in _man)
+                foreach(Team i in _manteams)
                 {
                     i.Print();
                 }
-                foreach (Team i in _woman)
+                foreach (Team i in _womanteams)
                 {
                     i.Print();
                 }

@@ -139,7 +139,7 @@ namespace Lab_7
             }
             public void Add(Participant[] participant) // несколько
             {
-                if (_participants == null || _participants.Length == 0 || _participants == null) return;
+                if (_participants == null || _participants.Length == 0 || participant == null) return;
 
                 foreach (var team in _participants)
                 {
@@ -157,9 +157,9 @@ namespace Lab_7
                     double[] prizes = new double[3];
                     if (Participants.Length < 3 || Participants == null) return prizes;
 
-                    prizes[0] = Bank * 0.5; // Первое место
-                    prizes[1] = Bank * 0.3; // Второе место
-                    prizes[2] = Bank * 0.2; // Третье место
+                    prizes[0] = (double)this.Bank * 0.5; // Первое место
+                    prizes[1] = (double)this.Bank * 0.3; // Второе место
+                    prizes[2] = (double)this.Bank * 0.2; // Третье место
 
                     return prizes;
                 }
@@ -175,22 +175,21 @@ namespace Lab_7
                 {
                     if (Participants.Length < 3 || Participants == null) return null;
 
-                    int m = Participants.Length / 2;
-                    var top = new double[m];
+                    var top = new double[this.Participants.Length / 2];
 
-                    Array.Copy(Participants, m, top, 0, m);
+                    Array.Copy(Participants, this.Participants.Length / 2, top, 0, this.Participants.Length / 2);
 
                     double N = 20.0 / Math.Min(top.Length, 10);
-                    double[] prizes = new double[m];
+                    double[] prizes = new double[this.Participants.Length / 2];
 
-                    for (int i = 3; i < m - 1; i++)
+                    for (int i = 3; i < this.Participants.Length / 2 - 1; i++)
                     {
-                        prizes[i] += Bank * (N / 100);
+                        prizes[i] += (double)this.Bank * (N / 100);
                     }
 
-                    prizes[0] = Bank * 0.4; // 40%
-                    prizes[1] = Bank * 0.25; // 25%
-                    prizes[2] = Bank * 0.15; // 15%
+                    prizes[0] += (double)this.Bank * 0.4; // 40%
+                    prizes[1] += (double)this.Bank * 0.25; // 25%
+                    prizes[2] += (double)this.Bank * 0.15; // 15%
 
                     return prizes;
                 }
