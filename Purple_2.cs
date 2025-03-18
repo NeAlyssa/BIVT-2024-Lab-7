@@ -86,13 +86,13 @@ namespace Lab_7
         public abstract class SkiJumping
         {
             public string Name { get; private set; }
-            public int Standart { get; private set; }
+            public int Standard { get; private set; }
             public Participant[] Participants { get; private set; }
 
-            public SkiJumping(string name, int standart)
+            public SkiJumping(string name, int standard)
             {
                 Name = name;
-                Standart = standart;
+                Standard = standard;
                 Participants = new Participant[0];
             }
 
@@ -113,7 +113,7 @@ namespace Lab_7
                 {
                     if (Participants[i].Distance == -1)
                     {
-                        Participants[i].Jump(distance, marks, Standart);
+                        Participants[i].Jump(distance, marks, Standard);
                         break;
                     }
                 }

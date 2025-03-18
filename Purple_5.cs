@@ -40,7 +40,7 @@ namespace Lab_7
                 int count = 0;
                 foreach (var r in responses)
                 {
-                    if (r.AnsArr[questionNumber] != null) count++;
+                    if (r.AnsArr[questionNumber] == AnsArr[questionNumber]) count++;
                 }
                 return count;
             }
@@ -211,7 +211,18 @@ namespace Lab_7
                         sumR.Add(new string[] { resp.Animal, resp.CharacterTrait, resp.Concept });
                     }
                 }
-                var qCount = new Response().CountVotes(sumR.Responses, question);
+
+                if (sumR.Responses.Length == 0) return null;
+
+                var qCount = 0;
+                foreach (var ans in sumR.Responses)
+                {
+                    string[] anwers = new string[] {ans.Animal, ans.CharacterTrait, ans.Concept};
+                    if (anwers[question - 1] != null) qCount++;
+                }
+
+                if (qCount == 0) return null;
+
                 var cort = sumR.Responses.GroupBy(resp =>
                 {
                     switch (question)

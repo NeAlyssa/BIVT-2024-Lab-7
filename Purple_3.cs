@@ -24,10 +24,7 @@ namespace Lab_7
                 get
                 {
                     if (_marks == null) return null;
-
-                    double[] marks = new double[_marks.Length];
-                    Array.Copy(_marks, marks, _marks.Length);
-                    return marks;
+                    return _marks.ToArray();
                 }
             }
             public int[] Places
@@ -35,10 +32,7 @@ namespace Lab_7
                 get
                 {
                     if (_places == null) return null;
-
-                    int[] places = new int[_places.Length];
-                    Array.Copy(_places, places, _places.Length);
-                    return places;
+                    return _places.ToArray();
                 }
             }
 
@@ -114,14 +108,7 @@ namespace Lab_7
                 if (participants == null) return;
                 for (int i = 0; i < JUDGES_COUNT; i++)
                 {
-                    Array.Sort(participants, (a, b) =>
-                    {
-                        double ma = a.Marks != null ? a.Marks[i] : 0, mb = b.Marks != null ? b.Marks[i] : 0;
-                        double x = ma - mb;
-                        if (x < 0) return 1;
-                        else if (x > 0) return -1;
-                        else return 0;
-                    });
+                    participants.OrderByDescending(x => x.Marks != null ? x.Marks[i] : 0);
                     for (int j = 0; j < participants.Length; j++)
                         participants[j].SetPlace(i, j + 1);
                 }
@@ -177,6 +164,7 @@ namespace Lab_7
                         {
                             participants[i].Evaluate(marks[j] * moods[j]);
                         }
+                        return;
                     }
                 }
             }
@@ -198,7 +186,7 @@ namespace Lab_7
             {
                 for (int i = 0; i < moods.Length; i++)
                 {
-                    moods[i] += (double)i / 10;
+                    moods[i] += (i + 1) / 10.0;
                 }
             }
         }
@@ -211,7 +199,7 @@ namespace Lab_7
             {
                 for (int i = 0; i < moods.Length; i++)
                 {
-                    moods[i] *= 1 + (double)i / 100;
+                    moods[i] *= 1 + (i + 1) / 100.0;
                 }
             }
         }
