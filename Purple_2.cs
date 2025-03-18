@@ -66,7 +66,7 @@ namespace Lab_7
             }
             public void Jump(int distance, int[] marks, int target)
             {
-                if (marks == null || _marks == null || marks.Length != _marks.Length) return;
+                if (marks == null || _marks == null || distance<0 ||marks.Length != _marks.Length) return;
                 _distance = distance;
                 _needd = 60 + (_distance - target) * 2;
                 Array.Copy(marks, _marks, marks.Length);
@@ -98,7 +98,7 @@ namespace Lab_7
                 {
                     get
                     {
-                        if (_participants == null) return _participants;
+                        if (_participants == null) return null;
                         var copy = new Participant[_participants.Length];
                         Array.Copy(_participants, copy, _participants.Length);
                         return copy;
@@ -124,11 +124,12 @@ namespace Lab_7
                     int l = _participants.Length;
                     var part2 = new Participant[l + participants.Length];
                     Array.Copy(_participants, part2, l);
-                    Array.Copy(participants, part2, participants.Length);
+                    Array.ConstrainedCopy(participants,0, part2,l, participants.Length);
                     _participants = part2;
                 }
                 public void Jump(int distance, int[] marks)
                 {
+                if (_participants == null) return;    
                     foreach (var x in _participants)
                     {
                         if (x.Distance == 0)

@@ -126,7 +126,11 @@ namespace Lab_7
             public Judge (string name, int[] marks)
             {
                 _name = name;
-                _marks = marks;
+                if (marks != null)
+                {
+                    _marks = new int [marks.Length];
+                    Array.Copy(marks, _marks, _marks.Length);
+                }
             }
             public int CreateMark()
             {
@@ -145,32 +149,18 @@ namespace Lab_7
             private Judge[] _judges;
             private Participant[] _participants;
 
-            public Judge[] Judges
-            {
-                get
-                {
-                    if (_judges == null) return null; 
-                    var copy = new Judge[ _judges.Length ];
-                    Array.Copy(_judges, copy, _judges.Length);
-                    return copy;
-                }
-            }
+            public Judge[] Judges => _judges;
 
-            public Participant[] Participants
-            {
-                get
-                {
-                    if (_participants == null) return null;
-                    var copy = new Participant[_participants.Length];
-                    Array.Copy(_participants, copy, _participants.Length);
-                    return copy;
-                }
-            }
+            public Participant[] Participants=> _participants;
+            
             public Competition(Judge[] judges)
             {
                 _participants=new Participant[0];
-                if (judges == null) return;
-                _judges = new Judge [judges.Length];
+                if (judges != null)
+                {
+                    _judges = new Judge[judges.Length];
+                    Array.Copy(judges,_judges, judges.Length);
+                }
             }
             public void Evaluate(Participant jumper) 
             {

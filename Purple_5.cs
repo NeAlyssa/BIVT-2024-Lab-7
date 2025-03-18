@@ -67,27 +67,27 @@ namespace Lab_7
         public class Report
         {
             private static int _index;
-            public Research[] Researches
-            {
-                get; private set;
-            } 
+            private Research[] _researches;
+            public Research[] Researches => _researches; 
             static Report()
             {
                 _index = 1;
             }
             public Report()
             {
-                Researches= new Research[0];
+                _researches = new Research[0];
+                
             }
             public Research MakeResearch()
             {
                 var month = DateTime.Now.ToString("MM");
                 var years = DateTime.Now.ToString("yy");
                 var ans= new Research($"No_{_index++}_{month}/{years}");
-                var n= new Research[1+ Researches.Length];
-                Array.Copy(Researches, n , Researches.Length);
+                if (_researches == null) _researches= new Research[0];
+                var n= new Research[1+ _researches.Length];
+                Array.Copy(Researches, n ,_researches.Length);
                 n[n.Length - 1] = ans;
-                Researches = n;
+                _researches = n;
                 return ans;
             }
             static string[] Copy (string[] answer,string n)
@@ -102,9 +102,9 @@ namespace Lab_7
             
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (Researches == null || question < 1 || question > 3) return null;
+                if (_researches == null || question < 1 || question > 3) return null;
                 string[] answer = new string[0];
-                foreach (var n1 in Researches)
+                foreach (var n1 in _researches)
                 {
                     foreach (var n2 in n1.Responses)
                     {

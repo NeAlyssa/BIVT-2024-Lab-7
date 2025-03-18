@@ -91,12 +91,12 @@ namespace Lab_7
                 int l = _sportsmen.Length;
                 var sport2 = new Sportsman[l + sportms.Length];
                 Array.Copy(_sportsmen, sport2, l);
-                Array.Copy(sportms, sport2, sportms.Length);
+                Array.ConstrainedCopy(sportms,0, sport2, l,sportms.Length);
                 _sportsmen = sport2;
             }
             public void Add(Group s)
             {
-                if (_sportsmen == null || s.Sportsmen == null) return;
+                if (_sportsmen == null ) return;
                 Add(s.Sportsmen);
 
             }
@@ -117,8 +117,17 @@ namespace Lab_7
                 var group = new Group("Финалисты");
                 var g1 = group1._sportsmen;
                 var g2 = group2._sportsmen;
-                if (g1 == null) g1 = new Sportsman[0];
-                if (g2 == null) g2 = new Sportsman[0];
+                if (g1 == null || g2 == null) return group;
+                if (group1._sportsmen == null)
+                {
+                    group._sportsmen = group2._sportsmen;
+                    return group;
+                }
+                if (group2._sportsmen == null)
+                {
+                    group._sportsmen = group1._sportsmen;
+                    return group;
+                }
                 group._sportsmen = new Sportsman[g1.Length + g2.Length];
                 int ind1 = 0, ind2 = 0, ind = 0;
                 while (ind1 < g1.Length && ind2 < g2.Length)
@@ -146,7 +155,7 @@ namespace Lab_7
 
             public void Split(out Sportsman[] men, out Sportsman[] women)
             {
-                if (_sportsmen == null) { men = null; women = null; return; }
+                if (_sportsmen == null) { men = null; women = null; }
                 men = _sportsmen.Where(x => (x is SkiMan)).ToArray();
                 women = _sportsmen.Where(x => (x is SkiWoman)).ToArray();
             }
@@ -154,8 +163,8 @@ namespace Lab_7
             {
                 if (_sportsmen == null) return;
                 Sort();
-                var men = _sportsmen.Where(x => (x is SkiMan)).ToArray();
-                var women = _sportsmen.Where(x => (x is SkiWoman)).ToArray();
+                Split(out Sportsman[] men, out Sportsman[] women);
+                if (men==null ||  women==null) return;
                 int ind = 0;
                 int i = 0;
                 for (; i < men.Length && i < women.Length; i++)
