@@ -14,6 +14,7 @@ namespace Lab_7
             private string _name; //private для полей, которые должны быть скрыты от внешнего доступа (инкапсуляция)
             private string _surname;
             private int[,] _marks;
+            private int _cnt;
 
             //svoystva
             public string Name => _name;
@@ -56,26 +57,27 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _marks = new int[2, 5]; //инициализация нулями
+                _cnt = 0;
             }
             //method
             public void Jump(int[] result) //заполняет результат прыжка оценками, массив - прыжок
             {
                 if (result == null || _marks == null) return;
-                int jumpIndex = -1;
-                for (int i = 0; i < 2; i++)
+                if (_cnt == 0)
                 {
-                    if (_marks[i, 0] == 0)
+                    for (int j = 0; j < 5; j++)
                     {
-                        jumpIndex = i;
-                        break;
+                        _marks[0, j] = result[j];
                     }
+                    _cnt++;
                 }
-                if (jumpIndex != -1)
+                else if (_cnt == 1)
                 {
                     for (int j=0;j<5; j++)
                     {
-                        _marks[jumpIndex, j] = result[j];
+                        _marks[1,j] = result[j];
                     }
+                    _cnt++;
                 }
             }
 
@@ -144,6 +146,7 @@ namespace Lab_7
                     newArr[i++] = x;
                 }
                 newArr[newArr.Length-1] = participant;
+                _participants = newArr;
             }
             public void Add(Participant[] participants) //добавление массива объектов типа Тим в массив тимс
             {
