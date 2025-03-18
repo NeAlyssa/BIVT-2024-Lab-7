@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Lab_7.Blue_2;
+using static Lab_7.Blue_5;
 
 namespace Lab_7
 {
@@ -135,6 +136,7 @@ namespace Lab_7
             private string _name;
             private int _bank;
             private Participant[] _participants;
+            private int _sportsmenind;
 
             public string Name => _name;
             public int Bank => _bank;
@@ -147,37 +149,47 @@ namespace Lab_7
                 _name = name;
                 _bank = bank;
                 _participants = new Participant[0];
+                _sportsmenind = 0;
             }
 
             public void Add(Participant part)
             {
-                if (_participants == null) return;
-                Participant[] temp = new Participant[_participants.Length + 1];
-                for (int i = 0; i < _participants.Length; i++)
-                {
-                    temp[i] = _participants[i];
-                }
-                temp[_participants.Length] = part;
-                _participants = temp;
+                if (_participants == null ) return;
+                //Participant[] temp = new Participant[_participants.Length + 1];
+                //for (int i = 0; i < _participants.length; i++)
+                //{
+                //    temp[i] = _participants[i];
+                //}
+                //temp[_participants.length] = part;
+                _participants[_sportsmenind] = part;
+                _sportsmenind++;
+              
 
             }
 
             public void Add(Participant[] part)
             {
-                if (_participants == null) return;
+                if (_participants == null|| part == null || part.Length==0 ) return;
+                //int ind = 0;
+                //Participant[] temp = new Participant[_participants.Length + 1];
+                //for (int i = 0; i < _participants.Length; i++)
+                //{
+                //    temp[i] = _participants[i];
+                //    ind++;
+                //}
+                //foreach (Participant p in part)
+                //{
+                //    temp[ind + 1] = p;
+                //    ind++;
+                //}
+                //_participants = temp;
                 int ind = 0;
-                Participant[] temp = new Participant[_participants.Length + 1];
-                for (int i = 0; i < _participants.Length; i++)
+                while ( ind < part.Length)
                 {
-                    temp[i] = _participants[i];
+                    _participants[_sportsmenind] =part[ind];
+                    _sportsmenind++;
                     ind++;
                 }
-                foreach (Participant p in part)
-                {
-                    temp[ind + 1] = p;
-                    ind++;
-                }
-                _participants = temp;
             }
         }
 

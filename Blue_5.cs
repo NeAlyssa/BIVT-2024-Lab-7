@@ -162,26 +162,35 @@ namespace Lab_7
             protected abstract double GetTeamStrength();
             public static Team GetChampion(Team[] teams)
             {
-                if (teams == null) return null;
-                double  maxi = -1;
-                int indmax = 0;
-                for (int i = 1; i < teams.Length; i++)
+                if (teams == null || teams.Length == 0) return null;
+
+                double maxStrength = double.MinValue;
+                Team champion = null;
+
+                foreach (var team in teams)
                 {
-                    if (teams[i] == null) continue;
-                    if (teams[i].GetTeamStrength() > maxi)
+                    if (team == null) continue;
+
+                    double strength = team.GetTeamStrength();
+                    if (strength > maxStrength)
                     {
-                        maxi = teams[i].GetTeamStrength();
-                        indmax = i;
+                        maxStrength = strength;
+                        champion = team;
                     }
                 }
-                return teams[indmax];
-                
+                return champion;
+
             }
             public void Print()
             {
                 Console.WriteLine(_name);
-                for (int k = 0; k < _sportsmenind; k++)
-                    _sportsmen[k].Print();
+                for (int k = 0; k < _sportsmenIndex; k++)
+                {
+                    if (_sportsmen[k] != null) // Проверка на null перед вызовом Print
+                    {
+                        _sportsmen[k].Print();
+                    }
+                }
                 Console.WriteLine();
             }
         }
@@ -198,11 +207,14 @@ namespace Lab_7
                 int count = 0;
                 foreach(Sportsman man in this.Sportsmen)
                 {
-                    if (man == null) continue;
-                    countp += man.Place;
-                    count++;
+                    if (man != null) 
+                    {
+                        countp += man.Place;
+                        count++;
+                    }
+                    
                 }
-                return 100 / (countp / count);
+                return 100 / countp / count;
             }
         }
 
@@ -219,10 +231,13 @@ namespace Lab_7
                 int pr = 1;
                 foreach (Sportsman woman in this.Sportsmen)
                 {
-                    if (woman == null) continue;
-                    countp += woman.Place;
-                    ch++;
-                    pr *= woman.Place;
+                    if (woman != null) 
+                    {
+                        countp += woman.Place;
+                        ch++;
+                        pr *= woman.Place;
+                    }
+                    
                 }
                 return 100 * countp * ch / pr;
             }

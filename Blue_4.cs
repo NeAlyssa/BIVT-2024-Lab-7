@@ -120,38 +120,47 @@ namespace Lab_7
             public void Add(Team team)
             {
                
-                if (team == null ||_manteams == null || _womanteams == null) return;
+                if (team == null ) return;
                 if (team is ManTeam manTeam)
                 {
                     if (_indm < 12)
                     {
                         _manteams[_indm++] = manTeam;
+                        
                     }
+                    
                 }
                 else if (team is WomanTeam womanTeam)
                 {
                     if (_indm < 12)
                     {
                         _womanteams[_indm++] = womanTeam;
+                        
                     }
+                    
                 }
             }
             public void Add(Team[] teams)
             {
-                if (teams==null ||  _manteams == null || _womanteams == null) return;
+                if (teams==null ) return;
 
-                foreach (var team in teams)
+                foreach (Team team in teams)
                 {
                     Add(team);
                 }
 
             }
-            public void Sorti(Team[] teams)
+            public void Sort()
             {
-                if (teams == null || teams.Length == 0) return;
-                for (int i = 0; i < teams.Length; i++)
+                Sorti(_manteams, _indm);
+                Sorti(_womanteams, _indw);
+            }
+            public void Sorti(Team[] teams, int ind)
+            {
+                if (teams == null ) return;
+                for (int i = 0; i < ind-1; i++)
                 {
-                    for (int j = 0; j < teams.Length - i - 1; j++)
+                    for (int j = 0; j < ind - i - 1; j++)
                     {
                         if (teams[j].TotalScore < teams[j + 1].TotalScore)
                         {
@@ -160,54 +169,52 @@ namespace Lab_7
                     }
                 }
             }
-            public void Sort()
-            {
-                Sorti(_manteams);
-                Sorti(_womanteams);
-            }
-            public static Team[] Mergi(Team[] group1, Team[] group2, int size)
-            {
-                Team[] res = new Team[size];
 
+            public static Group Merge(Group group1, Group group2, int size)
+            {
+                Group res = new Group("Финалисты");
+                Team[] man = Mergi(group1.ManTeams, group2.ManTeams, size);
+                Team[] woman = Mergi(group1.WomanTeams, group2.WomanTeams, size);
+                res.Add(man);
+                res.Add(woman);
+                return res;
+            }
+            public static Team[] Mergi(Team[] teams1, Team[] teams2, int size)
+            {
+                if (teams1 == null || teams2 == null) return null;
+                Team[] res = new Team[size];
+               
                 int i = 0, j = 0, c = 0;
                 while (i < size / 2 && j < size/2)
                 {
-                    if (group1[i].TotalScore >= group2[j].TotalScore)
+                    if (teams1[i].TotalScore >= teams2[j].TotalScore)
                     {
-                        res[c]=group1[i];
+                        res[c]=teams1[i];
                         i++;
                         c++;
                     }
                     else
                     {
-                        res[c]= group2[j];  
+                        res[c]= teams2[j];  
                         j++;
                         c++;
                     }
                 }
                 while (i < size/2)
                 {
-                    res[c] = group1[i];
+                    res[c] = teams1[i];
                     i++;
                     c++;
                 }
                 while (j < size/2)
                 {
-                    res[c] = group2[j];
+                    res[c] = teams2[j];
                     j++;
                     c++;
                 }
                 return res;
             }
-            public static Group Merge(Group group1, Group group2, int size)
-            {
-                Group res = new Group("Финалисты");
-                Team[] man = Mergi(group1._manteams, group2._manteams, size);
-                Team[] woman = Mergi(group1._womanteams, group2._womanteams, size);
-                res.Add(man);
-                res.Add(woman);
-                return res;
-            }
+            
             public void Print()
             {
                 

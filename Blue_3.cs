@@ -106,9 +106,13 @@ namespace Lab_7
                     int fall = 0;
                     foreach (int p in _penaltyTimes)
                     {
-                        if (p>=10) fall++;
+                        if (p>=5) fall++;
                     }
-                    if (fall > 0.1 * _penaltyTimes.Length || this.Total >= 2 * _penaltyTimes.Length) return true;
+                    if (fall > 0.1 * _penaltyTimes.Length || Total >= 2 * _penaltyTimes.Length) 
+                    {
+                        return true;
+                    }
+                    
                     return false;
                 }
 
@@ -127,7 +131,7 @@ namespace Lab_7
 
         public class HockeyPlayer : Participant
         {
-            private static int _ind= 0;
+            private static int _ind= 0; 
             private static int _all = 0;
             public HockeyPlayer(string name, string surname) : base(name, surname)
             {
@@ -139,13 +143,19 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return false;
+                    if (_penaltyTimes == null|| _penaltyTimes.Length==0) return false;
                     foreach (int time in _penaltyTimes)
                     {
                         if (time >= 10)
+                        {
                             return true;
+                        }
+                            
                     }
-                    if (this.Total > 0.1 * _all / _ind) return true;
+                    if (this.Total > 0.1 * _all / _ind)
+                    {
+                        return true;
+                    }
                     return false;
                 }
             }
