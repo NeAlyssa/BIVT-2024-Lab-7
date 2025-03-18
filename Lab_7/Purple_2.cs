@@ -37,8 +37,7 @@ namespace Lab_7
                 get
                 {
                     if (_marks == null || _distance == 0) return 0;
-                    int sum = _marks.Sum() - _marks.Max() - _marks.Min();
-                    sum += Math.Max(0, 60 + (_distance - _target) * 2);
+                    int sum = Math.Max(0, _marks.Sum() - _marks.Max() - _marks.Min() + 60 + (_distance - _target) * 2);
                     return sum;
                 }
             }
