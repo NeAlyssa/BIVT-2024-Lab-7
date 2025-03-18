@@ -58,10 +58,11 @@ namespace Lab_7
                     int score = 0;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (sportsman.Place>0 && sportsman.Place <= 5)
+                        if (sportsman.Place > 0 && sportsman.Place <= 5)
                         {
                             score += 6 - sportsman.Place;
                         }
+                        else score = 0;
                         //switch (sportsman.Place)
                         //{
                         //    case 1: score += 5; break;
@@ -103,19 +104,21 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null) return; ;
+                if (_sportsmen == null || sportsman==null) return ;
                 if (_cnt < _sportsmen.Length)
                 {
-                    _sportsmen[_cnt++] = sportsman;
+                    _sportsmen[_cnt] = sportsman;
+                    _cnt++;
                 }
                 else return;
             }
 
             public void Add(Sportsman[] newSportsmen)
             {
-                if (_sportsmen == null || _sportsmen.Length == 0 || Sportsmen==null || Sportsmen.Length==0 || _cnt>=_sportsmen.Length) return;
+                if (_sportsmen == null || _sportsmen.Length == 0 || newSportsmen==null || newSportsmen.Length==0 || _cnt>=_sportsmen.Length) return;
                 foreach (Sportsman sportsman in newSportsmen)
                 {
+                    if(sportsman==null) continue;
                     Add(sportsman);
                 }
             }
@@ -145,7 +148,9 @@ namespace Lab_7
             {
                 if (teams==null || teams.Length==0) return null;
                 Team champion = teams[0];
-                double maxStrength = champion.GetTeamStrength();
+                double maxStrength = 0;
+                if (champion== null) maxStrength=0;
+                else maxStrength = champion.GetTeamStrength();
 
                 foreach (var team in teams)
                 {
