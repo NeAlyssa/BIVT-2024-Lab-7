@@ -88,10 +88,19 @@ namespace Lab_7
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
-                        if (array[j].Total > array[j + 1].Total) // обращаемся к элементу массива и получаем значение этого элемента в свойвстве TotalTime
+                        if (array[j] == null) 
                         {
                             (array[j], array[j + 1]) = (array[j + 1], array[j]);
                         }
+                        else if (array[j + 1] == null)
+                        {
+                            continue;
+                        }
+                        else if (array[j].Total > array[j + 1].Total) // обращаемся к элементу массива и получаем значение этого элемента в свойвстве TotalTime
+                        {
+                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        }
+
                     }
                 }
             }
