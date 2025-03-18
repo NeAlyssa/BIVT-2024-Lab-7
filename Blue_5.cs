@@ -58,7 +58,7 @@ namespace Lab_7
                     int score = 0;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (sportsman.Place > 0 && sportsman.Place <= 5)
+                        if (sportsman.Place > 0 && sportsman.Place <= 5 && sportsman!=null)
                         {
                             score += 6 - sportsman.Place;
                         }
@@ -84,7 +84,7 @@ namespace Lab_7
                     int topplace = int.MaxValue;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (sportsman.Place > 0 && sportsman.Place < topplace)
+                        if (sportsman.Place > 0 && sportsman.Place < topplace && sportsman!=null)
                         {
                             topplace = sportsman.Place;
                         }
