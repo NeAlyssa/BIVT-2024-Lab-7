@@ -149,7 +149,7 @@ namespace Lab_7
         }
         public class WaterJump3m : WaterJump
         {
-            public WaterJump3m(string _name, int bank) : base(_name, bank) { }
+            public WaterJump3m(string name, int bank) : base(name, bank) { }
             public override double[] Prize
             {
                 get
@@ -167,7 +167,7 @@ namespace Lab_7
         }
         public class WaterJump5m : WaterJump
         {
-            public WaterJump5m(string _name, int bank) : base(_name, bank) { }
+            public WaterJump5m(string name, int bank) : base(name, bank) { }
 
             public override double[] Prize
             {
