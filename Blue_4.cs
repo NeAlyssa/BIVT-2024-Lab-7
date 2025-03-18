@@ -22,7 +22,9 @@ namespace Lab_7
                 get
                 {
                     if (_scores == null) return null;
-                    return _scores; 
+                    int[]copyScores=new int[_scores.Length];
+                    Array.Copy(copyScores, _scores, copyScores.Length);
+                    return copyScores;
                 }
             }
             public int TotalScore
