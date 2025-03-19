@@ -108,7 +108,8 @@ namespace Lab_7
                 if (participants == null) return;
                 for (int i = 0; i < JUDGES_COUNT; i++)
                 {
-                    participants.OrderByDescending(x => x.Marks != null ? x.Marks[i] : 0);
+                    var temp = participants.OrderByDescending(x => x.Marks != null ? x.Marks[i] : 0).ToArray();
+                    Array.Copy(temp, participants, temp.Length);
                     for (int j = 0; j < participants.Length; j++)
                         participants[j].SetPlace(i, j + 1);
                 }
