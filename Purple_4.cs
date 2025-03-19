@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -91,12 +91,12 @@ namespace Lab_7
                 int l = _sportsmen.Length;
                 var sport2 = new Sportsman[l + sportms.Length];
                 Array.Copy(_sportsmen, sport2, l);
-                Array.ConstrainedCopy(sportms,0, sport2, l,sportms.Length);
+                Array.ConstrainedCopy(sportms, 0, sport2, l, sportms.Length);
                 _sportsmen = sport2;
             }
             public void Add(Group s)
             {
-                if (_sportsmen == null ) return;
+                if (_sportsmen == null) return;
                 Add(s.Sportsmen);
 
             }
@@ -164,7 +164,8 @@ namespace Lab_7
                 if (_sportsmen == null) return;
                 Sort();
                 Split(out Sportsman[] men, out Sportsman[] women);
-                if (men==null ||  women==null) return;
+                if (men == null || women == null) return;
+                if (men[0].Time> women[0].Time) { (men, women) = (women, men); }
                 int ind = 0;
                 int i = 0;
                 for (; i < men.Length && i < women.Length; i++)
@@ -174,9 +175,9 @@ namespace Lab_7
                     _sportsmen[ind] = men[i];
                     ind++;
                 }
-                for (int j = i; j < women.Length; j++) _sportsmen[ind++]=women[j];
+               
                 for (int j = i; i < men.Length; j++) _sportsmen[ind++] = men[j];
-
+                for (int j = i; j < women.Length; j++) _sportsmen[ind++] = women[j];
             }
         }
         public class SkiMan : Sportsman
@@ -191,7 +192,7 @@ namespace Lab_7
         public class SkiWoman : Sportsman
         {
             public SkiWoman(string name, string surname) : base(name, surname) { }
-            public SkiWoman(string name, string surname, int time) : base(name, surname) { Run(time);}
+            public SkiWoman(string name, string surname, int time) : base(name, surname) { Run(time); }
 
         }
     }
