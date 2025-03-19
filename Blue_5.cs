@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Lab_7{
@@ -17,7 +18,7 @@ public class Blue_5
             _place = 0;
         }
         public void SetPlace(int place){
-            if (place<=0||_place != 0) return;
+            if (place<=0||_place > 0) return;
             _place = place;
         }
         public void Print()
@@ -65,7 +66,7 @@ public class Blue_5
             _kol=0;
         }
         public void Add(Sportsman sportsman){
-            if (_sportsmen == null) return;
+            if (_sportsmen == null || sportsman == null || _kol >= _sportsmen.Length) return;
             if(_kol < _sportsmen.Length){
                 _sportsmen[_kol] = sportsman;
                 _kol++;
@@ -111,7 +112,8 @@ public class Blue_5
                     imax = i ;
                 }
             }
-            return teams[imax];
+            Team maxt = teams[imax];
+            return maxt;
 
         }
         public void Print()

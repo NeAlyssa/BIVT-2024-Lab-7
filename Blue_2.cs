@@ -87,7 +87,7 @@ public class Blue_2
         public string Name => _name;
         public int Bank => _bank;
         public Participant[] Participants => _participants;
-        public abstract double[] Prize{ get; }
+        public abstract double[] Prize { get; }
         public WaterJump(string name, int bank){
             _name = name;
             _bank = bank;
@@ -96,7 +96,7 @@ public class Blue_2
         }
 
         public void Add(Participant part){
-            if (_participants == null || _participants.Length == 0 || _partid >= _participants.Length) return;
+            if (_participants == null) return;
             if(_partid < _participants.Length){
                 _participants[_partid] = part;
                 _partid++;

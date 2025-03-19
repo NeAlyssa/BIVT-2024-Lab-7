@@ -29,7 +29,7 @@ public class Blue_3
         }
         public virtual bool IsExpelled{
             get{
-                if (_penaltytimes == null || _penaltytimes.Length==0) return true;
+                if (_penaltytimes == null) return false;
                 for (int i =0;i<_penaltytimes.Length;i++){
                     if (_penaltytimes[i] == 10)
                     {
