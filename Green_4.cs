@@ -44,9 +44,22 @@ namespace Lab_7
             }
             public void Sort()
             {
-                if (_participants != null && _participants.Length > 0)
+                if (array == null || array.Length == 0)
                 {
-                    Participant.Sort(_participants);
+                    return;
+                }
+
+                for (int i = 0; i < array.Length - 1; i++)
+                {
+                    for (int j = 0; j < array.Length - 1 - i; j++)
+                    {
+                        if (array[j].BestJump < array[j + 1].BestJump)
+                        {
+                            Participant t = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = t;
+                        }
+                    }
                 }
             }
             public void Print()
@@ -65,16 +78,12 @@ namespace Lab_7
 
             public override void Retry(int index)
             {
-                if (index < 0 || index >= Participants.Length)
-                {
-                    return;
-                }
+                Participant participant = GetParticipantAt(index);
 
-                Participant participant = Participants[index];
-                double bestJump = participant.BestJump;
-
-                participant.Jump(bestJump);
-                participant.Jump(bestJump);
+                double BestJump = participant.BestJump;
+                participant = new Participant(participant.Name, participant.Surname);
+                participant.Jump(BestJump);
+                SetParticipant(index, participant);
             }
         }
         public class HighJump : Discipline
@@ -83,18 +92,16 @@ namespace Lab_7
 
             public override void Retry(int index)
             {
-                if (index < 0 || index >= Participants.Length)
-                {
-                    return;
-                }
+                Participant participant = GetParticipantAt(index);
 
-                Participant participant = Participants[index];
                 double[] jumps = participant.Jumps;
+                Participant new_ = new Participant(participant.Name, participant.Surname);
 
-                if (jumps.Length > 0)
+                for (int i = 0; i < jumps.Length - 1; i++)
                 {
-                    jumps[jumps.Length - 1] = 0;
+                    new_.Jump(jumps[i]);
                 }
+                SetParticipant(index, new_);
             }
         }
         public struct Participant
@@ -114,6 +121,7 @@ namespace Lab_7
                     {
                         return null;
                     }
+
                     double[] arr = new double[_jumps.Length];
                     Array.Copy(_jumps, arr, _jumps.Length);
                     return arr;

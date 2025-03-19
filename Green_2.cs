@@ -79,7 +79,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks == null || _marks.Length == 0)
+                    if (_marks == null)
                     {
                         return false;
                     }
@@ -119,7 +119,7 @@ namespace Lab_7
 
             public static void SortByAvgMark(Student[] array)
             {
-                if (array == null || array.Length == 0)
+                if (array == null)
                 {
                     return;
                 }
