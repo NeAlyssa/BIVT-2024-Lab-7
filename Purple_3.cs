@@ -190,6 +190,7 @@ namespace Lab_7
             public FigureSkating(double[] mood) : base(mood) { }
             protected override void ModificateMood()
             {
+                if (moods == null) return;
                 for (int i = 0; i < moods.Length; i++)
                 {
                     moods[i] += (i + 1) / 10.0;
@@ -203,6 +204,7 @@ namespace Lab_7
 
             protected override void ModificateMood()
             {
+                if (moods == null) return;
                 for (int i = 0; i < moods.Length; i++)
                 {
                     moods[i] *= 1 + (i + 1) / 100.0;
