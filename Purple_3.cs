@@ -150,8 +150,8 @@ namespace Lab_7
             public Skating(double[] moods)
             {
                 participants = new Participant[0];
-                if (moods == null) return;
                 this.moods = new double[7];
+                if (moods == null) return;
                 for (int i = 0; i < Math.Min(moods.Length, 7); i++)
                 {
                     this.moods[i] = moods[i];
