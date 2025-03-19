@@ -220,7 +220,7 @@ namespace Lab_7
                     if (anwers[question - 1] != null) qCount++;
                 }
 
-                if (qCount == 0) return null;
+                if (qCount == 0) return new (string, double)[0];
 
                 var cort = sumR.Responses.GroupBy(resp =>
                 {
