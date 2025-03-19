@@ -27,7 +27,7 @@ public class Blue_1
             if (responses == null || responses.Length == 0) 
                 return 0;
             
-            foreach (var response in responses)
+            foreach (Response response in responses)
             {
                 if (response != null && response.Name == _name)
                     _votes++;
@@ -49,6 +49,7 @@ public class Blue_1
         public HumanResponse(string name, string surname) : base(name)
         {
             _surname = surname;
+            _votes = 0;
         }
 
         public override int CountVotes(Response[] responses)
@@ -56,9 +57,10 @@ public class Blue_1
             if (responses == null || responses.Length == 0) 
                 return 0;
             
-            foreach (var response in responses)
+            foreach (Response response in responses)
             {
-                if (response != null && response is HumanResponse && Surname == _surname && response.Name == Name)
+                HumanResponse human = response as HumanResponse;
+                if (human != null && human is HumanResponse && human.Surname == _surname && human.Name == this.Name)
                     _votes++;
             }
             return _votes;        

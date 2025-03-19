@@ -65,44 +65,21 @@ public class Blue_4
     public class Group
     {
         private string _name;
-        private Team[] _manTeams;
-        private Team[] _womanTeams;
+        private ManTeam[] _manTeams;
+        private WomanTeam[] _womanTeams;
 
         private int _countMen;
         private int _countWomen;
 
         public string Name => _name;
-        public Team[] ManTeams
-        {
-            get
-            {
-                if (_manTeams == null || _manTeams.Length == 0) 
-                    return default(Team[]);
-                Team[] newTeams = new Team[_manTeams.Length];
-                for (int i = 0; i<_manTeams.Length; i++)
-                    newTeams[i] = _manTeams[i];
-                return newTeams;
-            }
-        } 
-
-        public Team[] WomanTeams
-        {
-            get
-            {
-                if (_womanTeams == null || _womanTeams.Length == 0) 
-                    return default(Team[]);
-                Team[] newTeams = new Team[_womanTeams.Length];
-                for (int i = 0; i<_womanTeams.Length; i++)
-                    newTeams[i] = _womanTeams[i];
-                return newTeams;
-            }
-        } 
+        public ManTeam[] ManTeams => _manTeams;
+        public WomanTeam[] WomanTeams => _womanTeams;
 
         public Group(string name)
         {
             _name = name;
-            _manTeams = new Team[12];
-            _womanTeams = new Team[12];
+            _manTeams = new ManTeam[12];
+            _womanTeams = new WomanTeam[12];
             _countMen = 0;
             _countWomen = 0;
         }
@@ -117,14 +94,14 @@ public class Blue_4
                 if (_manTeams == null || _countMen == 12 || team == null) 
                     return;
                 else
-                    _manTeams[_countMen++] = team;
+                    _manTeams[_countMen++] = team as ManTeam;
             }
             else if (team is WomanTeam)
             {
                 if (_womanTeams == null || _countWomen == 12 || team == null) 
                     return;
                 else
-                    _womanTeams[_countWomen++] = team;
+                    _womanTeams[_countWomen++] = team as WomanTeam;
             }
 
         }
@@ -135,19 +112,17 @@ public class Blue_4
             foreach (Team team in teams)
                 Add(team);
         }
-        private Team[] SortGroup(Team[] teams)
+        private void SortGroup(Team[] teams)
         {
-            if (teams == null)
-                return null; 
-            if (teams.Length < 2)
-                return teams;
+            if (teams == null || teams.Length < 2)
+                return; 
             var sortedTeams = teams.OrderByDescending(team => team.TotalScore).ToArray();
-            return sortedTeams;
+            Array.Copy(sortedTeams, teams, teams.Length);
         }
         public void Sort()
         {
-            _womanTeams = SortGroup(_womanTeams);
-            _manTeams = SortGroup(_manTeams);
+            SortGroup(_womanTeams);
+            SortGroup(_manTeams);
         }
         public static Group Merge(Group group1, Group group2, int size)
         {

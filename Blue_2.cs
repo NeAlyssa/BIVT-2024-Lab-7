@@ -72,7 +72,6 @@ public class Blue_2
                 for (int i = 0; i<5; i++)
                     _marks[1,i] = result[i]; 
             }
-            
          }
         
         public static void Sort(Participant[] array)
