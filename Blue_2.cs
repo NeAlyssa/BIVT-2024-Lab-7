@@ -140,18 +140,14 @@ namespace Lab_7
                 if (_participants == null) return;
 
                 Participant[] newArr=new Participant[_participants.Length+1];
-                int i = 0;
-                foreach(Participant x in _participants)
-                {
-                    newArr[i++] = x;
-                }
+                Array.Copy(_participants, newArr, _participants.Length);
                 newArr[newArr.Length-1] = participant;
                 _participants = newArr;
             }
             public void Add(Participant[] participants) //добавление массива объектов типа Тим в массив тимс
             {
-                if (_participants == null || participants == null || participants.Length==0) return;
-                foreach (var participant in participants)
+                if (_participants == null || participants == null || participants.Length == 0) return;
+                foreach (Participant participant in participants)
                 {
                     Add(participant);
                 }
