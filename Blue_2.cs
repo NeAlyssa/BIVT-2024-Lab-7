@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Lab_7.Blue_2;
+using static Lab_7.Blue_3;
 using static Lab_7.Blue_5;
 
 namespace Lab_7
@@ -155,25 +156,27 @@ namespace Lab_7
             public void Add(Participant part)
             {
                 if (_participants == null ) return;
-                //Participant[] temp = new Participant[_participants.Length + 1];
-                //for (int i = 0; i < _participants.length; i++)
-                //{
-                //    temp[i] = _participants[i];
-                //}
-                //temp[_participants.length] = part;
-                if ( _sportsmenind< _participants.Length)
+                Participant[] temp = new Participant[_participants.Length + 1];
+                int i = 0;
+                foreach (Participant p in _participants)
                 {
-                    _participants[_sportsmenind] = part;
-                    _sportsmenind++;
-
+                    temp[i++] = p;
                 }
+                temp[_participants.Length - 1] = part;
+                _participants = temp;
+                _sportsmenind ++;
+
+                //_participants[_sportsmenind] = part;
+                //_sportsmenind++;
+
+
 
 
             }
 
             public void Add(Participant[] part)
             {
-                if (_participants == null|| part == null || part.Length==0 ) return;
+                if (_participants == null|| part == null ) return;
                 //int ind = 0;
                 //Participant[] temp = new Participant[_participants.Length + 1];
                 //for (int i = 0; i < _participants.Length; i++)
@@ -187,7 +190,7 @@ namespace Lab_7
                 //    ind++;
                 //}
                 //_participants = temp;
-                foreach (Participant p in _participants)
+                foreach (Participant p in part)
                 {
                     Add(p);
                 }

@@ -123,7 +123,7 @@ namespace Lab_7
                 if (team == null ) return;
                 if (team is ManTeam manTeam)
                 {
-                    if (_indm < 12)
+                    if (_indm < _manteams.Length)
                     {
                         _manteams[_indm++] = manTeam;
                         
@@ -132,7 +132,7 @@ namespace Lab_7
                 }
                 else if (team is WomanTeam womanTeam)
                 {
-                    if (_indm < 12)
+                    if (_indm < _womanteams.Length)
                     {
                         _womanteams[_indm++] = womanTeam;
                         
@@ -144,7 +144,7 @@ namespace Lab_7
             {
                 if (teams==null ) return;
 
-                foreach (Team team in teams)
+                foreach (var team in teams)
                 {
                     Add(team);
                 }

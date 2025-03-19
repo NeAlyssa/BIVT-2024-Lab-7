@@ -219,7 +219,7 @@ namespace Lab_7
             {
                 int countp = 0;
                 int count = 0;
-                foreach(Sportsman man in this.Sportsmen)
+                foreach(var man in this.Sportsmen)
                 {
                     if (man == null) continue;
                     
@@ -243,7 +243,7 @@ namespace Lab_7
                 int countp = 0;
                 int ch = 0;
                 int pr = 1;
-                foreach (Sportsman woman in this.Sportsmen)
+                foreach (var woman in this.Sportsmen)
                 {
                     if (woman == null) continue;
                     

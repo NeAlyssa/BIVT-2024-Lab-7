@@ -99,7 +99,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return false;
+                    if (_penaltyTimes == null|| _penaltyTimes.Length == 0) return false;
                     int fall = 0;
                     foreach (int p in _penaltyTimes)
                     {
