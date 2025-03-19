@@ -51,8 +51,11 @@ namespace Lab_7
                     }
                     ans -= (_marks[best] + _marks[worst]);
                     ans += _needd;
-                    return ans;
-
+                    if (ans < 0) { return 0; }
+                    else
+                    {
+                        return ans;
+                    }
                 }
             }
             public Participant(string name, string surname)
