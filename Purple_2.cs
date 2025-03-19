@@ -51,8 +51,11 @@ namespace Lab_7
                     }
                     ans -= (_marks[best] + _marks[worst]);
                     ans += _needd;
-                    return ans;
-
+                    if (ans < 0) { return 0; }
+                    else
+                    {
+                        return ans;
+                    }
                 }
             }
             public Participant(string name, string surname)
@@ -66,7 +69,7 @@ namespace Lab_7
             }
             public void Jump(int distance, int[] marks, int target)
             {
-                if (marks == null || _marks == null || distance<0 ||marks.Length != _marks.Length) return;
+                if (marks == null || _marks == null || distance < 0 || marks.Length != _marks.Length) return;
                 _distance = distance;
                 _needd = 60 + (_distance - target) * 2;
                 Array.Copy(marks, _marks, marks.Length);
@@ -87,72 +90,71 @@ namespace Lab_7
                 System.Console.WriteLine($"{_name} {_surname} {_marks}");
             }
         }
-            public abstract class SkiJumping
+        public abstract class SkiJumping
+        {
+            private string _name;
+            private int _standard;
+            private Participant[] _participants;
+            public string Name => _name;
+            public int Standard => _standard;
+            public Participant[] Participants
             {
-                private string _name;
-                private int _standard;
-                private Participant[] _participants;
-                public string Name => _name;
-                public int Standard => _standard;
-                public Participant[] Participants
+                get
                 {
-                    get
-                    {
-                        if (_participants == null) return null;
-                        var copy = new Participant[_participants.Length];
-                        Array.Copy(_participants, copy, _participants.Length);
-                        return copy;
-                    }
-                }
-                public SkiJumping(string name, int standard)
-                {
-                    _name = name;
-                    _standard = standard;
-                    _participants = new Participant[0];
-                }
-                public void Add(Participant participant)
-                {
-                    if (_participants == null) return;
-                    var part1 = new Participant[_participants.Length + 1];
-                    Array.Copy(_participants, part1, _participants.Length);
-                    part1[part1.Length - 1] = participant;
-                    _participants = part1;
-                }
-                public void Add(Participant[] participants)
-                {
-                    if (_participants == null || participants == null) return;
-                    int l = _participants.Length;
-                    var part2 = new Participant[l + participants.Length];
-                    Array.Copy(_participants, part2, l);
-                    Array.ConstrainedCopy(participants,0, part2,l, participants.Length);
-                    _participants = part2;
-                }
-                public void Jump(int distance, int[] marks)
-                {
-                if (_participants == null) return;    
-                    foreach (var x in _participants)
-                    {
-                        if (x.Distance == 0)
-                        {
-                            x.Jump(distance, marks, _standard);
-                        }
-                    }
-                }
-                public void Print()
-                {
-                    Console.WriteLine($"{_name} {_standard}");
-                    if (_participants == null) return;
-                    for (int i=0; i< _participants.Length;i++)_participants[i].Print();
+                    if (_participants == null) return null;
+                    var copy = new Participant[_participants.Length];
+                    Array.Copy(_participants, copy, _participants.Length);
+                    return copy;
                 }
             }
-            public class JuniorSkiJumping : SkiJumping
+            public SkiJumping(string name, int standard)
             {
-                public JuniorSkiJumping() : base("100m", 100) { }
+                _name = name;
+                _standard = standard;
+                _participants = new Participant[0];
             }
-            public class ProSkiJumping : SkiJumping
+            public void Add(Participant participant)
             {
-                public ProSkiJumping() : base("150m", 150) { }
+                if (_participants == null) return;
+                var part1 = new Participant[_participants.Length + 1];
+                Array.Copy(_participants, part1, _participants.Length);
+                part1[part1.Length - 1] = participant;
+                _participants = part1;
+            }
+            public void Add(Participant[] participants)
+            {
+                if (_participants == null || participants == null) return;
+                int l = _participants.Length;
+                var part2 = new Participant[l + participants.Length];
+                Array.Copy(_participants, part2, l);
+                Array.ConstrainedCopy(participants, 0, part2, l, participants.Length);
+                _participants = part2;
+            }
+            public void Jump(int distance, int[] marks)
+            {
+                if (_participants == null) return;
+                foreach (var x in _participants)
+                {
+                    if (x.Distance == 0)
+                    {
+                        x.Jump(distance, marks, _standard);
+                    }
+                }
+            }
+            public void Print()
+            {
+                Console.WriteLine($"{_name} {_standard}");
+                if (_participants == null) return;
+                for (int i = 0; i < _participants.Length; i++) _participants[i].Print();
             }
         }
+        public class JuniorSkiJumping : SkiJumping
+        {
+            public JuniorSkiJumping() : base("100m", 100) { }
+        }
+        public class ProSkiJumping : SkiJumping
+        {
+            public ProSkiJumping() : base("150m", 150) { }
+        }
     }
-
+}

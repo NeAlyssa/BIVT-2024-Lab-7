@@ -67,7 +67,7 @@ namespace Lab_7
                     return score;
                 }
             }
-            
+
             //конструктор
             public Participant(string name, string surname)
             {
@@ -88,18 +88,18 @@ namespace Lab_7
             public void SetCriterias(double[] coefs)
             {
                 if (coefs == null || _coefs == null || coefs.Length != _coefs.Length) return;
-                
+
                 {
-                    Array.Copy(coefs, _coefs,4);
+                    Array.Copy(coefs, _coefs, 4);
                 }
             }
-            public void Jump(int[] marks) 
+            public void Jump(int[] marks)
             {
                 if (marks == null || _marks == null || _ind >= _marks.GetLength(0) || marks.Length != _marks.GetLength(1)) return;
                 for (int i = 0; i < marks.Length; i++)
                 {
                     _marks[_ind, i] = marks[i];
-                    
+
                 }
                 _ind++;
             }
@@ -107,7 +107,7 @@ namespace Lab_7
             {
                 if (array == null) return;
 
-                var a= array.OrderByDescending((x) => x.TotalScore).ToArray();
+                var a = array.OrderByDescending((x) => x.TotalScore).ToArray();
                 Array.Copy(a, array, array.Length);
             }
 
@@ -121,14 +121,14 @@ namespace Lab_7
             private string _name;
             private int[] _marks;
             private int _ind;
-            public string Name=> _name;
+            public string Name => _name;
 
-            public Judge (string name, int[] marks)
+            public Judge(string name, int[] marks)
             {
                 _name = name;
                 if (marks != null)
                 {
-                    _marks = new int [marks.Length];
+                    _marks = new int[marks.Length];
                     Array.Copy(marks, _marks, _marks.Length);
                 }
             }
@@ -137,11 +137,13 @@ namespace Lab_7
                 if (_marks == null) return 0;
                 int ans = _marks[_ind];
                 _ind++;
-                _ind %=_marks.Length;
+                _ind %= _marks.Length;
                 return ans;
             }
-            public void Print() { Console.WriteLine(_name); 
-            for (int i=0;i< _marks.Length;i++) Console.Write($"{_marks[i]} ");
+            public void Print()
+            {
+                Console.WriteLine(_name);
+                for (int i = 0; i < _marks.Length; i++) Console.Write($"{_marks[i]} ");
             }
         }
         public class Competition
@@ -151,20 +153,20 @@ namespace Lab_7
 
             public Judge[] Judges => _judges;
 
-            public Participant[] Participants=> _participants;
-            
+            public Participant[] Participants => _participants;
+
             public Competition(Judge[] judges)
             {
-                _participants=new Participant[0];
+                _participants = new Participant[0];
                 if (judges != null)
                 {
                     _judges = new Judge[judges.Length];
-                    Array.Copy(judges,_judges, judges.Length);
+                    Array.Copy(judges, _judges, judges.Length);
                 }
             }
-            public void Evaluate(Participant jumper) 
+            public void Evaluate(Participant jumper)
             {
-                if (_judges==null || _participants==null) return;
+                if (_judges == null || _participants == null) return;
                 int[] ans = new int[7];
                 for (int i = 0; i < 7; i++)
                 {
@@ -189,7 +191,7 @@ namespace Lab_7
                 var part2 = new Participant[l + participants.Length];
                 for (int i = 0; i < participants.Length; i++)
                 {
-                    if (participants[i]== null) return;
+                    if (participants[i] == null) return;
                     Evaluate(participants[i]);
                 }
                 Array.Copy(_participants, part2, l);
@@ -200,6 +202,3 @@ namespace Lab_7
         }
     }
 }
-                
-                
-
