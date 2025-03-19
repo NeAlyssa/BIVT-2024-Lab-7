@@ -49,7 +49,7 @@ namespace Lab_6
             {
                 get
                 {
-                    if (_penalties == null || _penalties.Length == 0) return true;
+                    if (_penalties == null) return false;
                     bool t = false;
                     for (int i = 0; i < _penalties.Length; i++)
                     {
@@ -119,14 +119,14 @@ namespace Lab_6
             {
                 get
                 {
-                    if (_penalties == null || _penalties.Length == 0) return false;
+                    if (_penalties == null) return false;
                     int n = this.Penalties.Length;
                     int count = 0;
                     for (int i = 0; i < n; i++)
                     {
-                        if (this.Penalties[i] == 5) count++;
+                        if (this.Penalties[i] >= 5) count++;
                     }
-                    if ((count * 100) / n > 10 || this.Total > n * 2) return true;
+                    if ((count * 100 / n) > 10 || this.Total > n * 2) return true;
                     return false;
                 }
             }
@@ -152,11 +152,11 @@ namespace Lab_6
             {
                 get
                 {
-                    if (_penalties == null || _penalties.Length == 0) return false;
+                    if (_penalties == null) return false;
                     int n = this.Penalties.Length;
                     for (int i = 0; i < n; i++)
                     {
-                        if (this.Penalties[i] == 10) return true;
+                        if (this.Penalties[i] >= 10) return true;
                     }
                     if (this.Total > 0.1 * _timePlayers / _countPlayers) return true;
                     return false;
@@ -171,6 +171,7 @@ namespace Lab_6
             //методы
             public override void PlayMatch(int time)
             {
+                if (_penalties == null) return;
                 if (time < 0 || time > 10) return;
                 base.PlayMatch(time);
                 _timePlayers += time;

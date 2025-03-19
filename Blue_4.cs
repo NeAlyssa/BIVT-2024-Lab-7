@@ -125,7 +125,7 @@ namespace Lab_6
             }
             public void Add(Team[] teams)
             {
-                if (teams == null || teams.Length == 0) return;
+                if (teams == null || _manTeams == null || _womanTeams == null || teams.Length == 0) return;
                 int cm = 0, cw = 0;
                 for (int i = 0, j = 0; i + j < teams.Length;)
                 {
@@ -144,9 +144,9 @@ namespace Lab_6
                         j++;
                         cw++;
                     }
-                    _countMan += cm;
-                    _countWoman += cw;
                 }
+                _countMan += cm;
+                _countWoman += cw;
             }
             private void TeamSort(Team[] teams, int countTeam)
             {

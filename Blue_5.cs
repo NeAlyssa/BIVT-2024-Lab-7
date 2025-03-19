@@ -70,7 +70,7 @@ namespace Lab_6
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
+                    if (_sportsmen == null || _sportsmen.Length == 0) return 18;
                     int maxPlace = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
@@ -90,16 +90,17 @@ namespace Lab_6
             //методы
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null || _sportsmen.Length == 0 || _count >= _sportsmen.Length) return;
+                if (_sportsmen == null || sportsman == null || _sportsmen.Length == 0 || _count >= _sportsmen.Length) return;
                 _sportsmen[_count] = sportsman;
                 _count++;
             }
             public void Add(Sportsman[] sportsman)
             {
-                if (_sportsmen.Length == 0 || _sportsmen == null || sportsman == null || sportsman.Length == 0 || _count >= _sportsmen.Length) return;
+                if (_sportsmen == null || sportsman == null || sportsman.Length == 0 || _sportsmen.Length == 0 || _count >= _sportsmen.Length) return;
                 int i = 0;
                 while (_count < _sportsmen.Length && i < sportsman.Length)
                 {
+                    if (sportsman[i] == null) continue;
                     _sportsmen[_count] = sportsman[i];
                     _count++;
                     i++;
@@ -128,11 +129,12 @@ namespace Lab_6
                         i--;
                     }
                 }
+                //на всякий случай возможно стоит проверить, что каждый элемент teams не null, иначе наверное его надо в конец 
             }
             protected abstract double GetTeamStrength();
             public static Team GetChampion(Team[] teams)
             {
-                if (teams == null || teams.Length == 0) return null;
+                if (teams == null || teams.Length == 0) return null; //если массив с командами не содержит команд, то и команду с максимальным результатом мы вывести не сможем
                 double maxTeam = 0;
                 if (teams[0] != null) maxTeam = teams[0].GetTeamStrength();
                 int maxIndex = 0;
@@ -156,6 +158,7 @@ namespace Lab_6
         }
         public class ManTeam : Team
         {
+            //конструктор
             public ManTeam(string name) : base(name) { }
             protected override double GetTeamStrength()
             {
@@ -170,11 +173,12 @@ namespace Lab_6
                     }
                 }
                 double mid = plases / count;
-                return mid / 100;
+                return 100 / mid;
             }
         }
         public class WomanTeam : Team
         {
+            //конструктор
             public WomanTeam(string name) : base(name) { }
             protected override double GetTeamStrength()
             {

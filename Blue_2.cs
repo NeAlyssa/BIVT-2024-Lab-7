@@ -62,7 +62,7 @@ namespace Lab_6
             //методы
             public void Jump(int[] result)
             {
-                if (result == null || _marks == null || result.Length == 0 || _marks.GetLength(0) < 2 || _marks.GetLength(1) < 5) return;
+                if (result == null || _marks == null || result.Length == 0) return;
                 if (_count != 0 || _count != 1) return;
                 for (int j = 0; j < _marks.GetLength(1); j++)
                 {
@@ -123,10 +123,10 @@ namespace Lab_6
                 if (_participants == null || participants == null) return;
                 int n = participants.Length;
                 int m = _participants.Length;
-                Array.Resize(ref _participants, _participants.Length + n);
-                for (int i = 1, k = 1; i <= n; i++, k++)
+                Array.Resize(ref _participants, m + n);
+                for (int i = 0; i <= n; i++)
                 {
-                    _participants[m - k] = participants[n - i];
+                    _participants[m + i] = participants[i];
                 }
             }
         }
@@ -165,9 +165,9 @@ namespace Lab_6
                         prize[0] += 0.4 * this.Bank;
                         prize[1] += 0.25 * this.Bank;
                         prize[2] += 0.15 * this.Bank;
-                        for (int i = 3; i < n / 2; i++)
+                        for (int i = 0; i < n / 2; i++)
                         {
-                            prize[i] = N * this.Bank / 100;
+                            prize[i] += N * this.Bank / 100;
                         }
                         return prize;
                     }
@@ -178,9 +178,9 @@ namespace Lab_6
                         prize[0] += 0.4 * this.Bank;
                         prize[1] += 0.25 * this.Bank;
                         prize[2] += 0.15 * this.Bank;
-                        for (int i = 3; i < 10; i++)
+                        for (int i = 0; i < 10; i++)
                         {
-                            prize[i] = N * this.Bank / 100;
+                            prize[i] += N * this.Bank / 100;
                         }
                         return prize;
                     }
