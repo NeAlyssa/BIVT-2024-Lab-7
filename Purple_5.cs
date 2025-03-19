@@ -35,13 +35,14 @@ namespace Lab_7
 
             public int CountVotes(Response[] responses, int questionNumber)
             {
-                if (responses == null || questionNumber < 1 || questionNumber > 3) return default;
+                if (responses == null || questionNumber < 1 || questionNumber > 3 ) return default(int);
                 int count_question = 0;
                 int k = questionNumber;
                 k--;
+                if (Massive_of_answers[k] == null) return default(int);
                 foreach (Response response in responses)
                 {
-                    if (response.Massive_of_answers[k] != "") count_question++;
+                    if (response.Massive_of_answers[k] == Massive_of_answers[k]) count_question++;
                 }
                 return count_question;
             }

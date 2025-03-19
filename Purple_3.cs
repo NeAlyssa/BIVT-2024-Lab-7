@@ -158,8 +158,14 @@ namespace Lab_7
 
             public Skating(double[] moods)
             {
-                if (moods == null) return; 
-                _moods = moods.ToArray();
+                _participants = new Participant[0];
+                if (moods == null) { _moods = new double[7]; }
+                else if ( moods != null) {
+                    int length_of_moods = Math.Min(moods.Length, 7);
+                    _moods = new double[length_of_moods];
+                    Array.Copy(moods,_moods,length_of_moods);
+                }
+
                 ModificateMood();
             }
             protected abstract void ModificateMood();
