@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -98,7 +98,8 @@ namespace Lab_7
             }
             public void Evaluate(double result)
             {
-                if (_marks == null || _ind >= _marks.Length) return;
+                if (_marks == null || _ind >= 7) return;
+                if (result < 0 || result > 6) return;
                 _marks[_ind] = result;
                 _ind++;
 
@@ -202,9 +203,8 @@ namespace Lab_7
             public void Evaluate(double[] marks)
             {
                 if (marks == null || _moods == null) return;
-                int length = Math.Min(marks.Length, 7); 
-                var ans = _participants[length];
-                for (int i = 0; i < length; i++)
+                var ans = _participants[_moods.Length];
+                for (int i = 0; i < _moods.Length; i++)
                 {
                     if (marks[i] != null || _moods[i] != null)
                     {
@@ -228,7 +228,7 @@ namespace Lab_7
                 int l = _participants.Length;
                 var part2 = new Participant[l + participants.Length];
                 Array.Copy(_participants, part2, l);
-                Array.ConstrainedCopy(participants,0, part2, l, participants.Length);
+                Array.ConstrainedCopy(participants, 0, part2, l, participants.Length);
                 _participants = part2;
             }
         }
@@ -259,6 +259,3 @@ namespace Lab_7
         }
     }
 }
-    
-
-
