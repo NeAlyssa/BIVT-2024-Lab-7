@@ -23,7 +23,7 @@ namespace Lab_7
                 {
                     if (_scores == null) return null;
                     int[]copyScores=new int[_scores.Length];
-                    Array.Copy(copyScores, _scores, copyScores.Length);
+                    Array.Copy(_scores, copyScores, _scores.Length);
                     return copyScores;
                 }
             }
@@ -31,8 +31,13 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_scores == null) return 0;
-                    return _scores.Sum();
+                    if (_scores == null || _scores.Length==0) return 0;
+                    int score = 0;
+                    for (int i=0; i < _scores.Length; i++)
+                    {
+                        score+= _scores[i];
+                    }
+                    return score;
                 }
             }
 
@@ -77,38 +82,24 @@ namespace Lab_7
         public class Group 
         {
             private string _name;
-            private Team[] _manteams;
+            private ManTeam[] _manteams;
             private int _manCnt; //счетчик команд для добавления
-            private Team[] _womanteams;
+            private WomanTeam[] _womanteams;
             private int _womanCnt; //счетчик команд для добавления
 
             // свойства
             public string Name => _name;
-            public Team[] ManTeams
-            {
-                get
-                {
-                    if (_manteams == null) return null;
-                    return _manteams;
-                }
-            }
-            public Team[] WomanTeams
-            {
-                get
-                {
-                    if (_womanteams == null) return null;
-                    return _womanteams;
-                }
-            }
+            public ManTeam[] ManTeams => _manteams;
+            public WomanTeam[] WomanTeams => _womanteams;
 
             // конструктор
 
             public Group(string name)
             {
                 _name = name;
-                _manteams = new Team[12];
+                _manteams = new ManTeam[12];
                 _manCnt = 0;
-                _womanteams = new Team[12];
+                _womanteams = new WomanTeam[12];
                 _womanCnt = 0;
             }
 
@@ -122,7 +113,7 @@ namespace Lab_7
                 {
                     if (_manteams != null && _manCnt < 12 && team != null)
                     {
-                        _manteams[_manCnt] = team;
+                        _manteams[_manCnt] = team as ManTeam;
                         _manCnt++;
                     }
                     else return;
@@ -131,7 +122,7 @@ namespace Lab_7
                 {
                     if (_womanteams != null && _womanCnt < 12 && team != null)
                     {
-                        _womanteams[_womanCnt] = team;
+                        _womanteams[_womanCnt] = team as WomanTeam;
                         _womanCnt++;
                     }
                     else return;
@@ -155,76 +146,73 @@ namespace Lab_7
             public void Add(Team[] teams) //добавление массива объектов типа Тим в массив тимс
             {
                 if (teams.Length == 0 || teams == null) return;
-                foreach (var team in teams)
+                foreach (Team team in teams)
                 {
                     Add(team);
                 }
             }
           
-            private Team[] SortTeams(Team[] teams)
+            private void SortTeams(Team[] teams)
             {
-                if (teams == null) return null;
-                if (teams.Length <= 1) return teams;
+                if (teams == null) return;
+                if (teams.Length <= 1) return;
                 for (int i = 0; i < teams.Length-1; i++)
                 {
                     for (int j = 0; j < teams.Length - i - 1; j++)
                     {
                         if (teams[j].TotalScore < teams[j + 1].TotalScore)
                         {
-                            Team temp = teams[j];
-                            teams[j] = teams[j + 1];
-                            teams[j + 1] = temp;
+                            (teams[j + 1], teams[j]) = (teams[j], teams[j + 1]);
                         }
                     }
                 }
-                return teams;
             }
             public void Sort() //пузырьком <3 по убыванию суммарных очков
             {
                 if (_manteams == null || _womanteams == null) return;
-                _manteams=SortTeams(_manteams);
-                _womanteams=SortTeams(_womanteams);
+                SortTeams(_manteams);
+                SortTeams(_womanteams);
             }
             public static Group Merge(Group group1, Group group2, int size) // сайз-ограничение по размеру (6) слияние массивов в новую группу
             { 
                 if (size<1) return null;
                 Group result = new Group("Финалисты");
-                Team[] manTeam=MergeTeams(group1._manteams, group2._manteams, size);
-                Team[] womanTeam = MergeTeams(group1._womanteams, group2._womanteams, size);
+                group1.Sort();
+                group2.Sort();
+                Group manTeam=MergeTeams(group1.ManTeams, group2.ManTeams, group1.ManTeams.Length+group2.ManTeams.Length);
+                Group womanTeam = MergeTeams(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length + group2.WomanTeams.Length);
 
-                result.Add(manTeam);
-                result.Add(womanTeam);
+                result.Add(manTeam.ManTeams);
+                result.Add(womanTeam.WomanTeams);
 
                 return result;
 
             }
 
-            private static Team[] MergeTeams(Team[] firstteam, Team[] secondteam, int size)
+            private static Group MergeTeams(Team[] firstteam, Team[] secondteam, int size)
             {
                 if (firstteam==null || secondteam==null || firstteam.Length == 0 || secondteam.Length == 0 || size<=0) return null;
-                Team[] result = new Team[size];
-                int group1Count = Math.Min(size / 2, firstteam.Length);
-                int group2Count = Math.Min(size - group1Count, secondteam.Length);
+                Group result = new Group("Финалисты");
 
-                int i = 0, j = 0,k=0;
-                while (i < group1Count && j < group2Count)
+                int i = 0, j = 0;
+                while (i < (size/2) && j < (size/2))
                 {
                     if (firstteam[i].TotalScore >= secondteam[j].TotalScore)
                     {
-                        result[k++] = firstteam[i++];
+                        result.Add(firstteam[i++]);
                     }
                     else
                     {
-                        result[k++]=secondteam[j++];
+                        result.Add(secondteam[j++]);
                     }
                 }
-                while (i < group1Count)
+                while (i < size/2)
                 {
-                    result[k++] = firstteam[i++];
+                    result.Add(firstteam[i++]);
                 }
-                while (j < group2Count)
+                while (j < size/2)
                 {
-                    result[k++] = secondteam[j++];
+                    result.Add(secondteam[j++]);
                 }
                 return result;
             }
