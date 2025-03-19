@@ -161,9 +161,13 @@ namespace Lab_7
                 //    temp[i] = _participants[i];
                 //}
                 //temp[_participants.length] = part;
-                _participants[_sportsmenind] = part;
-                _sportsmenind++;
-              
+                if ( _sportsmenind< _participants.Length)
+                {
+                    _participants[_sportsmenind] = part;
+                    _sportsmenind++;
+
+                }
+
 
             }
 
@@ -183,12 +187,9 @@ namespace Lab_7
                 //    ind++;
                 //}
                 //_participants = temp;
-                int ind = 0;
-                while ( ind < part.Length)
+                foreach (Participant p in _participants)
                 {
-                    _participants[_sportsmenind] =part[ind];
-                    _sportsmenind++;
-                    ind++;
+                    Add(p);
                 }
             }
         }

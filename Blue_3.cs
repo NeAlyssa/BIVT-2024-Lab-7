@@ -94,10 +94,7 @@ namespace Lab_7
 
         public class BasketballPlayer : Participant
         {
-            public BasketballPlayer(string name, string surname) : base(name, surname)
-            {
-                _penaltyTimes = new int[0];
-            }
+           
             public override bool IsExpelled
             {
                 get
@@ -117,6 +114,10 @@ namespace Lab_7
                 }
 
             }
+            public BasketballPlayer(string name, string surname) : base(name, surname)
+            {
+                _penaltyTimes = new int[0];
+            }
 
             public override void PlayMatch(int fall)
             {
@@ -131,13 +132,9 @@ namespace Lab_7
 
         public class HockeyPlayer : Participant
         {
-            private static int _ind= 0; 
-            private static int _all = 0;
-            public HockeyPlayer(string name, string surname) : base(name, surname)
-            {
-                _penaltyTimes = new int[0];
-                _ind++;
-            }
+            private static int _ind=0;
+            private static int _all=0;
+            
 
             public override bool IsExpelled
             {
@@ -159,6 +156,14 @@ namespace Lab_7
                     return false;
                 }
             }
+
+            
+            public HockeyPlayer(string name, string surname) : base(name, surname)
+            {
+                _penaltyTimes = new int[0];
+                _ind++;
+            }
+            
 
             public override void PlayMatch(int time)
             {

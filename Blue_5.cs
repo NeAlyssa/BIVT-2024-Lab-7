@@ -162,36 +162,50 @@ namespace Lab_7
             protected abstract double GetTeamStrength();
             public static Team GetChampion(Team[] teams)
             {
+                //if (teams == null || teams.Length == 0) return null;
+
+                //double maxStrength = double.MinValue;
+                //Team champion = null;
+
+                //foreach (var team in teams)
+                //{
+                //    if (team == null) continue;
+
+                //    double strength = team.GetTeamStrength();
+                //    if (strength > maxStrength)
+                //    {
+                //        maxStrength = strength;
+                //        champion = team;
+                //    }
+                //}
+                //return champion;
                 if (teams == null || teams.Length == 0) return null;
 
-                double maxStrength = double.MinValue;
-                Team champion = null;
-
-                foreach (var team in teams)
+                double maxi = -1;
+               
+                int maxind = 0;
+                for (int i = 1; i < teams.Length; i++)
                 {
-                    if (team == null) continue;
-
-                    double strength = team.GetTeamStrength();
-                    if (strength > maxStrength)
+                    if (teams[i] == null) continue;
+                    if (teams[i].GetTeamStrength() > maxi)
                     {
-                        maxStrength = strength;
-                        champion = team;
+                        maxi = teams[i].GetTeamStrength();
+                        maxind = i;
                     }
                 }
-                return champion;
-
+                return teams[maxind];
             }
             public void Print()
             {
-                Console.WriteLine(_name);
-                for (int k = 0; k < _sportsmenIndex; k++)
-                {
-                    if (_sportsmen[k] != null) // Проверка на null перед вызовом Print
-                    {
-                        _sportsmen[k].Print();
-                    }
-                }
-                Console.WriteLine();
+                //Console.WriteLine(_name);
+                //for (int k = 0; k < _sportsmenind; k++)
+                //{
+                //    if (_sportsmen[k] != null) 
+                //    {
+                //        _sportsmen[k].Print();
+                //    }
+                //}
+                //Console.WriteLine();
             }
         }
 
@@ -207,11 +221,11 @@ namespace Lab_7
                 int count = 0;
                 foreach(Sportsman man in this.Sportsmen)
                 {
-                    if (man != null) 
-                    {
-                        countp += man.Place;
-                        count++;
-                    }
+                    if (man == null) continue;
+                    
+                    countp += man.Place;
+                    count++;
+                    
                     
                 }
                 return 100 / countp / count;
@@ -231,12 +245,12 @@ namespace Lab_7
                 int pr = 1;
                 foreach (Sportsman woman in this.Sportsmen)
                 {
-                    if (woman != null) 
-                    {
-                        countp += woman.Place;
-                        ch++;
-                        pr *= woman.Place;
-                    }
+                    if (woman == null) continue;
+                    
+                    countp += woman.Place;
+                    ch++;
+                    pr *= woman.Place;
+                    
                     
                 }
                 return 100 * countp * ch / pr;

@@ -86,14 +86,14 @@ namespace Lab_7
         public class  Group
         {
             private string _name;
-            private Team[] _manteams;
-            private Team[] _womanteams;
+            private ManTeam[] _manteams;
+            private WomanTeam[] _womanteams;
             private int _indm;
             private int _indw;
 
             public string Name => _name;
-            public Team[] ManTeams => _manteams;
-            public Team[] WomanTeams => _womanteams;
+            public ManTeam[] ManTeams => _manteams;
+            public WomanTeam[] WomanTeams => _womanteams;
 
             //            {
             //get
@@ -109,8 +109,8 @@ namespace Lab_7
             public Group(string name)
             {
                 _name = name;
-                _manteams = new Team[12];
-                _womanteams = new Team[12];
+                _manteams = new ManTeam[12];
+                _womanteams = new WomanTeam[12];
                 _indm = 0;
                 _indw = 0;
 
