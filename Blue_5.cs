@@ -32,7 +32,6 @@ namespace Lab_7
                 {
                     _place = place;
                 }
-                else return;
             }
             public void Print()
             {
@@ -58,7 +57,8 @@ namespace Lab_7
                     int score = 0;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (sportsman.Place > 0 && sportsman.Place <= 5 && sportsman!=null)
+                        if (sportsman==null) continue;
+                        if (sportsman.Place > 0 && sportsman.Place <= 5)
                         {
                             score += 6 - sportsman.Place;
                         }
@@ -104,18 +104,14 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null || sportsman==null) return ;
-                if (_cnt < _sportsmen.Length)
-                {
-                    _sportsmen[_cnt] = sportsman;
-                    _cnt++;
-                }
-                else return;
+                if (_sportsmen == null|| _cnt >= _sportsmen.Length || sportsman == null) return ;
+                _sportsmen[_cnt] = sportsman;
+                _cnt++;
             }
 
             public void Add(Sportsman[] newSportsmen)
             {
-                if (_sportsmen == null || _sportsmen.Length == 0 || newSportsmen==null || newSportsmen.Length==0 || _cnt>=_sportsmen.Length) return;
+                if (_sportsmen == null || newSportsmen==null || _cnt>=_sportsmen.Length) return;
                 foreach (Sportsman sportsman in newSportsmen)
                 {
                     if(sportsman==null) continue;
@@ -126,7 +122,7 @@ namespace Lab_7
             public static void Sort(Team[] teams)
             {
                 if (teams == null || teams.Length == 0) return;
-                for (int i = 0; i < teams.Length; i++)
+                for (int i = 0; i < teams.Length-1; i++)
                 {
                     for (int j = 0; j < teams.Length - i - 1; j++)
                     {
@@ -146,23 +142,24 @@ namespace Lab_7
 
             public static Team GetChampion(Team[] teams)
             {
-                if (teams==null || teams.Length==0) return null;
-                Team champion = teams[0];
-                double maxStrength = 0;
-                if (champion== null) maxStrength=0;
-                else maxStrength = champion.GetTeamStrength();
+                if (teams == null || teams.Length == 0) return null;
+
+                Team champion = null; 
+                double maxStrength = double.MinValue; 
 
                 foreach (var team in teams)
                 {
-                    if (team==null) continue;
-                    double strength = team.GetTeamStrength();
+                    if (team == null) continue; 
+
+                    double strength = team.GetTeamStrength(); 
                     if (strength > maxStrength)
                     {
-                        champion = team;
-                        maxStrength = strength;
+                        champion = team; 
+                        maxStrength = strength; 
                     }
                 }
-                return champion;
+
+                return champion; 
             }
             public void Print()
             {
