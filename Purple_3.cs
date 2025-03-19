@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -98,8 +98,7 @@ namespace Lab_7
             }
             public void Evaluate(double result)
             {
-                if (_marks == null || _ind >= 7) return;
-                if (result < 0 || result > 6) return;
+                if (_marks == null || _ind >= _marks.Length) return;
                 _marks[_ind] = result;
                 _ind++;
 
@@ -191,11 +190,9 @@ namespace Lab_7
             }
             public Skating(double[] moods)
             {
-                if (moods == null || moods.Length<7) return;
+                if (moods == null) return;
                 _moods = new double[7];
-                
-                  Array.Copy(moods, _moods, 7);
-                
+                Array.Copy(moods, _moods, moods.Length);
                 ModificateMood();
                 _participants = new Participant[0];
 
@@ -205,8 +202,9 @@ namespace Lab_7
             public void Evaluate(double[] marks)
             {
                 if (marks == null || _moods == null) return;
-                var ans = _participants[_moods.Length];
-                for (int i = 0; i < _moods.Length; i++)
+                int length = Math.Min(marks.Length, 7); 
+                var ans = _participants[length];
+                for (int i = 0; i < length; i++)
                 {
                     if (marks[i] != null || _moods[i] != null)
                     {
@@ -230,7 +228,7 @@ namespace Lab_7
                 int l = _participants.Length;
                 var part2 = new Participant[l + participants.Length];
                 Array.Copy(_participants, part2, l);
-                Array.ConstrainedCopy(participants, 0, part2, l, participants.Length);
+                Array.ConstrainedCopy(participants,0, part2, l, participants.Length);
                 _participants = part2;
             }
         }
@@ -261,3 +259,6 @@ namespace Lab_7
         }
     }
 }
+    
+
+
