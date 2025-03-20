@@ -121,20 +121,22 @@ namespace Lab_7
             {
                
                 if (team == null ) return;
-                if (team is ManTeam manTeam)
+                if (team is ManTeam )
                 {
                     if (_indm < _manteams.Length)
                     {
-                        _manteams[_indm++] = manTeam;
+                        ManTeam manteam = team as ManTeam;
+                        _manteams[_indm++] = manteam;
                         
                     }
                     
                 }
-                else if (team is WomanTeam womanTeam)
+                else if (team is WomanTeam)
                 {
                     if (_indm < _womanteams.Length)
                     {
-                        _womanteams[_indm++] = womanTeam;
+                        WomanTeam womanteam = team as WomanTeam;
+                        _womanteams[_indm++] = womanteam;
                         
                     }
                     
@@ -144,9 +146,10 @@ namespace Lab_7
             {
                 if (teams==null ) return;
 
-                foreach (var team in teams)
+                for (int i = 0; i < teams.Length;)
                 {
-                    Add(team);
+                    if (teams[i] == null) continue;
+                    this.Add(teams[i]);
                 }
 
             }
@@ -173,8 +176,8 @@ namespace Lab_7
             public static Group Merge(Group group1, Group group2, int size)
             {
                 Group res = new Group("Финалисты");
-                Team[] man = Mergi(group1.ManTeams, group2.ManTeams, size);
-                Team[] woman = Mergi(group1.WomanTeams, group2.WomanTeams, size);
+                Team[] man = Mergi(group1._manteams, group2._manteams, size);
+                Team[] woman = Mergi(group1._womanteams, group2._womanteams, size);
                 res.Add(man);
                 res.Add(woman);
                 return res;
