@@ -153,17 +153,17 @@ public class Blue_2
         {
             get
             {
-                if (this.Participants == null || this.Participants.Length < 3)
+                if (Participants == null || Participants.Length < 3)
                     return default(double[]);
-                int n = (Participants.Length <= 20) ? Participants.Length/2 : 10;
-                double[] prize = new double[n];
-                prize[0] = 0.4*Bank; prize[1] = 0.25*Bank; prize[2] = 0.15*Bank;
 
-                double N = 20.0/n * Bank/100;
-                for (int i = 3; i<n; i++)
-                {
-                    prize[i] = N;
-                }
+                int n = (Participants.Length/2 < 10) ? Participants.Length/2 : 10;
+                double[] prize = new double[n];
+
+                double N = 20.0/n/100*Bank;
+                for (int i = 0; i<n; i++)
+                    prize[i] = Math.Round(N,5);
+                prize[0] += 0.4*Bank; prize[1] += 0.25*Bank; prize[2] += 0.15*Bank;
+                
                 return prize;
             }
         }
