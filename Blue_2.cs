@@ -66,7 +66,7 @@ namespace Lab_7
             public void Jump(int[] result) // заполняет результат очередного прыжка оценками судей
             {
                 if (result == null) return;
-                if (_marks == null) return;
+                if (_marks == null || _jumped == null) return;
 
                 int nojump = Array.FindIndex(_jumped, jump => !jump); // находим первый неоценённый прыжок
 
@@ -155,7 +155,7 @@ namespace Lab_7
                 get
                 {
                     double[] prizes = new double[3];
-                    if (Participants.Length < 3 || Participants == null) return prizes;
+                    if (this.Participants.Length < 3 || this.Participants == null) return prizes;
 
                     prizes[0] = (double)this.Bank * 0.5; // Первое место
                     prizes[1] = (double)this.Bank * 0.3; // Второе место
@@ -173,7 +173,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants.Length < 3 || Participants == null) return null;
+                    if (this.Participants.Length < 3 || this.Participants == null) return null;
 
                     var top = new double[this.Participants.Length / 2];
 

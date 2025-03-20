@@ -65,7 +65,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null) return 0;
+                    if (_sportsmen == null || _sportsmen[0] == null) return 0;
 
                     int[] scores = { 0, 5, 4, 3, 2, 1 };
 
@@ -77,7 +77,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null) return ;
+                    if (_sportsmen == null || _sportsmen[0] == null) return 0;
 
                     int topPlace = 18;
                     for (int i = 0; i < _count; i++)
@@ -102,13 +102,10 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null) return;
+                if (_sportsmen == null || _sportsmen == null || _count >= _sportsmen.Length) return;
 
-                if (_count < _sportsmen.Length)
-                {
-                    _sportsmen[_count] = sportsman;
-                    _count++;
-                }
+                _sportsmen[_count] = sportsman;
+                _count++;
             }
             public void Add(Sportsman[] newSportsmen)
             {
@@ -130,11 +127,19 @@ namespace Lab_7
                 {
                     for (int j = 0; j < teams.Length - i - 1; j++)
                     {
-                        if (teams[j].SummaryScore < teams[j + 1].SummaryScore)
+                        if (teams[j] == null)
                         {
                             (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]);
                         }
+                        else if (teams[j + 1] == null)
+                        {
+                            continue;
+                        }
                         else if (teams[j].TopPlace > teams[j + 1].TopPlace && teams[j].SummaryScore == teams[j + 1].SummaryScore)
+                        {
+                            (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]);
+                        }
+                        else if (teams[j + 1].SummaryScore == teams[j].SummaryScore && teams[j + 1].TopPlace < teams[j].TopPlace)
                         {
                             (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]);
                         }
@@ -147,9 +152,18 @@ namespace Lab_7
                 if (teams == null || teams.Length == 0) return null;
 
                 Team person = teams[0];
-                double max = person.GetTeamStrength();
-                foreach (var team in teams)
+                double max;
+                if (teams[0] == null)
                 {
+                    max = 0;
+                }
+                else
+                {
+                    max = teams[0].GetTeamStrength();
+                }
+                foreach (Team team in teams)
+                {
+                    if (team == null) continue;
                     double power = team.GetTeamStrength();
                     if (power > max)
                     {

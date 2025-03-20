@@ -17,7 +17,18 @@ namespace Lab_7
 
             // свойства
             public string Name => _name;
-            public int[] Scores => _scores;
+            public int[] Scores
+            {
+                get
+                {
+                    if (_scores == null) return null;
+
+                    int[] copyscores = new int[_scores.Length];
+                    for (int k = 0; k < copyscores.Length; k++)
+                        copyscores[k] = _scores[k];
+                    return copyscores;
+                }
+            }
             public int TotalScore
             {
                 get
@@ -40,7 +51,7 @@ namespace Lab_7
 
             public void PlayMatch(int result) // добавляет в массив игр результат очередного матча
             {
-                if (_scores == null) return;
+                if (_scores == null || _scores.Length == 0) return;
                 int[] t = new int[_scores.Length + 1];
                 for(int i = 0; i < _scores.Length; i++)
                 {
@@ -123,7 +134,7 @@ namespace Lab_7
             }
             public void Add(Team[] teams) // несколько
             {
-                if (_manteams == null || _womanteams == null) return;
+                if (teams == null || teams.Length == 0 || _manteams == null || _womanteams == null) return;
 
                 foreach (var team in teams)
                 {
@@ -132,7 +143,6 @@ namespace Lab_7
             }
             public void Sort()
             {
-                if (_manteams == null || _womanteams == null) return;
                 // делаем сортировку
                 SortOneTeam(_manteams);
                 SortOneTeam(_womanteams);
@@ -141,6 +151,7 @@ namespace Lab_7
 
             private void SortOneTeam(Team[] team)
             {
+                if (team == null || team.Length == 0) return;
                 for (int i = 0; i < team.Length; i++)
                 {
                     for (int j = 0; j < team.Length - i - 1; j++)
@@ -165,6 +176,7 @@ namespace Lab_7
             }
             private static Team[] OneMerge(Team[] group1, Team[] group2, int size) // слияния двух отсортированных массивов команд двух групп в новую группу с ограничением по размеру
             {
+                if (group1 == null || group2 == null) return null;
                 Team[] resultat = new Team[size];
                 int i = 0, k = 0, h = 0, j = 0, n = 0;
                 while (i < size && j < size)

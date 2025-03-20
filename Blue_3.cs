@@ -120,7 +120,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return false;
+                    if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
                     int n = 0;
                     for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
@@ -139,7 +139,7 @@ namespace Lab_7
             }
             public override void PlayMatch(int n)
             {
-                if (n < 0 || n > 5 || _penaltyTimes == null)
+                if (n < 0 || n > 5)
                 {
                     return;
                 }
@@ -161,7 +161,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return false;
+                    if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
                     for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
                         if (_penaltyTimes[k] >= 10)
@@ -181,7 +181,10 @@ namespace Lab_7
             {
                 if (_penaltyTimes == null) return;
                 base.PlayMatch(Times);
-                _time += Times;
+                if (Times >= 0)
+                {
+                    _time += Times;
+                }
             }
         }
     }
