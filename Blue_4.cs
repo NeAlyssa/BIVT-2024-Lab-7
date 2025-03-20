@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_4
     {
@@ -126,27 +126,11 @@ namespace Lab_6
             public void Add(Team[] teams)
             {
                 if (teams == null || _manTeams == null || _womanTeams == null || teams.Length == 0) return;
-                int cm = 0, cw = 0;
-                for (int i = 0, j = 0; i + j < teams.Length;)
+                for (int i = 0; i < teams.Length;)
                 {
-                    if (teams[i + j] == null) continue;
-                    else if (_manTeams != null && teams[i + j] is ManTeam && _countMan + i < _manTeams.Length)
-                    {
-                        ManTeam manTeam = teams[i + j] as ManTeam;
-                        _manTeams[_countMan + i] = manTeam;
-                        i++;
-                        cm++;
-                    }
-                    else if (_womanTeams != null && teams[i + j] is WomanTeam && _countWoman + j < _womanTeams.Length)
-                    {
-                        WomanTeam womanTeam = teams[i + j] as WomanTeam;
-                        _womanTeams[_countWoman + j] = womanTeam;
-                        j++;
-                        cw++;
-                    }
+                    if (teams[i] == null) continue;
+                    this.Add(teams[i]);
                 }
-                _countMan += cm;
-                _countWoman += cw;
             }
             private void TeamSort(Team[] teams, int countTeam)
             {

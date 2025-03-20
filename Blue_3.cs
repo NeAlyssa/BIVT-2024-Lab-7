@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_3
     {
@@ -119,7 +119,7 @@ namespace Lab_6
             {
                 get
                 {
-                    if (_penalties == null) return false;
+                    if (_penalties == null || _penalties.Length == 0) return false;
                     int n = this.Penalties.Length;
                     int count = 0;
                     for (int i = 0; i < n; i++)

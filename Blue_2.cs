@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_2
     {
@@ -124,7 +124,7 @@ namespace Lab_6
                 int n = participants.Length;
                 int m = _participants.Length;
                 Array.Resize(ref _participants, m + n);
-                for (int i = 0; i <= n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     _participants[m + i] = participants[i];
                 }
