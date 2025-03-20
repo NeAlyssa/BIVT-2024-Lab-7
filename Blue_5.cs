@@ -219,14 +219,13 @@ namespace Lab_7
             {
                 int countp = 0;
                 int count = 0;
-                foreach(var man in this.Sportsmen)
+                for (int i = 0; i < this.Sportsmen.Length; i++)
                 {
-                    if (man == null) continue;
-                    
-                    countp += man.Place;
-                    count++;
-                    
-                    
+                    if (this.Sportsmen[i] != null)
+                    {
+                        countp += this.Sportsmen[i].Place;
+                        count++;
+                    }
                 }
                 return 100 / countp / count;
             }
@@ -243,15 +242,14 @@ namespace Lab_7
                 int countp = 0;
                 int ch = 0;
                 int pr = 1;
-                foreach (var woman in this.Sportsmen)
+                for (int i = 0; i < this.Sportsmen.Length; i++)
                 {
-                    if (woman == null) continue;
-                    
-                    countp += woman.Place;
-                    ch++;
-                    pr *= woman.Place;
-                    
-                    
+                    if (this.Sportsmen[i] != null)
+                    {
+                        countp += this.Sportsmen[i].Place;
+                        pr *= this.Sportsmen[i].Place;
+                        ch++;
+                    }
                 }
                 return 100 * countp * ch / pr;
             }
