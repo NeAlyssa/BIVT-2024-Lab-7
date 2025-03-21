@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_4
     {
@@ -197,26 +197,14 @@ namespace Lab_6
             public void Shuffle()
             {
                 if (_sportsmen == null) return;
-                double timemax = _sportsmen[0].Time;
-                int imax = 0;
-                for (int i = 0; i < _sportsmen.Length-1;i++)
-                {
-                    if (_sportsmen[i].Time > timemax)
-                    {
-                        timemax = _sportsmen[i].Time;
-                        imax = i;
-                    }
-                }
-                Sportsman temp = _sportsmen[0];
-                _sportsmen[0] = _sportsmen[imax];
-                _sportsmen[imax] = temp;
+                Sort();
                 for (int i = 1; i< _sportsmen.Length-1; i++)
                 {
                     for (int j = i+1; j < _sportsmen.Length; j++)
                     {
-                        if (_sportsmen[i].Time < _sportsmen[j].Time && _sportsmen[j] is SkiMan != _sportsmen[i-1] is SkiMan)
+                        if (_sportsmen[i].Time > _sportsmen[j].Time && _sportsmen[j] is SkiMan != _sportsmen[i-1] is SkiMan)
                         {
-                            temp = _sportsmen[i];
+                            var temp = _sportsmen[i];
                             _sportsmen[i] = _sportsmen[j];
                             _sportsmen[j] = temp;
                         }
