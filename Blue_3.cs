@@ -143,8 +143,8 @@ namespace Lab_7
 
         public class HockeyPlayer : Participant
         {
-            private static int countPlayers=0;
-            private static int totalPenaltyMinutesAll=0;
+            private static int _cntPlayers=0;
+            private static int _totalPenaltyMinutesAll=0;
             public override bool IsExpelled
             {
                 get
@@ -157,15 +157,14 @@ namespace Lab_7
                             return true;
                         }
                     }
-                    if (this.Total > (totalPenaltyMinutesAll / countPlayers) *0.1) return true;
-                    return false;
+                    return (Total > (_totalPenaltyMinutesAll / _cntPlayers) *0.1);
                 }
             }
 
             public HockeyPlayer(string name, string surname) : base(name, surname)
             {
                 _penalties = new int[0];
-                countPlayers++;
+                _cntPlayers++;
             }
             public override void PlayMatch(int penaltyMinutes)
             {
@@ -173,7 +172,7 @@ namespace Lab_7
                 base.PlayMatch(penaltyMinutes);
                 if (penaltyMinutes >= 0)
                 {
-                    totalPenaltyMinutesAll += penaltyMinutes;
+                    _totalPenaltyMinutesAll += penaltyMinutes;
                     
                 }
             }
