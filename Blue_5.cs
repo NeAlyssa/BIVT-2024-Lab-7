@@ -84,6 +84,7 @@ namespace Lab_7
                     int topplace = int.MaxValue;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
+                        if (sportsman==null) continue;
                         if (sportsman.Place > 0 && sportsman.Place < topplace && sportsman!=null)
                         {
                             topplace = sportsman.Place;
