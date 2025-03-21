@@ -162,7 +162,7 @@ namespace Lab_7
                 {
                     temp[i++] = p;
                 }
-                temp[_participants.Length - 1] = part;
+                temp[_participants.Length ] = part;
                 _participants = temp;
                 _sportsmenind ++;
 
