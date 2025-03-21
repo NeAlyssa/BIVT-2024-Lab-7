@@ -123,8 +123,8 @@ namespace Lab_7
                     {
                         if (penalty >= 5) falls++;
                     }
-                    if (falls > 0.1 * cnt || this.Total >= 2 * cnt) return true;
-                    return false;
+                    return (falls > 0.1 * cnt || this.Total >= 2 * cnt);
+                    
                 }
             }
 
