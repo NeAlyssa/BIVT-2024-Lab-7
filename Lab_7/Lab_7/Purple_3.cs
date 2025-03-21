@@ -1,13 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_3
     {
@@ -76,7 +77,7 @@ namespace Lab_6
             }
             public void Evaluate(double result)
             {
-                if (_marks == null || index == _marks.Length) return;
+                if (_marks == null || index == _marks.Length || index >= 7) return;
                 _marks[index] = result;
                 index++;
             }
@@ -84,13 +85,10 @@ namespace Lab_6
             public static void SetPlaces(Participant[] participants)
             {
                 if (participants == null || participants.Length == 0) return;
-                for (int i = 0; i < participants.Length; i++)
+               
+                for (int i = 0; i < 7; i++)
                 {
-                    if (participants[i].Places == null) return;
-                }
-                for (int i = 0; i < participants[0].Places.Length; i++)
-                {
-                    for (int j = 0; j < participants.Length; j++)
+                    for (int j = 0; j < participants.Length-1; j++)
                     {
                         double max = participants[j].Marks[i];
                         int ind = j;
@@ -225,7 +223,11 @@ namespace Lab_6
             }
             public Skating(double[] moods)
             {
-                _moods = moods;
+                if (moods == null || moods.Length < 7) return;
+                Array.Resize(ref moods, 7);
+                var newArray = new double[7];
+                Array.Copy(moods, newArray, 7);
+                _moods = newArray;
                 ModificateMood();
             }
             protected abstract void ModificateMood();
@@ -266,7 +268,7 @@ namespace Lab_6
             {
                 if (_moods == null) return;
                 for (int i = 0; i < _moods.Length; i++)
-                    _moods[i] += i / 10;
+                    _moods[i] += (i+1) / 10.0;
             }
         }
         public class IceSkating : Skating
@@ -276,7 +278,7 @@ namespace Lab_6
             {
                 if (_moods == null) return;
                 for (int i = 0; i < _moods.Length; i++)
-                    _moods[i] += _moods[i] * i / 100;
+                    _moods[i] += _moods[i] * i / 100.0;
             }
         }
     }
