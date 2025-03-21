@@ -183,8 +183,8 @@ namespace Lab_7
 
                 double maxi = -1;
                
-                int maxind = 0;
-                for (int i = 1; i < teams.Length; i++)
+                int maxind =0 ;
+                for (int i = 0; i < teams.Length; i++)
                 {
                     if (teams[i] == null) continue;
                     if (teams[i].GetTeamStrength() > maxi)
@@ -219,14 +219,15 @@ namespace Lab_7
             {
                 int countp = 0;
                 int count = 0;
-                for (int i = 0; i < this.Sportsmen.Length; i++)
+                for (int i = 0; i < Sportsmen.Length; i++)
                 {
-                    if (this.Sportsmen[i] != null)
+                    if (Sportsmen[i] != null)
                     {
-                        countp += this.Sportsmen[i].Place;
+                        countp += Sportsmen[i].Place;
                         count++;
                     }
                 }
+                if (count == 0 || countp==0) return 0;
                 return 100 / countp / count;
             }
         }
@@ -242,15 +243,16 @@ namespace Lab_7
                 int countp = 0;
                 int ch = 0;
                 int pr = 1;
-                for (int i = 0; i < this.Sportsmen.Length; i++)
+                for (int i = 0; i < Sportsmen.Length; i++)
                 {
-                    if (this.Sportsmen[i] != null)
+                    if (Sportsmen[i] != null)
                     {
-                        countp += this.Sportsmen[i].Place;
-                        pr *= this.Sportsmen[i].Place;
+                        countp += Sportsmen[i].Place;
+                        pr *= Sportsmen[i].Place;
                         ch++;
                     }
                 }
+                
                 return 100 * countp * ch / pr;
             }
         }
