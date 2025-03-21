@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_5
     {
@@ -98,19 +98,19 @@ namespace Lab_6
                     {
                         case 1:
                             {
-                                if (_responses[i].Animal != "-" && _responses[i].Animal != null)
+                                if (_responses[i].Animal != "" && _responses[i].Animal != null)
                                     ans = _responses[i].Animal;
                                 break;
                             }
                         case 2:
                             {
-                                if (_responses[i].CharacterTrait != "-" && _responses[i].CharacterTrait != null)
+                                if (_responses[i].CharacterTrait != "" && _responses[i].CharacterTrait != null)
                                     ans = _responses[i].CharacterTrait;
                                 break;
                             }
                         case 3:
                             {
-                                if (_responses[i].Concept != "-" && _responses[i].Concept != null)
+                                if (_responses[i].Concept != "" && _responses[i].Concept != null)
                                     ans = _responses[i].Concept;
                                 break;
                             }
@@ -184,7 +184,7 @@ namespace Lab_6
                 }
             }
         }
-        /*
+        
         public class Report
         {
             private Research[] _researches;
@@ -213,7 +213,7 @@ namespace Lab_6
                 Array.Resize(ref _researches, _researches.Length + 1);
                 var research = new Research($"No_{_index++}_{time.ToString("MM")}/{time.ToString("YY")}");
                 _researches[_researches.Length - 1] = research;
-                return _researches[_researches.Length-1];
+                return research;
             }
             
             public (string, double)[] GetGeneralReport(int question)
@@ -296,63 +296,9 @@ namespace Lab_6
             }
             
         }
-        */
-        public class Report
-        {
-            private Research[] _researches;
-            private static int IDCounter;
-            private int ID;
-            public Research[] Researches => (_researches == null) ? _researches : (Research[])_researches.Clone();
-
-            static Report()
-            {
-                IDCounter = 1;
-            }
-
-            public Report()
-            {
-                ID = IDCounter++;
-                _researches = new Research[0];
-            }
-
-            public Research MakeResearch()
-            {
-                var MM = DateTime.Now.ToString("MM");
-                var YY = DateTime.Now.ToString("yy");
-
-                var newResearch = new Research($"No_{ID}_{MM}/{YY}");
-
-                Array.Resize(ref _researches, _researches.Length + 1);
-                _researches[_researches.Length-1] = newResearch;
-
-                return newResearch;
-            }
-
-            private string Property(Response response, int question)
-            {
-                switch (question)
-                {
-                    case 1: return response.Animal;
-                    case 2: return response.CharacterTrait;
-                    case 3: return response.Concept;
-                    default: return null;
-                }
-            }
-
-            public (string, double)[] GetGeneralReport(int question)
-            {
-                if (question < 1 || question > 3) return null;
-
-                var flattenedResponses = _researches.SelectMany(rsrch => rsrch.Responses);
-
-                var targetResponses = flattenedResponses.Where(rsp => Property(rsp, question) != null);
-                int targetResponsesCount = targetResponses.Count();
-
-                var groupedResponses = targetResponses.GroupBy(rsp => Property(rsp, question));
-
-                return groupedResponses.Select(g => (g.Key, (double)g.Count() / targetResponsesCount * 100)).ToArray();
-            }
-        }
+        
+        
     }
-    
 }
+    
+
