@@ -104,7 +104,7 @@ public class Blue_3
                     if (penalty >= 5)
                         countFalls++;
                 }
-                return 0.1*_penaltyTimes.Length < countFalls || Total >= 2*_penaltyTimes.Length;
+                return 0.1*_penaltyTimes.Length < countFalls || Total > 2*_penaltyTimes.Length;
             }
         }
 
