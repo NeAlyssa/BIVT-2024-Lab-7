@@ -203,7 +203,7 @@ namespace Lab_7
 
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (Researches == null) return null;
+                if (Researches == null || question < 1 || question > 3) return null;
                 Research sumR = new Research("");
                 foreach (var res in Researches)
                 {
