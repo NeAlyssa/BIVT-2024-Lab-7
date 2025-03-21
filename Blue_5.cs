@@ -75,7 +75,7 @@ namespace Lab_7
                     int maxPlace = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
-                        if (_sportsmen[i].Place > 0 && _sportsmen[i].Place < maxPlace) maxPlace = _sportsmen[i].Place;
+                        if (_sportsmen[i] != null && _sportsmen[i].Place > 0 && _sportsmen[i].Place < maxPlace) maxPlace = _sportsmen[i].Place;
                     }
                     return maxPlace;
                 }

@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using static Lab_6.Blue_1;
+using static Lab_7.Blue_1;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_1
     {

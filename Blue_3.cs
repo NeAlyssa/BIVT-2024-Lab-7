@@ -68,8 +68,24 @@ namespace Lab_7
             //методы 
             public static void Sort(Participant[] array)
             {
-                if (array == null || array.Length == 0) return;
-                for (int i = 1, j = 2; i < array.Length;)
+                if (array == null) return;
+                int countNotNull = 0;
+                //скипаем все null элементы, чтобы остальные были вначале массива
+                for (int k = 0; k < array.Length; k++)
+                {
+                    if (array[k] != null)
+                    {
+                        array[countNotNull] = array[k];
+                        countNotNull++;
+                    }
+                }
+                while (countNotNull < array.Length)
+                {
+                    array[countNotNull] = null;
+                    countNotNull++;
+                }
+                //сортировка не null элементов
+                for (int i = 1, j = 2; i < countNotNull;)
                 {
                     if (i == 0 || array[i - 1].Total <= array[i].Total)
                     {

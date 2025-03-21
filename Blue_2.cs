@@ -158,32 +158,17 @@ namespace Lab_7
                 {
                     if (this.Participants == null || this.Participants.Length < 3) return null;
                     int n = this.Participants.Length;
-                    if (n / 2 <= 10) 
-                    { 
-                        double[] prize = new double[n / 2];
-                        int N = 20 / (n / 2);
-                        prize[0] += 0.4 * this.Bank;
-                        prize[1] += 0.25 * this.Bank;
-                        prize[2] += 0.15 * this.Bank;
-                        for (int i = 0; i < n / 2; i++)
-                        {
-                            prize[i] += N * this.Bank / 100;
-                        }
-                        return prize;
+                    int mid = n / 2;
+                    double[] prize = new double[Math.Min(mid, 10)];
+                    int N = 20 / mid; 
+                    prize[0] += 0.4 * this.Bank; //1 место
+                    prize[1] += 0.25 * this.Bank; //2 место
+                    prize[2] += 0.15 * this.Bank; //3 место
+                    for (int i = 0; i < prize.Length; i++)
+                    {
+                        prize[i] += N * this.Bank / 100; //начисляем проценты (в том числе 1-3 месту) 
                     }
-                    else 
-                    { 
-                        double[] prize = new double[10];
-                        int N = 10;
-                        prize[0] += 0.4 * this.Bank;
-                        prize[1] += 0.25 * this.Bank;
-                        prize[2] += 0.15 * this.Bank;
-                        for (int i = 0; i < 10; i++)
-                        {
-                            prize[i] += N * this.Bank / 100;
-                        }
-                        return prize;
-                    }
+                    return prize;
                 }
             }
         }

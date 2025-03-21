@@ -126,7 +126,7 @@ namespace Lab_7
             public void Add(Team[] teams)
             {
                 if (teams == null || _manTeams == null || _womanTeams == null || teams.Length == 0) return;
-                for (int i = 0; i < teams.Length;)
+                for (int i = 0; i < teams.Length; i++)
                 {
                     if (teams[i] == null) continue;
                     this.Add(teams[i]);
