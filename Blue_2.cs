@@ -145,7 +145,7 @@ namespace Lab_7
                 get
                 {
                     if (Participants == null || Participants.Length < 3) return default(double[]);
-                    double[] prise = new double[3] { 1.5 * Bank, 1.3 * Bank, 1.2 * Bank };
+                    double[] prise = new double[3] { 0.5 * Bank, 0.3 * Bank, 0.2 * Bank };
                     return prise;
                 }
             }

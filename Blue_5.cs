@@ -75,7 +75,7 @@ namespace Lab_7
                     int mini = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
-                        if (mini > _sportsmen[i].Place && _sportsmen[i].Place > 0) mini = _sportsmen[i].Place;
+                        if (_sportsmen[i] != null && mini > _sportsmen[i].Place && _sportsmen[i].Place > 0) mini = _sportsmen[i].Place;
                     }
                     return mini;
                 }

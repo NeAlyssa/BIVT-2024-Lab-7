@@ -107,13 +107,7 @@ namespace Lab_7
                     Add(team);
                 }
             }
-            public void TeamSort()
-            {
-                Sort(_womanteams);
-                Sort(_manteams);
-
-            }
-            public void Sort(Team[]team)
+            private void TeamSort(Team[] team)
             {
                 if (team == null) return;
                 for (int i = 0; i < team.Length; i++)
@@ -129,11 +123,16 @@ namespace Lab_7
                     }
                 }
             }
+            public void Sort()
+            {
+                
+                TeamSort(_womanteams);
+                TeamSort(_manteams);
+            }
 
             public static Group Merge(Group group1, Group group2, int size)
             {
                 Group finaly = new Group("Финалисты");
-                if (size <= 0) return default(Group);
                 Group manTeam = TeamMerge(group1.ManTeams, group2.ManTeams, group1.ManTeams.Length + group2.ManTeams.Length);
                 Group womanTeam = TeamMerge(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length + group2.WomanTeams.Length);
                 finaly.Add(manTeam.ManTeams);
