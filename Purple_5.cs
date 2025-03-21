@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_5
     {
