@@ -45,7 +45,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penalties == null) return false;
+                    if (_penalties == null || _penalties.Length==0) return false;
                     for (int i = 0; i < _penalties.Length; i++)
                     {
                         if (_penalties[i] == 10)
