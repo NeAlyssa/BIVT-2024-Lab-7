@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_1
     {
@@ -80,7 +80,7 @@ namespace Lab_6
             }
             public void Jump(int[] marks)
             {
-                if (marks == null || _marks == null || marks.Length != 7) return;
+                if (marks == null || _marks == null || marks.Length != 7 || indexJumper >=4 ) return;
                 for (int i = 0; i < marks.Length; i++)
                 {
                     _marks[indexJumper, i] = marks[i];
