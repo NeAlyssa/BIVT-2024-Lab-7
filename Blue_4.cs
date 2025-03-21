@@ -119,48 +119,32 @@ namespace Lab_7
 
             public void Add(Team team)
             {
-               
-                if (team == null ) return;
-                if (team is ManTeam )
+                if (team is ManTeam manTeam && _indm < _manteams.Length)
                 {
-                    if (_indm < _manteams.Length)
-                    {
-                        ManTeam manteam = team as ManTeam;
-                        _manteams[_indm++] = manteam;
-                        
-                    }
-                    
+                    _manteams[_indm] = manTeam;
+                    _indm++;
                 }
-                else if (team is WomanTeam)
+                else if (team is WomanTeam womanTeam && _indw < _womanteams.Length)
                 {
-                    if (_indm < _womanteams.Length)
-                    {
-                        WomanTeam womanteam = team as WomanTeam;
-                        _womanteams[_indm++] = womanteam;
-                        
-                    }
-                    
+                    _womanteams[_indw] = womanTeam;
+                    _indw++;
                 }
             }
             public void Add(Team[] teams)
             {
-                if (teams==null ) return;
-
-                for (int i = 0; i < teams.Length;)
+                foreach (var team in teams)
                 {
-                    if (teams[i] == null) continue;
-                    this.Add(teams[i]);
+                    Add(team);
                 }
-
             }
             public void Sort()
             {
                 Sorti(_manteams, _indm);
                 Sorti(_womanteams, _indw);
             }
-            public void Sorti(Team[] teams, int ind)
+            private void Sorti(Team[] teams, int ind)
             {
-                if (teams == null ) return;
+                if (teams == null|| ind ==0 ) return;
                 for (int i = 0; i < ind-1; i++)
                 {
                     for (int j = 0; j < ind - i - 1; j++)
@@ -182,7 +166,7 @@ namespace Lab_7
                 res.Add(woman);
                 return res;
             }
-            public static Team[] Mergi(Team[] teams1, Team[] teams2, int size)
+            private static Team[] Mergi(Team[] teams1, Team[] teams2, int size)
             {
                 if (teams1 == null || teams2 == null) return null;
                 Team[] res = new Team[size];
