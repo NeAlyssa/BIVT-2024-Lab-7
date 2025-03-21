@@ -178,17 +178,24 @@ namespace Lab_7
                 {
                     if (this.Participants.Length < 3 || this.Participants == null) return null;
                     int mid = this.Participants.Length / 2;
-                    var topParticipants = new double[mid];
-                    Array.Copy(this.Participants, mid, topParticipants, 0, mid);
-                    double N = 20.0 / Math.Min(topParticipants.Length, 10);
-                    double[] prizes = new double[mid];
+                    int n;
+                    if (mid>10)
+                    {
+                        n=10;
+                    }
+                    else
+                    {    
+                        n=mid;
+                    }
+                    double N = 20.0 / (double)n;
+                    double[] prizes = new double[n];
                     for (int i = 3; i < mid - 1; i++)
                     {
-                        prizes[i] += (double)Bank * (N / 100);
+                        prizes[i] = Math.Round((double)this.Bank * (N / 100),5);
                     }
-                    prizes[0] = (double)Bank * 0.4;
-                    prizes[1] = (double)Bank * 0.25;
-                    prizes[2] = (double)Bank * 0.15;
+                    prizes[0] += (double)this.Bank * 0.4;
+                    prizes[1] += (double)this.Bank * 0.25;
+                    prizes[2] += (double)this.Bank * 0.15;
                     return prizes;
                 }
             }
