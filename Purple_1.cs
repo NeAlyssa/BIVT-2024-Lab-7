@@ -185,7 +185,7 @@ namespace Lab_7
 
             }
         }
-        public class Competiton
+        public class Competition
         {
             private Judge[] _judges;
             private Participant[] _participants;
