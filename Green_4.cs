@@ -44,22 +44,37 @@ namespace Lab_7
             }
             public void Sort()
             {
-                if (array == null || array.Length == 0)
+                if (_participants == null || _participants == 0)
                 {
                     return;
                 }
 
-                for (int i = 0; i < array.Length - 1; i++)
+                for (int i = 0; i < _participants.Length - 1; i++)
                 {
-                    for (int j = 0; j < array.Length - 1 - i; j++)
+                    for (int j = 0; j < _participants.Length - 1 - i; j++)
                     {
-                        if (array[j].BestJump < array[j + 1].BestJump)
+                        if (_participants[j].BestJump < _participants[j + 1].BestJump)
                         {
-                            Participant t = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = t;
+                            Participant t = _participants[j];
+                            _participants[j] = _participants[j + 1];
+                            _participants[j + 1] = t;
                         }
                     }
+                }
+            }
+            private protected Participant GetParticipantAt(int index)
+            {
+                if (index >= 0 && _participants != null)
+                {
+                    return _participants[index];
+                }
+                return default(Participant);
+            }
+            private protected void SetParticipant(int index, Participant participant)
+            {
+                if (_participants != null && index >= 0)
+                {
+                    _participants[index] = participant;
                 }
             }
             public void Print()
