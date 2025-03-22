@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks == null) return null;
+                    if (_marks == null) return default(int[,]);
                     int[,] copmarks = new int[2, 5];
                     for (int i = 0; i < 2; i++)
                     {
@@ -66,7 +67,7 @@ namespace Lab_7
             public void Jump(int[] result) // заполняет результат очередного прыжка оценками судей
             {
                 if (result == null) return;
-                if (_marks == null || _jumped == null) return;
+                if (_marks == null) return;
 
                 int nojump = Array.FindIndex(_jumped, jump => !jump); // находим первый неоценённый прыжок
 
@@ -85,7 +86,7 @@ namespace Lab_7
 
             public static void Sort(Participant[] array) // по убыванию суммарного результата спортсмена
             {
-                if (array == null || array.Length == 0) return;
+                if (array == null || array.Length <= 1) return;
                 // делаем сортировку
 
                 for (int i = 0; i < array.Length - 1; i++)
@@ -112,7 +113,6 @@ namespace Lab_7
             private string _name;
             private int _bank;
             private Participant[] _participants;
-            private int _participantCount;
 
             public string Name => _name;
             public int Bank => _bank;
@@ -124,24 +124,25 @@ namespace Lab_7
                 _name = name;
                 _bank = bank;
                 _participants = new Participant[0];
-                _participantCount = 0;
             }
 
             public void Add(Participant participant) // одна команда в группу
             {
                 if (_participants == null) return;
 
-                if (_participantCount < _participants.Length)
+                Participant[] participant2 = new Participant[_participants.Length + 1];
+                for (int i = 0; i < _participants.Length; i++)
                 {
-                    _participants[_participantCount] = participant;
-                    _participantCount++;
+                    participant2[i] = _participants[i];
                 }
+                participant2[_participants.Length] = participant;
+                _participants = participant2;
             }
-            public void Add(Participant[] participant) // несколько
+            public void Add(Participant[] participants) // несколько
             {
-                if (_participants == null || _participants.Length == 0 || participant == null) return;
+                if (_participants == null || _participants.Length == 0 || participants == null) return;
 
-                foreach (var team in _participants)
+                foreach (Participant team in participants)
                 {
                     Add(team);
                 }
@@ -155,11 +156,11 @@ namespace Lab_7
                 get
                 {
                     double[] prizes = new double[3];
-                    if (this.Participants.Length < 3 || this.Participants == null) return prizes;
+                    if (this.Participants.Length < 3 || this.Participants == null) return default(double[]);
 
-                    prizes[0] = (double)this.Bank * 0.5; // Первое место
-                    prizes[1] = (double)this.Bank * 0.3; // Второе место
-                    prizes[2] = (double)this.Bank * 0.2; // Третье место
+                    prizes[0] = this.Bank * 0.5; // Первое место
+                    prizes[1] = this.Bank * 0.3; // Второе место
+                    prizes[2] = this.Bank * 0.2; // Третье место
 
                     return prizes;
                 }
@@ -173,23 +174,31 @@ namespace Lab_7
             {
                 get
                 {
-                    if (this.Participants.Length < 3 || this.Participants == null) return null;
+                    if (this.Participants.Length < 3 || this.Participants == null) return default(double[]);
 
-                    var top = new double[this.Participants.Length / 2];
-
-                    Array.Copy(Participants, this.Participants.Length / 2, top, 0, this.Participants.Length / 2);
-
-                    double N = 20.0 / Math.Min(top.Length, 10);
-                    double[] prizes = new double[this.Participants.Length / 2];
-
-                    for (int i = 3; i < this.Participants.Length / 2 - 1; i++)
+                    int n;
+                    double[] prizes;
+                    if (Participants.Length / 2 < 10)
                     {
-                        prizes[i] += (double)this.Bank * (N / 100);
+                        prizes = new double[Participants.Length / 2];
+                        n = Participants.Length / 2;
+                    }
+                    else
+                    {
+                        prizes = new double[10];
+                        n = 10;
                     }
 
-                    prizes[0] += (double)this.Bank * 0.4; // 40%
-                    prizes[1] += (double)this.Bank * 0.25; // 25%
-                    prizes[2] += (double)this.Bank * 0.15; // 15%
+                    double N = 20.0 / n;
+
+                    for (int i = 0; i < n; i++)
+                    {
+                        prizes[i] = this.Bank * (N / 100);
+                    }
+
+                    prizes[0] += this.Bank * 0.4; // 40%
+                    prizes[1] += this.Bank * 0.25; // 25%
+                    prizes[2] += this.Bank * 0.15; // 15%
 
                     return prizes;
                 }

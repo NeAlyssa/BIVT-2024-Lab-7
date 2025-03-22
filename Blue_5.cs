@@ -102,16 +102,16 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null || _sportsmen == null || _count >= _sportsmen.Length) return;
+                if (_sportsmen == null || sportsman == null || _count >= _sportsmen.Length) return;
 
                 _sportsmen[_count] = sportsman;
                 _count++;
             }
             public void Add(Sportsman[] newSportsmen)
             {
-                if (_sportsmen == null || _sportsmen.Length == 0 || _sportsmen == null) return;
+                if (_sportsmen == null || newSportsmen == null) return;
 
-                foreach (var sportsman in newSportsmen)
+                foreach (Sportsman sportsman in newSportsmen)
                 {
                     Add(sportsman);
                 }
@@ -119,7 +119,7 @@ namespace Lab_7
 
             public static void Sort(Team[] teams)
             {
-                if (teams == null || teams.Length == 0) return;
+                if (teams == null || teams.Length <= 1) return;
                 // делаем сортировку
 
 
@@ -149,7 +149,7 @@ namespace Lab_7
             protected abstract double GetTeamStrength();
             public static Team GetChampion(Team[] teams)
             {
-                if (teams == null || teams.Length == 0) return null;
+                if (teams == null) return null;
 
                 Team person = teams[0];
                 double max;
@@ -163,7 +163,10 @@ namespace Lab_7
                 }
                 foreach (Team team in teams)
                 {
-                    if (team == null) continue;
+                    if (team == null)
+                    {
+                        continue;
+                    }
                     double power = team.GetTeamStrength();
                     if (power > max)
                     {
@@ -190,14 +193,14 @@ namespace Lab_7
             }
             protected override double GetTeamStrength()
             {
-                int suma = 0, c = 0, result = 0;
-                foreach (Sportsman man in this.Sportsmen)
+                double result = 0;
+                foreach (Sportsman man in Sportsmen)
                 {
-                    if (man == null) continue;
-                    suma += man.Place;
-                    c++;
+                    
+                    result += man.Place;
                 }
-                result = 100 / (suma / c);
+                result /= 2;
+                result = 100.0 / result;
 
                 return result;
             }
@@ -209,15 +212,14 @@ namespace Lab_7
             }
             protected override double GetTeamStrength()
             {
-                int c = 0, result = 0, suma = 0, proiz = 0;
-                foreach (Sportsman woman in this.Sportsmen)
+                double result = 0, suma = 0, proiz = 1;
+                foreach (Sportsman woman in Sportsmen)
                 {
-                    if (woman == null) continue;
+                    
                     suma += woman.Place;
-                    c++;
                     proiz *= woman.Place;
                 }
-                result = 100 * suma * c / proiz;
+                result = 100 * suma * Sportsmen.Length / proiz;
 
                 return result;
             }

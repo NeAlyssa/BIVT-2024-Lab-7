@@ -51,7 +51,7 @@ namespace Lab_7
 
             public void PlayMatch(int result) // добавляет в массив игр результат очередного матча
             {
-                if (_scores == null || _scores.Length == 0) return;
+                if (_scores == null) return;
                 int[] t = new int[_scores.Length + 1];
                 for(int i = 0; i < _scores.Length; i++)
                 {
@@ -113,30 +113,36 @@ namespace Lab_7
 
             public void Add(Team team) // одна команда в группу
             {
-                if (team == null || _manteams == null || _womanteams == null) return;
+                if (team == null) return;
 
                 if (team is ManTeam manteam)
                 {
-                    if (_manind < _manteams.Length)
+                    if (_manteams == null || _manind >= _manteams.Length)
                     {
-                        _manteams[_manind] = manteam;
-                        _manind++;
+                        return;
+                    }
+                    else
+                    {
+                        _manteams[_manind++] = manteam;
                     }
                 }
                 else if (team is WomanTeam womanteam)
                 {
-                    if (_womanind < _womanteams.Length)
+                    if (_womanteams == null || _womanind >= _womanteams.Length)
+                    {
+                        return;
+                    }
+                    else
                     {
                         _womanteams[_womanind++] = womanteam;
-                        _womanind++;
                     }
                 }
             }
             public void Add(Team[] teams) // несколько
             {
-                if (teams == null || teams.Length == 0 || _manteams == null || _womanteams == null) return;
+                if (teams == null || teams.Length == 0) return;
 
-                foreach (var team in teams)
+                foreach (Team team in teams)
                 {
                     Add(team);
                 }
@@ -144,17 +150,17 @@ namespace Lab_7
             public void Sort()
             {
                 // делаем сортировку
-                SortOneTeam(_manteams);
-                SortOneTeam(_womanteams);
+                SortOneTeam(_manteams, _manind);
+                SortOneTeam(_womanteams, _womanind);
 
             }
 
-            private void SortOneTeam(Team[] team)
+            private void SortOneTeam(Team[] team, int ind)
             {
-                if (team == null || team.Length == 0) return;
-                for (int i = 0; i < team.Length; i++)
+                if (team == null || ind == 0) return;
+                for (int i = 0; i < ind; i++)
                 {
-                    for (int j = 0; j < team.Length - i - 1; j++)
+                    for (int j = 0; j < ind - i - 1; j++)
                     {
                         if (team[j].TotalScore < team[j + 1].TotalScore)
                         {       
@@ -179,7 +185,7 @@ namespace Lab_7
                 if (group1 == null || group2 == null) return null;
                 Team[] resultat = new Team[size];
                 int i = 0, k = 0, h = 0, j = 0, n = 0;
-                while (i < size && j < size)
+                while (i < size / 2 && j < size / 2 && group1[i] != null && group2[j] != null)
                 {
                     if (group1[i].TotalScore >= group2[j].TotalScore)
                     {
@@ -194,16 +200,16 @@ namespace Lab_7
                         j++;
                     }
                 }
-                while (k < size)
+                while (i < size / 2)
                 {
-                    resultat[n] = group1[k];
-                    k++;
+                    resultat[n] = group1[i];
+                    i++;
                     n++;
                 }
-                while (h < size)
+                while (j < size / 2)
                 {
-                    resultat[n] = group2[h];
-                    h++;
+                    resultat[n] = group2[j];
+                    j++;
                     n++;
                 }
                 return resultat;
