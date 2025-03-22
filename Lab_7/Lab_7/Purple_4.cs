@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Lab_7.Purple_4;
 
 namespace Lab_7
 {
@@ -75,7 +76,16 @@ namespace Lab_7
             private string _name;
             private Sportsman[] _sportsmen;
             public string Name => _name;
-            public Sportsman[] Sportsmen => _sportsmen;
+            public Sportsman[] Sportsmen
+            {
+                get
+                {
+                    if (_sportsmen == null) return null;
+                    var newArray = new Sportsman[_sportsmen.Length];
+                    Array.Copy(_sportsmen, newArray, _sportsmen.Length);
+                    return newArray;
+                }
+            }
             public Group(string name)
             {
                 _name = name;
@@ -84,7 +94,12 @@ namespace Lab_7
             public Group(Group group)
             {
                 _name = group.Name;
-                _sportsmen = group.Sportsmen;
+               if (group.Sportsmen == null)
+                    _sportsmen = null;
+                else {
+                    _sportsmen = new Sportsman[group.Sportsmen.Length];
+                    Array.Copy(group.Sportsmen, _sportsmen, group.Sportsmen.Length);
+                }
             }
             public void Add(Sportsman sportsman)
             {
@@ -132,10 +147,12 @@ namespace Lab_7
             {
                 Group groupmerge = new Group("Ans");
                 if (group1.Sportsmen == null && group2.Sportsmen == null) return group1;
-                if (group2.Sportsmen == null) return group2;
+                if (group1.Sportsmen == null) return group2;
                 if (group2.Sportsmen == null) return group1;
                 groupmerge._sportsmen = new Sportsman[group1.Sportsmen.Length + group2.Sportsmen.Length];
                 int i1 = 0, i2 = 0, k = 0;
+                group1.Sort();
+                group2.Sort();
                 while (group1.Sportsmen.Length > i1 && group2.Sportsmen.Length > i2)
                 {
                     if (group1.Sportsmen[i1].Time < group2.Sportsmen[i2].Time)
