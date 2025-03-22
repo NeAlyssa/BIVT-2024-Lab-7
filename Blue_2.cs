@@ -14,47 +14,50 @@ namespace Lab_7
         {
             private string _name;
             private int _bank;
-            private int[] _participants;
+            private Participant[] _participants;
 
             public string Name => _name;
             public int Bank => _bank;
-            public int[] Participants
-            {
-                get
-                {
-                    if (_participants == null) return default(int[]);
-                    var newArray = new int[_participants.Length];
-                    Array.Copy(_participants, newArray, newArray.Length);
-                    _participants = newArray;
-                    return _participants;
-                }
-            }
+            public Participant[] Participants => _participants;
+
+            //вопрос почему без ссылки 
+            //public int[] Participants
+            //{
+            //    get
+            //    {
+            //        if (_participants == null) return default(int[]);
+            //        var newArray = new int[_participants.Length];
+            //        Array.Copy(_participants, newArray, newArray.Length);
+            //        _participants = newArray;
+            //        return _participants;
+            //    }
+            //}
             public abstract double[] Prize { get; }
 
             public WaterJump(string name, int bank)
             {
                 _name = name;
                 _bank = bank;
-                _participants = new int[0];
+                _participants = new Participant[0];
             }
-            public void Add(int participant) 
+            public void Add(Participant participant) 
             {
                 if (_participants == null) return;
-                var newArray = new int[_participants.Length +1];
-                Array.Copy(_participants, newArray, newArray.Length);
+                Participant[] newArray = new Participant[_participants.Length +1];
+                Array.Copy(_participants, newArray, _participants.Length);
                 newArray[_participants.Length] = participant;
                 _participants = newArray;
             }
-            public void Add(int[] participant)
+            public void Add(Participant[] participant)
             {
-                if (_participants == null) return;
-                foreach(var player in participant)
+                if (_participants == null || participant == null) return;
+                foreach(Participant player in participant)
                 {
                     Add(player);
                 }
             }
         }
-        public abstract class WaterJump3m : WaterJump
+        public class WaterJump3m : WaterJump
         {
             public WaterJump3m(string name, int bank) : base(name, bank) { }
             public override double[] Prize
@@ -70,7 +73,7 @@ namespace Lab_7
             }
         }
         
-        public abstract class WaterJump5m : WaterJump
+        public class WaterJump5m : WaterJump
         {
             public WaterJump5m(string name, int bank) : base(name, bank) { }
 
