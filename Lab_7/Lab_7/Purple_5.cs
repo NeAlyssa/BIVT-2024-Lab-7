@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static Lab_7.Purple_4;
+using static Lab_7.Purple_5;
 
 
 
@@ -37,19 +39,19 @@ namespace Lab_7
                     {
                         case 1:
                             {
-                                if (responses[i].Animal != "" || responses[i].Animal != null)
+                                if (responses[i].Animal != "" || responses[i].Animal != "-"|| responses[i].Animal != null)
                                     count++;
                                 break;
                             }
                         case 2:
                             {
-                                if (responses[i].CharacterTrait != "" || responses[i].CharacterTrait != null)
+                                if (responses[i].CharacterTrait != ""||  responses[i].CharacterTrait != "-" || responses[i].CharacterTrait != null)
                                     count++;
                                 break;
                             }
                         case 3:
                             {
-                                if (responses[i].Concept != "" || responses[i].Concept != null)
+                                if (responses[i].Concept != "" || responses[i].Concept != ""|| responses[i].Concept != null)
                                     count++;
                                 break;
                             }
@@ -68,7 +70,16 @@ namespace Lab_7
             private Response[] _responses;
 
             public string Name => _name;
-            public Response[] Responses => _responses;
+            public Response[] Responses
+            {
+                get
+                {
+                    if (_responses == null) return null;
+                    var newArray = new Response[_responses.Length];
+                    Array.Copy(_responses, newArray, _responses.Length);
+                    return newArray;
+                }
+            }
 
 
 
@@ -80,7 +91,7 @@ namespace Lab_7
             }
             public void Add(string[] answers)
             {
-                if (_responses == null || answers.Length != 3) return;
+                if (_responses == null || answers == null || answers.Length != 3) return;
                 Response a = new Response(answers[0], answers[1], answers[2]);
                 Array.Resize(ref _responses, _responses.Length + 1);
                 _responses[_responses.Length - 1] = a;
@@ -218,7 +229,7 @@ namespace Lab_7
             
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (_researches == null) return (null);
+                if (_researches == null || question < 1 || question > 3) return (null);
                 int countans = 0;
                 (string, double)[] report = new(string, double)[0];
                 string[] answers = new string[0];
