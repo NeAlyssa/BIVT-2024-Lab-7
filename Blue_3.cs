@@ -129,7 +129,7 @@ namespace Lab_7
                             n++;
                         }
                     }
-                    if (n > 0.1 * _penaltyTimes.Length || this.Total >= 2 * _penaltyTimes.Length)
+                    if (n > 0.1 * _penaltyTimes.Length || this.Total > 2 * _penaltyTimes.Length)
                     {
                         return true;
                     }
@@ -179,12 +179,8 @@ namespace Lab_7
             }
             public override void PlayMatch(int Times)
             {
-                if (_penaltyTimes == null) return;
                 base.PlayMatch(Times);
-                if (Times >= 0)
-                {
-                    _time += Times;
-                }
+                _time += Times;
             }
         }
     }

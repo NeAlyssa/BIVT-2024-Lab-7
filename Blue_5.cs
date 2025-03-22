@@ -77,10 +77,11 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen[0] == null) return 0;
+                    if (_sportsmen == null || _sportsmen[0] == null) return 18;
 
-                    int topPlace = 18;
-                    for (int i = 0; i < _count; i++)
+                    int topPlace = _sportsmen[0].Place;
+
+                    for (int i = 1; i < _count; i++)
                     {
                         if (_sportsmen[i].Place < topPlace)
                         {
@@ -102,10 +103,9 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null || sportsman == null || _count >= _sportsmen.Length) return;
+                if (_sportsmen == null || sportsman == null || _count == 6) return;
 
-                _sportsmen[_count] = sportsman;
-                _count++;
+                _sportsmen[_count++] = sportsman;
             }
             public void Add(Sportsman[] newSportsmen)
             {
@@ -135,7 +135,7 @@ namespace Lab_7
                         {
                             continue;
                         }
-                        else if (teams[j].TopPlace > teams[j + 1].TopPlace && teams[j].SummaryScore == teams[j + 1].SummaryScore)
+                        else if (teams[j].SummaryScore < teams[j + 1].SummaryScore)
                         {
                             (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]);
                         }

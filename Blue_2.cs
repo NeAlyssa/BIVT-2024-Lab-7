@@ -140,7 +140,7 @@ namespace Lab_7
             }
             public void Add(Participant[] participants) // несколько
             {
-                if (_participants == null || _participants.Length == 0 || participants == null) return;
+                if (_participants == null || participants.Length == 0 || participants == null) return;
 
                 foreach (Participant team in participants)
                 {
