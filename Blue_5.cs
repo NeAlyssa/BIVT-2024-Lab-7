@@ -63,6 +63,7 @@ namespace Lab_7
                 get
                 {
                     if (_sportsmen == null) return 0;
+                    if (_sportsmen[0] == null) return 0;
 
                     int sum = 0;
 
