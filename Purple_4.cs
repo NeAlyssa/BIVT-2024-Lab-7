@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -117,17 +118,9 @@ namespace Lab_7
                 var group = new Group("Финалисты");
                 var g1 = group1._sportsmen;
                 var g2 = group2._sportsmen;
-                if (g1 == null || g2 == null) return group;
-                if (group1._sportsmen == null)
-                {
-                    group._sportsmen = group2._sportsmen;
-                    return group;
-                }
-                if (group2._sportsmen == null)
-                {
-                    group._sportsmen = group1._sportsmen;
-                    return group;
-                }
+                if (group1._sportsmen == null || group2._sportsmen == null) return group;
+                if (g1 == null) g1 = new Sportsman[0];
+                if (g2 == null) g2 = new Sportsman[0];
                 group._sportsmen = new Sportsman[g1.Length + g2.Length];
                 int ind1 = 0, ind2 = 0, ind = 0;
                 while (ind1 < g1.Length && ind2 < g2.Length)
@@ -164,20 +157,21 @@ namespace Lab_7
                 if (_sportsmen == null) return;
                 Sort();
                 Split(out Sportsman[] men, out Sportsman[] women);
-                if (men == null || women == null) return;
-                if (men[0].Time > women[0].Time) { (men, women) = (women, men); }
+                if (men != null && women != null && men[0].Time > women[0].Time) { (men, women) = (women, men); }
                 int ind = 0;
                 int i = 0;
                 for (; i < men.Length && i < women.Length; i++)
                 {
-                    _sportsmen[ind] = women[i];
-                    ind++;
+
                     _sportsmen[ind] = men[i];
+                    ind++;
+                    _sportsmen[ind] = women[i];
                     ind++;
                 }
 
-                for (int j = i; i < men.Length; j++) _sportsmen[ind++] = men[j];
-                for (int j = i; j < women.Length; j++) _sportsmen[ind++] = women[j];
+                for (int j = i; i < men.Length; j++) { _sportsmen[ind] = men[j]; ind++; }
+                for (int j = i; j < women.Length; j++) {_sportsmen[ind] = women[j]; ind++;
+            }
             }
         }
         public class SkiMan : Sportsman
