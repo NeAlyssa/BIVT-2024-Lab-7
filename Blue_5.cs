@@ -37,11 +37,12 @@ public class Blue_5
                 if (_sportsmen == null) return 0;
                 int s=0;
                 for (int i=0;i<_sportsmen.Length;i++){
+                    if (_sportsmen[i] == null) continue;
                     if (_sportsmen[i].Place == 1) {s+=5;}
-                    if (_sportsmen[i].Place == 2) {s+=4;}
-                    if (_sportsmen[i].Place == 3) {s+=3;}
-                    if (_sportsmen[i].Place == 4) {s+=2;}
-                    if (_sportsmen[i].Place == 5) {s+=1;}
+                    else if (_sportsmen[i].Place == 2) {s+=4;}
+                    else if (_sportsmen[i].Place == 3) {s+=3;}
+                    else if (_sportsmen[i].Place == 4) {s+=2;}
+                    else if (_sportsmen[i].Place == 5) {s+=1;}
                 }
                 return s;
             }

@@ -97,20 +97,22 @@ public class Blue_2
 
         public void Add(Participant part){
             if (_participants == null) return;
-            if(_partid < _participants.Length){
-                _participants[_partid] = part;
-                _partid++;
+            int l = _participants.Length;
+            Participant[] party = new Participant[l +1];
+            int n=0;
+            foreach(Participant par in _participants){
+                party[n] = par;
+                n++;
             }
+            party[l] = part;
+            _participants = party;
+            _partid++;
         }
         public void Add(Participant[] parts)
             {
                 if (_participants == null || parts == null || parts.Length == 0) return;
-                int i = 0;
-                while (_partid < _participants.Length && i < parts.Length)
-                {
-                    _participants[_partid] = parts[i];
-                    _partid++;
-                    i++;
+                foreach (Participant pro in parts){
+                    Add(pro);
                 }
             }
     }
