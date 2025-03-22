@@ -161,8 +161,8 @@ namespace Lab_7
         public class HockeyPlayer : Participant
         {
             //поля
-            private int _countPlayers;
-            private int _timePlayers;
+            private static int _countPlayers;
+            private static int _timePlayers;
             //свойства
             public override bool IsExpelled
             {

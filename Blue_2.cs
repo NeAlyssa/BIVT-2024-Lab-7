@@ -63,7 +63,7 @@ namespace Lab_7
             public void Jump(int[] result)
             {
                 if (result == null || _marks == null || result.Length == 0) return;
-                if (_count != 0 || _count != 1) return;
+                if (_count != 0 && _count != 1) return;
                 for (int j = 0; j < _marks.GetLength(1); j++)
                 {
                     _marks[_count, j] = result[j];
