@@ -229,6 +229,7 @@ namespace Lab_7
                 Array.Copy(moods, newArray, 7);
                 _moods = newArray;
                 ModificateMood();
+                _participants = new Participant[0];
             }
             protected abstract void ModificateMood();
             public void Evaluate(double[] marks)
@@ -254,10 +255,12 @@ namespace Lab_7
             }
             public void Add(Participant[] participants)
             {
-                if (_participants == null) _participants = new Participant[0];
                 if (participants == null || participants.Length == 0) return;
-                var newArray = new Participant[participants.Length];
-                Array.Copy(participants, newArray, participants.Length);
+                if (_participants == null) _participants = new Participant[0];
+                
+                var newArray = new Participant[participants.Length+_participants.Length];
+                Array.Copy(_participants, newArray, _participants.Length);
+                Array.Copy(participants,0, newArray,_participants.Length, participants.Length);
                 _participants = newArray;
             }
         }
