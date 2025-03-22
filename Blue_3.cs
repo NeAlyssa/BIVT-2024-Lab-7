@@ -138,6 +138,12 @@ namespace Lab_7
             {
                 _countOfAll++;
             }
+            //нет модификатора доступа
+            static HockeyPlayer()
+            {
+                _totalPenaltyTimeOfAll = 0;
+                _countOfAll = 0;
+            }
             public override void PlayMatch(int time)
             {
                 base.PlayMatch(time);
