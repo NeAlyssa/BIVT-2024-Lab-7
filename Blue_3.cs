@@ -148,20 +148,20 @@ namespace Lab_7
         }
         public class HockeyPlayer : Participant
         {
-            private int _player;
-            private int _time;
+            private int _player = 0;
+            private int _time = 0;
 
             public HockeyPlayer(string name, string surname) : base(name, surname)
             {
-                _penaltyTimes = new int[0];
                 _player++;
             }
 
+            private int Times => _time;
             public override bool IsExpelled
             {
                 get
                 {
-                    if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
+                    if (_penaltyTimes == null) return false;
                     for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
                         if (_penaltyTimes[k] >= 10)

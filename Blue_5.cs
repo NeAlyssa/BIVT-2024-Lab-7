@@ -101,11 +101,11 @@ namespace Lab_7
                 _count = 0;
             }
 
-            public void Add(Sportsman sportsman)
+            public void Add(Sportsman newsportsman)
             {
-                if (_sportsmen == null || sportsman == null || _count == 6) return;
+                if (_sportsmen == null || newsportsman == null || _count == 6) return;
 
-                _sportsmen[_count++] = sportsman;
+                _sportsmen[_count++] = newsportsman;
             }
             public void Add(Sportsman[] newSportsmen)
             {
