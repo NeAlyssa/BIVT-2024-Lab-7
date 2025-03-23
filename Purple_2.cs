@@ -20,16 +20,7 @@ namespace Lab_7
             public string Name => _name;
             public string Surname => _surname;
             public int Distance => _distance;
-            public int[] Marks
-            {
-                get
-                {
-                    if (_marks == null) return default(int[]);
-                    var newArray = new int[_marks.Length];
-                    Array.Copy(_marks, newArray, _marks.Length);
-                    return newArray;
-                }
-            }
+            public int[] Marks => _marks;
 
             public int Result
             {

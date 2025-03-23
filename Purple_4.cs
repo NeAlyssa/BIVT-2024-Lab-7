@@ -101,34 +101,22 @@ namespace Lab_7
             public void Add(Sportsman[] newSportsmen)
             {
                 if (newSportsmen == null || _sportsmen == null) return;
-                int oldLength = _sportsmen.Length;
+                int oldLength = _sportsmen.Length;  
                 Array.Resize(ref _sportsmen, _sportsmen.Length + newSportsmen.Length);
                 Array.Copy(newSportsmen, 0, _sportsmen, oldLength, newSportsmen.Length);
             }
 
             public void Add(Group group)
             {
-                if (group.Sportsmen == null || _sportsmen == null) return;
-                int oldLength = _sportsmen.Length;
-                Array.Resize(ref _sportsmen, _sportsmen.Length + group.Sportsmen.Length);
-                Array.Copy(group.Sportsmen, 0, _sportsmen, oldLength, group.Sportsmen.Length);
+                Add(group.Sportsmen);
             }
 
             public void Sort()
             {
                 if (_sportsmen == null) return;
-                for (int i = 0; i < _sportsmen.Length; i++)
-                {
-                    Sportsman key = _sportsmen[i];
-                    int j = i - 1;
 
-                    while (j >= 0 && _sportsmen[j].Time > key.Time) //ascending
-                    {
-                        _sportsmen[j + 1] = _sportsmen[j];
-                        j = j - 1;
-                    }
-                    _sportsmen[j + 1] = key;
-                }
+                var sortedSportsmen = _sportsmen.OrderBy(x => x.Time).ToArray();
+                Array.Copy(sortedSportsmen, _sportsmen, _sportsmen.Length);
             }
 
             public static Group Merge(Group group1, Group group2)
@@ -187,7 +175,6 @@ namespace Lab_7
                     if (i < menCount) result.Add(sortedSkiMen[i++]);
                     if (j < womenCount) result.Add(sortedSkiWomen[j++]);
                 }
-
                 _sportsmen = result.ToArray();
             }
 
