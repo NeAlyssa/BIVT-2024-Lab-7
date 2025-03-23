@@ -64,7 +64,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants.Length < 3 || Participants == null) return null;
+                    if (Participants.Length < 3 || Participants == null) return default(double[]);
                     double first = Bank * 0.5;
                     double second = Bank * 0.3;
                     double third = Bank * 0.2;
@@ -81,7 +81,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants.Length < 3 || Participants == null) return null;
+                    if (Participants.Length < 3 || Participants == null) return default(double[]);
                     int count = 0;
                     if (Participants.Length / 2 <= 10) count = Participants.Length / 2;
                     else count = 10;

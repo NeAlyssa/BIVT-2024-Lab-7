@@ -154,7 +154,7 @@ namespace Lab_7
                 int count = 0;
                 foreach (Sportsman player in Sportsmen)
                 {
-                    if(player.Place > 0)
+                    if(player != null && player.Place > 0)
                     {
                         teamStrength += player.Place;
                         count++;
@@ -174,18 +174,18 @@ namespace Lab_7
             {
                 if (Sportsmen == null) return 0;
                 double sumPlace = 0;
-                double multiplySum = 0;
+                double multiplySum = 1; //ofc its 1 
                 int count = 0;
                 foreach(Sportsman player in Sportsmen)
                 {
-                    if (player.Place > 0)
+                    if (player != null && player.Place > 0)
                     {
                         sumPlace += player.Place;
                         multiplySum *= player.Place;
                         count++;
                     }
                 }
-                if (multiplySum == 0) return 0;
+                if (multiplySum == 0 || count == 0) return 0;
                 sumPlace = sumPlace * count / multiplySum;
                 return 100 * sumPlace;
             }

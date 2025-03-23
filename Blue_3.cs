@@ -116,7 +116,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return true;
+                    if (_penaltyTimes == null) return false;
                     if (Total > _penaltyTimes.Length * 2) return true;
                     int matchesWithFiveFouls = 0;
                     foreach (int fouls in _penaltyTimes)
@@ -153,7 +153,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return true;
+                    if (_penaltyTimes == null) return false;
                     foreach(var time in _penaltyTimes)
                     {
                         if (time >= 10) return true;
