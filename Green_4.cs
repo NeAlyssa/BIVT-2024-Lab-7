@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Xml.Linq;
@@ -97,7 +97,43 @@ namespace Lab_7
                     participant.Print();
                 }
             }
+            public class LongJump : Discipline
+            {
+                public LongJump() : base("Long jump") { }
 
+                public override void Retry(int index)
+                {
+                    Participant participant = GetParticipantAt(index);
+
+                    double BestJump = participant.BestJump;
+
+
+
+                    participant = new Participant(participant.Name, participant.Surname);
+
+                    participant.Jump(BestJump);
+
+                    SetParticipant(index, participant);
+                }
+            }
+            public class HighJump : Discipline
+            {
+                public HighJump() : base("High jump") { }
+
+                public override void Retry(int index)
+                {
+                    Participant participant = GetParticipantAt(index);
+
+                    double[] jumps = participant.Jumps;
+                    Participant new_ = new Participant(participant.Name, participant.Surname);
+
+                    for (int i = 0; i < jumps.Length - 1; i++)
+                    {
+                        new_.Jump(jumps[i]);
+                    }
+                    SetParticipant(index, new_);
+                }
+            }
 
             public abstract void Retry(int index);
 
