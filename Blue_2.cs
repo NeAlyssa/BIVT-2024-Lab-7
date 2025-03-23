@@ -177,9 +177,9 @@ namespace Lab_7
                             prize[i] += 0.01 * N * Bank;
                         }
                     }
-                    prize[0] += 0.4 * Bank;
-                    prize[1] += 0.25 * Bank;
-                    prize[2] += 0.15 * Bank;
+                    prize[0] = 0.4 * Bank;
+                    prize[1] = 0.25 * Bank;
+                    prize[2] = 0.15 * Bank;
                     return prize;
                 }
             }
