@@ -44,7 +44,7 @@ namespace Lab_7
             }
             public void Sort()
             {
-                if (_participants == null || _participants == 0)
+                if (_participants == null || _participants.Length == 0)
                 {
                     return;
                 }
@@ -95,10 +95,16 @@ namespace Lab_7
             {
                 Participant participant = GetParticipantAt(index);
 
-                double BestJump = participant.BestJump;
-                participant = new Participant(participant.Name, participant.Surname);
-                participant.Jump(BestJump);
-                SetParticipant(index, participant);
+                double bestJump = participant.BestJump;
+
+                Participant new_Participant = new Participant(participant.Name, participant.Surname);
+
+                new_Participant.Jump(bestJump);
+
+                new_Participant.Jump(0);
+                new_Participant.Jump(0);
+
+                SetParticipant(index, new_Participant);
             }
         }
         public class HighJump : Discipline
@@ -109,16 +115,20 @@ namespace Lab_7
             {
                 Participant participant = GetParticipantAt(index);
 
-                double[] jumps = participant.Jumps;
-                Participant new_ = new Participant(participant.Name, participant.Surname);
+                Participant new_Participant = new Participant(participant.Name, participant.Surname);
 
+                double[] jumps = participant.Jumps;
                 for (int i = 0; i < jumps.Length - 1; i++)
                 {
-                    new_.Jump(jumps[i]);
+                    new_Participant.Jump(jumps[i]);
                 }
-                SetParticipant(index, new_);
+
+                new_Participant.Jump(0);
+
+                SetParticipant(index, new_Participant);
             }
         }
+
         public struct Participant
         {
             private string _name;
@@ -177,6 +187,7 @@ namespace Lab_7
                         return;
                     }
                 }
+                _jumps[_jumps.Length - 1] = result;
             }
 
             public static void Sort(Participant[] array)

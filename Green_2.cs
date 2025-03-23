@@ -112,6 +112,10 @@ namespace Lab_7
                     if (_marks[i] == 0)
                     {
                         _marks[i] = mark;
+                        if (IsExcellent)
+                        {
+                            _excellent_k++;
+                        }
                         return;
                     }
                 }
