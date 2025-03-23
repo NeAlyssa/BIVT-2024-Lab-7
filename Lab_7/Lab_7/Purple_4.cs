@@ -21,7 +21,7 @@ namespace Lab_7
             public string Surname => _surname;
             public double Time => _time;
             private int f;
-            public static void Sorted(Sportsman[] array)
+            private static void Sorted(Sportsman[] array)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -94,7 +94,7 @@ namespace Lab_7
             public Group(Group group)
             {
                 _name = group.Name;
-               if (group.Sportsmen == null)
+                if (group.Sportsmen == null)
                     _sportsmen = null;
                 else {
                     _sportsmen = new Sportsman[group.Sportsmen.Length];
@@ -103,29 +103,20 @@ namespace Lab_7
             }
             public void Add(Sportsman sportsman)
             {
-                var s = Sportsmen;
-                if (s == null) return;
-                _sportsmen = new Sportsman[s.Length + 1];
-                Array.Copy(s, _sportsmen, s.Length);
-                _sportsmen[s.Length] = sportsman;
+                if (_sportsmen == null || sportsman == null) return;
+                Array.Resize(ref _sportsmen, _sportsmen.Length + 1);
+                _sportsmen[_sportsmen.Length - 1] = sportsman;
             }
             public void Add(Sportsman[] sportsmen)
             {
-                if (sportsmen == null) return;
-                var s = Sportsmen;
-                if (s == null) return;
-                _sportsmen = new Sportsman[s.Length + sportsmen.Length];
-                Array.Copy(s, _sportsmen, s.Length);
-                Array.Copy(sportsmen, 0, _sportsmen, s.Length, sportsmen.Length);
+                if (_sportsmen == null|| sportsmen == null) return;
+                int sportsmenlen = _sportsmen.Length;
+                Array.Resize(ref _sportsmen, sportsmenlen + sportsmen.Length);
+                Array.Copy(sportsmen, 0, _sportsmen, sportsmenlen, sportsmen.Length);
             }
             public void Add(Group group)
             {
-                if (group.Sportsmen == null) return;
-                var s = Sportsmen;
-                if (s == null) return;
-                _sportsmen = new Sportsman[_sportsmen.Length + group.Sportsmen.Length];
-                Array.Copy(s, _sportsmen, s.Length);
-                Array.Copy(group.Sportsmen, 0, _sportsmen, s.Length, group.Sportsmen.Length);
+                Add(group.Sportsmen);
             }
             public void Sort()
             {
@@ -215,17 +206,34 @@ namespace Lab_7
             {
                 if (_sportsmen == null) return;
                 Sort();
-                for (int i = 1; i< _sportsmen.Length-1; i++)
+                Print();
+                Sportsman[] men = new Sportsman[0];
+                Sportsman[] women = new Sportsman[0];
+                Split(out men,out women);
+                int i = 0, j = 0, k = 0;
+                if (_sportsmen[0] is SkiMan)
+                    i++;
+                else j++;
+                while (i <men.Length && j < women.Length)
                 {
-                    for (int j = i+1; j < _sportsmen.Length; j++)
+                    if (_sportsmen[k++] is SkiMan)
                     {
-                        if (_sportsmen[i].Time > _sportsmen[j].Time && _sportsmen[j] is SkiMan != _sportsmen[i-1] is SkiMan)
-                        {
-                            var temp = _sportsmen[i];
-                            _sportsmen[i] = _sportsmen[j];
-                            _sportsmen[j] = temp;
-                        }
+                        _sportsmen[k] = women[j++];
                     }
+                    else
+                    {
+                        _sportsmen[k] = men[i++];
+                    }
+                }
+                while (i < men.Length)
+                {
+                    k++;
+                    _sportsmen[k] = men[i++];
+                }
+                while(j < women.Length)
+                {
+                    k++;
+                    _sportsmen[k] = women[j++];
                 }
             }
         }
