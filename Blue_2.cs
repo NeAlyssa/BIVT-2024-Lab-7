@@ -160,7 +160,7 @@ namespace Lab_7
                     int n = this.Participants.Length;
                     int mid = n / 2;
                     double[] prize = new double[Math.Min(mid, 10)];
-                    int N = 20 / mid; 
+                    int N = 20 / Math.Min(mid, 10); 
                     prize[0] += 0.4 * this.Bank; //1 место
                     prize[1] += 0.25 * this.Bank; //2 место
                     prize[2] += 0.15 * this.Bank; //3 место
