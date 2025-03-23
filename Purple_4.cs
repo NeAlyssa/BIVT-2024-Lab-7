@@ -157,21 +157,22 @@ namespace Lab_7
                 if (_sportsmen == null) return;
                 Sort();
                 Split(out Sportsman[] men, out Sportsman[] women);
-                if (men != null && women != null && men[0].Time > women[0].Time) { (men, women) = (women, men); }
+                if (men.Length==0 && women.Length==0 && men[0].Time > women[0].Time) { (men, women) = (women, men); }
                 int ind = 0;
-                int i = 0;
-                for (; i < men.Length && i < women.Length; i++)
+                int index = 0;
+                for (int i=0; i < men.Length && i < women.Length; i++)
                 {
 
                     _sportsmen[ind] = men[i];
                     ind++;
                     _sportsmen[ind] = women[i];
                     ind++;
+                    index = i;
                 }
 
-                for (int j = i; i < men.Length; j++) { _sportsmen[ind] = men[j]; ind++; }
-                for (int j = i; j < women.Length; j++) {_sportsmen[ind] = women[j]; ind++;
-            }
+                for (int j = index; j < men.Length; j++) _sportsmen[ind++] = men[j];  
+                for (int j = index; j < women.Length; j++) _sportsmen[ind++] = women[j];
+            
             }
         }
         public class SkiMan : Sportsman

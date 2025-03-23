@@ -35,20 +35,20 @@ namespace Lab_7
             {
                 if (responses == null || questionNumber < 1 || questionNumber > 3) return 0;
                 int count = 0;
-                for (int i = 0; i < responses.Length; i++)
+                foreach( var response in responses ) 
                 {
                     switch (questionNumber)
                     {
                         case 1:
-                            if (responses[i].Animal == _answers[1])
+                            if (response._answers[1] == _answers[1] && response._answers[1]!=null)
                                 count++;
                             break;
                         case 2:
-                            if (responses[i].CharacterTrait == _answers[2])
+                            if (response._answers[2] == _answers[2] && response._answers[2] != null)
                                 count++;
                             break;
                         case 3:
-                            if (responses[i].Concept == _answers[3])
+                            if (response._answers[3] == _answers[3] && response._answers[3] != null)
                                 count++;
                             break;
                     }
@@ -69,14 +69,15 @@ namespace Lab_7
         public class Report
         {
             private static int _index;
-            public Research[] Researches { get; private set; }
+            private Research[] _reserches;
+            public Research[] Researches => _reserches;
             static Report()
             {
                 _index = 1;
             }
             public Report()
             {
-                Researches = new Research[0];
+                _reserches = new Research[0];
 
             }
             public Research MakeResearch()
@@ -84,27 +85,25 @@ namespace Lab_7
                 var month = DateTime.Now.ToString("MM");
                 var years = DateTime.Now.ToString("yy");
                 var ans = new Research($"No_{_index++}_{month}/{years}");
-                if (Researches == null) Researches = new Research[0];
+                if (_reserches == null) _reserches = new Research[0];
                 var researches= new Research[Researches.Length+1];
                 researches[researches.Length-1] = ans;
-                Researches = researches;
+                _reserches = researches;
                 return ans;
             }
             public string[] Copy(string[] answer, string n)
             {
-                string[] copy = new string[answer.Length + 1];
-                Array.Copy(answer, copy, answer.Length);
-                copy[copy.Length - 1] = n;
-
-                return copy;
+                Array.Resize(ref answer, answer.Length + 1);
+                answer[answer.Length-1] = n;
+                return answer;
 
             }
 
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (Researches == null || question < 1 || question > 3) return null;
+                if (_reserches == null || question < 1 || question > 3) return null;
                 string[] answer = new string[0];
-                foreach (var n1 in Researches)
+                foreach (var n1 in _reserches)
                 {
                     foreach (var n2 in n1.Responses)
                     {
