@@ -118,13 +118,12 @@ namespace Lab_7
                 for (int i = 0; i < array.Length; i++)
                 {
                     if (array[i].Places == null) return;
+                    SortPlaces(array[i]);
                 }
                 for (int i = 0; i < array.Length; i++)
                 {
                     for (int j = 0; j < array.Length - 1 - i; j++)
                     {
-                        SortPlaces(array[j]);
-                        SortPlaces(array[j + 1]);
                         if (SumP(array[j]) > SumP(array[j + 1]))
                         {
                             Participant temp = array[j];
@@ -135,14 +134,14 @@ namespace Lab_7
                         {
 
 
-                            if (array[j].Places[0] > array[j + 1].Places[0])
+                            if (ComparisonPlaces(array[j], array[j+1]))
                             {
                                 Participant temp = array[j];
                                 array[j] = array[j + 1];
                                 array[j + 1] = temp;
                             }
 
-                            else if (array[j].Places[0] == array[j + 1].Places[0])
+                            else if (!(ComparisonPlaces(array[j+1], array[j])))
                             {
                                 if (SumM(array[j]) < SumM(array[j + 1]))
                                 {
@@ -175,6 +174,16 @@ namespace Lab_7
                         }
                     }
                 }
+            }
+            private static bool ComparisonPlaces(Participant a, Participant b)
+            {
+                if (a.Places == null || b.Places == null) return false;
+                for (int i = 0; i < a.Places.Length; i++)
+                {
+                    if (a.Places[i] > b.Places[i])
+                        return true;
+                }
+                return false;
             }
             private static int SumP(Participant a)
             {
@@ -225,9 +234,8 @@ namespace Lab_7
             {
                 if (moods == null || moods.Length < 7) return;
                 Array.Resize(ref moods, 7);
-                var newArray = new double[7];
-                Array.Copy(moods, newArray, 7);
-                _moods = newArray;
+                _moods = new double[7];
+                Array.Copy(moods, _moods, 7);
                 ModificateMood();
                 _participants = new Participant[0];
             }
@@ -238,7 +246,7 @@ namespace Lab_7
                 int index = -1;
                 for (int i = 0; i < _participants.Length; i++)
                 {
-                    if(_participants[i].Marks.All(mark => mark == 0))
+                    if(_participants[i].Marks.All(mark => mark == 0) || _participants[i].Marks.All(mark => mark == null))
                     {
                         index = i; break;
                     }    
