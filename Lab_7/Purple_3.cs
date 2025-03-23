@@ -63,30 +63,21 @@ namespace Lab_7
 
             public static void SetPlaces(Participant[] participants)
             {
-                if (participants == null) return;
+                if (participants == null || participants.Length == 0) return;
 
-                for (int judgeIndex = 0; judgeIndex < 7; judgeIndex++)
-                {
-                    var sortedParticipants = participants
-                        .Where(p => p.Marks != null && p.Places != null) 
-                        .OrderByDescending(p => p.Marks[judgeIndex])  
+                var filtered = participants
+                        .Where(p => p.Marks != null && p.Places != null)
                         .ToArray();
 
-                    for (int i = 0; i < sortedParticipants.Length; i++)
-                    {
-                        sortedParticipants[i]._places[judgeIndex] = i + 1;
-                    }
-
-
-                    if (judgeIndex == 6)
-                    {
-                        sortedParticipants = sortedParticipants
-                            .Concat(participants.Where(p => p.Marks == null))
-                            .ToArray();
-
-                        Array.Copy(sortedParticipants, participants, sortedParticipants.Length);
-                    }
+                for (int judge = 0; judge < 7; judge++)
+                {
+                    filtered = filtered.OrderByDescending(p => p._marks[judge]).ToArray();
+                    for (int j = 0; j < filtered.Length; j++) filtered[j]._places[judge] = j + 1;
                 }
+
+                var combined = filtered.Concat(participants.Where(p => p._marks == null || p._places == null)).ToArray();
+
+                Array.Copy(combined, participants, participants.Length);
             }
             private static void SortByJudge(Participant[] array, int judgeIndex)
             {
@@ -135,6 +126,7 @@ namespace Lab_7
             public void Print()
             {
                 Console.WriteLine($"{_name} {Score} {Places.Min()} {Marks.Sum()}");
+                Console.WriteLine(String.Join(" ", Places));
             }
             private static bool CompareParticipants(Participant p1, Participant p2)
             {
