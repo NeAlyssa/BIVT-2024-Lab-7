@@ -103,17 +103,8 @@ namespace Lab_7
             private int _number;
 
             public string Name => _name;
-            public int Standart => _standart;
-            public Participant[] Participants
-            {
-                get
-                {
-                    if (_participants == null) return null;
-                    var NewArray = new Participant[_participants.Length];
-                    Array.Copy(_participants, NewArray, _participants.Length);
-                    return NewArray;
-                }
-            }
+            public int Standard => _standart;
+            public Participant[] Participants => _participants;
 
             public SkiJumping(string name, int standart)
             {

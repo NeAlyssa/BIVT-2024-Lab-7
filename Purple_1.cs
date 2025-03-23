@@ -157,26 +157,8 @@ namespace Lab_7
             private Judge[] _judges;
             private Participant[] _participants;
 
-            public Judge[] Judges
-            {
-                get
-                {
-                    if (_judges == null) return null;
-                    var arr = new Judge[_judges.Length];
-                    Array.Copy(_judges, arr, _judges.Length);
-                    return arr;
-                }
-            }
-            public Participant[] Participants
-            {
-                get
-                {
-                    if (_participants == null) return null;
-                    var arr = new Participant[_participants.Length];
-                    Array.Copy(_participants, arr, _participants.Length);
-                    return arr;
-                }
-            }
+            public Judge[] Judges => _judges;
+            public Participant[] Participants => _participants;
 
             public Competition(Judge[] judges)
             {

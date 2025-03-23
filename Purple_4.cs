@@ -33,6 +33,23 @@ namespace Lab_7
                 if (_time == 0) _time = time;
             }
 
+            public static void Sort(Sportsman[] array)
+            {
+                if (array == null) return;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < array.Length - i - 1; j++)
+                    {
+                        if (array[j].Time > array[j + 1].Time)
+                        {
+                            var p = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = p;
+                        }
+                    }
+                }
+            }
+
             public void Print()
             {
                 Console.WriteLine(Name + " " + Surname + " " + Time);
@@ -138,23 +155,7 @@ namespace Lab_7
                     gr.Add(group2._sportsman[j++]);
                 return gr;
             }
-
-            public static void Sort(Sportsman[] array)
-            {
-                for (int i = 0; i < array.Length; i++)
-                {
-                    for (int j = 0; j < array.Length - i - 1; j++)
-                    {
-                        if (array[j].Time > array[j + 1].Time)
-                        {
-                            var p = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = p;
-                        }
-                    }
-                }
-            }
-
+            
             public void Split(out Sportsman[] men, out Sportsman[] women)
             {
                 men = new Sportsman[0];

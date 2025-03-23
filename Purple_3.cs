@@ -156,16 +156,7 @@ namespace Lab_7
             protected double[] _moods;
             private int _number;
 
-            public Participant[] Participants
-            {
-                get
-                {
-                    if (_participants == null) return null;
-                    var NewArray = new Participant[_participants.Length];
-                    Array.Copy(_participants, NewArray, _participants.Length);
-                    return NewArray;
-                }
-            }
+            public Participant[] Participants => _participants;
 
             public double[] Moods
             {
@@ -190,9 +181,11 @@ namespace Lab_7
 
             public void Evaluate(double[] marks)
             {
-                foreach (var r in marks)
+                if (marks == null) return;
+                if (marks.Length > 7) Array.Resize(ref marks, 7);
+                for (int i = 0; i < marks.Length; i++)
                 {
-                    _participants[_number].Evaluate(r);
+                    _participants[_number].Evaluate(marks[i] * _moods[i]);
                 }
                 _number++;
             }
@@ -219,9 +212,9 @@ namespace Lab_7
 
             protected override void ModificateMood()
             {
-                for (int i = 0; i < 7; i++)
+                for (double i = 0; i < 7; i++)
                 {
-                    _moods[i] += i / 10;
+                    _moods[i] += (i + 1) / 10;
                 }
             }
         }
@@ -232,9 +225,9 @@ namespace Lab_7
 
             protected override void ModificateMood()
             {
-                for (int i = 0; i < 7; i++)
+                for (double i = 0; i < 7; i++)
                 {
-                    _moods[i] *= (1 + i / 100);
+                    _moods[i] *= (1 + (i + 1) / 100);
                 }
             }
         }

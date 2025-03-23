@@ -60,7 +60,7 @@ namespace Lab_7
             }
         }
 
-        public class Research
+        public struct Research
         {
             private string _name;
             private Response[] _responses;
@@ -128,16 +128,7 @@ namespace Lab_7
             private Research[] _researches;
             private static int _number;
 
-            public Research[] Researches
-            {
-                get
-                {
-                    if (_researches == null) return null;
-                    var New = new Research[_researches.Length];
-                    Array.Copy(_researches, New, _researches.Length);
-                    return New;
-                }
-            }
+            public Research[] Researches => _researches;
             
             static Report()
             {
