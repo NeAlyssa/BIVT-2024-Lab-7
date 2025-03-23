@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab_7
 {
-    internal class Blue_5
+    public class Blue_5
     {
         //класс
         public class Sportsman
@@ -83,7 +83,7 @@ namespace Lab_7
                     int Min = 18;
                     for (int i = 0; i < 6; i++)
                     {
-                        if (Min > _sportsmen[i].Place && _sportsmen[i].Place != 0)
+                        if (_sportsmen[i]!= null &&Min > _sportsmen[i].Place && _sportsmen[i].Place != 0)
                         {
                             Min = _sportsmen[i].Place;
                         }
@@ -168,12 +168,12 @@ namespace Lab_7
             public ManTeam(string Name) : base(Name) { }
             protected override double GetTeamStrength()
             {
-                if (Sportsmen==null || Sportsmen.Length==0) return 0;
+                //if (Sportsmen==null || Sportsmen.Length==0) return 0;
                 double sum = 0;
                 int counter = 0;
                 foreach(var sportsman in Sportsmen)
                 {
-                    if (sportsman.Place != 0)
+                    if (sportsman != null)
                     {
                         sum += sportsman.Place;
                         counter++;
@@ -189,13 +189,13 @@ namespace Lab_7
             public WomanTeam(string Name) : base(Name) { }
             protected override double GetTeamStrength()
             {
-                if (Sportsmen == null || Sportsmen.Length == 0) return 0;
+                //if (Sportsmen == null || Sportsmen.Length == 0) return 0;
                 double sum = 0;
                 int counter = 0;
                 double proizv = 1;
                 foreach (var sportsman in Sportsmen)
                 {
-                    if (sportsman.Place != 0)
+                    if (sportsman!= null)
                     {
                         sum += sportsman.Place;
                         counter++;
