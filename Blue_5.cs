@@ -63,13 +63,14 @@ namespace Lab_7
                 get
                 {
                     if (_sportsmen == null) return 0;
-                    if (_sportsmen[0] == null) return 0;
-
+                    //if (_sportsmen[0] == null) return 0;
+                    if ( _sportsmen.Length == 0) return 0;
                     int sum = 0;
 
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
 
+                        if (_sportsmen[i] == null) continue;
                         if (_sportsmen[i].Place == 1) sum += 5;
                         else if (_sportsmen[i].Place == 2) sum += 4;
                         else if (_sportsmen[i].Place == 3) sum += 3;
@@ -83,7 +84,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null) return 0;
+                    if (_sportsmen == null || _sportsmen.Length == 0) return 18;
                     int maxi = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
@@ -130,32 +131,61 @@ namespace Lab_7
             public static void Sort(Team[] teams)
             {
                 if (teams == null || teams.Length == 0) return;
-                for (int i = 0; i < teams.Length - 1; i++)
+                //for (int i = 0; i < teams.Length - 1; i++)
+                //{
+                //    for (int j = 0; j < teams.Length - i - 1; j++)
+                //    {
+                //if (teams[j + 1].SummaryScore > teams[j].SummaryScore)
+                //{
+                //    (teams[j + 1], teams[j]) = (teams[j], teams[j + 1]);
+                //}
+                //if (teams[j] == null)
+                //{
+                //    (teams[j ], teams[j+1]) = (teams[j+1], teams[j ]);
+                //}
+                //else if (teams[j+1] == null)
+                //{
+                //    continue;
+                //}
+                //else if (teams[j + 1].SummaryScore > teams[j].SummaryScore)
+                //{
+                //    (teams[j + 1], teams[j]) = (teams[j], teams[j + 1]);
+                //}
+                //else if (teams[j + 1].SummaryScore == teams[j].SummaryScore &&
+                //    teams[j + 1].TopPlace < teams[j].TopPlace)
+                //{
+                //    Team tmp = teams[j];
+                //    teams[j] = teams[j + 1];
+                //    teams[j + 1] = tmp;
+                //}
+                //else if (teams[j + 1].SummaryScore == teams[j].SummaryScore &&
+                //    teams[j + 1].TopPlace > teams[j].TopPlace)
+                //{
+                //    Team tmp = teams[j ];
+                //    teams[j ] = teams[j+1];
+                //    teams[j+1] = tmp;
+                //}
+                //    }
+                //}
+                if (teams == null || teams.Length == 0) return;
+                for (int i = 1, j = 2; i < teams.Length;)
                 {
-                    for (int j = 0; j < teams.Length - i - 1; j++)
+                    if (i == 0 || teams[i - 1].SummaryScore > teams[i].SummaryScore)
                     {
-                        //if (teams[j + 1].SummaryScore > teams[j].SummaryScore)
-                        //{
-                        //    (teams[j + 1], teams[j]) = (teams[j], teams[j + 1]);
-                        //}
-                        if (teams[j + 1].SummaryScore > teams[j].SummaryScore)
-                        {
-                            (teams[j + 1], teams[j]) = (teams[j], teams[j + 1]);
-                        }
-                        else if (teams[j + 1].SummaryScore == teams[j].SummaryScore &&
-                            teams[j + 1].TopPlace < teams[j].TopPlace)
-                        {
-                            Team tmp = teams[j];
-                            teams[j] = teams[j + 1];
-                            teams[j + 1] = tmp;
-                        }
-                        //else if (teams[j + 1].SummaryScore == teams[j].SummaryScore &&
-                        //    teams[j + 1].TopPlace > teams[j].TopPlace)
-                        //{
-                        //    Team tmp = teams[j ];
-                        //    teams[j ] = teams[j+1];
-                        //    teams[j+1] = tmp;
-                        //}
+                        i = j;
+                        j++;
+                    }
+                    else if (teams[i - 1].SummaryScore == teams[i].SummaryScore && teams[i - 1].TopPlace <= teams[i].TopPlace)
+                    {
+                        i = j;
+                        j++;
+                    }
+                    else
+                    {
+                        
+                        
+                        (teams[i], teams[i-1]) = (teams[i-1], teams[i]);
+                        i--;
                     }
                 }
             }
