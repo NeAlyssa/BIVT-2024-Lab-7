@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_6.Purple_4;
+//using static Lab_6.Purple_4;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_3
     {
@@ -38,7 +38,7 @@ namespace Lab_6
                     {
                         for (int j = 0; j < marks.Length; j++)
                         {
-                            _participants[i].Evaluate(marks[j] * _moods[i]);
+                            _participants[i].Evaluate(marks[j] * _moods[j]);
                         }
                         return;
                     }
@@ -46,19 +46,14 @@ namespace Lab_6
             }
             public void Add(Participant s)
             {
-                Participant[] sp = new Participant[_participants.Length + 1];
-                for (int i = 0;i < _participants.Length; i++)
-                {
-                    sp[i] = _participants[i];
-                }
-                sp[_participants.Length] = s;
-                _participants = sp;
+                _participants.Append(s);
             }
-            public void Add(Participant[] s)
+            public void Add(Participant[] ss)
             {
-                foreach (Participant S in s)
+                if (ss == null) return;
+                foreach (Participant s in ss)
                 {
-                    Add(S);
+                    _participants.Append(s);
                 }
             }
 
@@ -70,7 +65,7 @@ namespace Lab_6
             {
                 for (int i = 0; i < _moods.Length; i++)
                 {
-                    _moods[i] += (i + 1) / 10.0;
+                    _moods[i] += (i + 1) * 1.0 / 10.0;
                 }
             }
         }
@@ -81,7 +76,7 @@ namespace Lab_6
             {
                 for (int i = 0; i < _moods.Length; i++)
                 {
-                    _moods[i] *= (100 + i + 1) / 100.0;
+                    _moods[i] *= (100 + i + 1) * 1.0 / 100.0;
                 }
             }
         }

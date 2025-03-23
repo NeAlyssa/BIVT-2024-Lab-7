@@ -5,9 +5,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_6.Purple_5;
+//using static Lab_6.Purple_5;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_5
     {
@@ -38,7 +38,7 @@ namespace Lab_6
             }
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (question < 1 || question > 3 || _research == null) return new (string, double)[0];
+                if (question < 1 || question > 3 || _research == null) return null;
                 double count = 0;
                 Response[] s = new Response[0];
                 for (int i = 0; i < _research.Length; i++)

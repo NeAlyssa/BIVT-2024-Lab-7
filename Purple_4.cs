@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_6.Purple_4;
+//using static Lab_6.Purple_4;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_4
     {
@@ -223,16 +223,7 @@ namespace Lab_6
                 Sportsman[] women;
                 Sort();
                 Split(out men, out women);
-                if (men == null) 
-                { 
-                    _sportsmen = women;
-                    return;
-                }
-                if (women == null)
-                {
-                    _sportsmen = men;
-                    return;
-                }
+                if (men == null || women == null) return;
                 int koef;
                 if (_sportsmen[0] is SkiMan) koef = 0;
                 else
@@ -241,7 +232,7 @@ namespace Lab_6
                 }
 
                 Sportsman[] S = new Sportsman[men.Length + women.Length];
-                for (int i = 0, j = 0, k = 0; i < men.Length || j < women.Length; k++)
+                for (int i = 0, j = 0, k = 0; k < men.Length + women.Length; k++)
                 {
                     if (k % 2 == koef)
                     {
@@ -252,7 +243,7 @@ namespace Lab_6
                         }
                         else
                         {
-                            S[k] = men[i];
+                            S[k] = women[j];
                             j++;
                         }
                     }
@@ -260,7 +251,7 @@ namespace Lab_6
                     {
                         if (i < women.Length)
                         {
-                            S[k] = men[i];
+                            S[k] = women[j];
                             j++;
                         }
                         else

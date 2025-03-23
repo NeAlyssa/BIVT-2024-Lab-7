@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_1
     {
@@ -42,7 +42,7 @@ namespace Lab_6
             private Judge[] _judges;
             private Participant[] _participants;
 
-            public Judge[] Judges() => _judges;
+            public Judge[] Judges => _judges;
             public Participant[] Participants => _participants;
 
             public Competition(Judge[] judges)

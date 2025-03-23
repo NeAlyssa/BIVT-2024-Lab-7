@@ -4,9 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_6.Purple_1;
+//using static Lab_6.Purple_1;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_2
     {
@@ -27,28 +27,26 @@ namespace Lab_6
             }
             public void Add(Participant p)
             {
-                if (_participants == null) return;
-                Participant[] pp = new Participant[_participants.Length + 1];
-                for (int i = 0; i < _participants.Length; i++)
-                {
-                    pp[i] = _participants[i];
-                }
-                pp[_participants.Length] = p;
-                _participants = pp;
+                _participants.Append(p);
             }
-            public void Add(Participant[] p)
+            public void Add(Participant[] pp)
             {
-                if (_participants == null) return;
-                foreach (Participant pp in p)
+                if (pp == null) return;
+                foreach (Participant p in pp)
                 {
-                    Add(pp);
+                    _participants.Append(p);
                 }
             }
             public void Jump(int distance, int[] marks)
             {
+                if (marks == null || _participants == null) return;
                 foreach (Participant p in _participants)
                 {
-                    p.Jump(distance, marks, _standard);
+                    if (p.Distance == 0)
+                    {
+                        p.Jump(distance, marks, _standard);
+                        return;
+                    }
                 }
             }
             public void Print()
