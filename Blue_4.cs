@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -109,7 +109,7 @@ namespace Lab_7
 
             public void Add(Team team)
             {
-                if (team == null) return;
+                if (team == null|| _ManTeams==null || _WomanTeams==null) return;
                 if( team is ManTeam)
                 {
                     if (_countM< _ManTeams.Length)
@@ -117,7 +117,6 @@ namespace Lab_7
                         ManTeam manTeam = team as ManTeam;
                         _ManTeams[_countM] = manTeam;
                         _countM++;
-                        return;
                     }
                 }
                 else if (team is WomanTeam)
@@ -127,14 +126,13 @@ namespace Lab_7
                         WomanTeam womanTeam = team as WomanTeam;
                         _WomanTeams[_countW] = womanTeam;
                         _countW++;
-                        return;
                     }
                 }
             }
 
             public void Add(Team[] teams)
             {
-                if (teams == null) return;
+                if (_ManTeams == null || _WomanTeams == null) return;
                 foreach (var team in teams)
                 {
                     Add(team);
@@ -165,20 +163,22 @@ namespace Lab_7
 
             public static Group Merge(Group group1, Group group2, int size)
             {
+                if(size<=0) return null;
                 group1.Sort();
                 group2.Sort();
                 Group New = new Group("Финалисты");
-                Group M=MergeEach(group1.ManTeams, group2.ManTeams, New, size/2);
-                Group W= MergeEach(group1.WomanTeams, group2.WomanTeams, New, size / 2);
+                Group M=MergeEach(group1.ManTeams, group2.ManTeams, size/2);
+                Group W= MergeEach(group1.WomanTeams, group2.WomanTeams, size / 2);
                 New.Add(M.ManTeams);
                 New.Add(W.WomanTeams);
                 return New;
             }
             
-            private static Group MergeEach(Team[] Team1, Team[] Team2, Group New, int len)
+            private static Group MergeEach(Team[] Team1, Team[] Team2, int len)
             {
+                Group New= new Group("Финалисты");
                 int i = 0, j = 0;
-                if (len <= 0) return null;
+                if (len <= 0|| Team1==null || Team2==null) return null;
                 while (i < len / 2 && j < len / 2)
                 {
                     if (Team1[i].TotalScore >= Team2[j].TotalScore)
