@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lab_7
 {
-    internal class Blue_2
+    public class Blue_2
     {
         //структура
         public struct Participant
@@ -144,7 +144,7 @@ namespace Lab_7
             //добавляем участников
             public void Add(Participant[] participants)
             {
-                if (participants == null || participants.Length == 0) return;
+                if (participants == null || participants.Length == 0|| _participants==null) return;
                 foreach (var participant in participants)
                 {
                     Add(participant);
@@ -160,7 +160,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants == null || Participants.Length < 3)
+                    if (this.Participants == null || this.Participants.Length < 3)
                     {
                         return null;
                     }
@@ -178,7 +178,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants == null || Participants.Length < 3)
+                    if (this.Participants == null || this.Participants.Length < 3)
                     {
                         return null;
                     }
@@ -197,7 +197,7 @@ namespace Lab_7
                     }
                     for (int i = 0; i < count; i++)
                     {
-                        New[p.Length + i] = ToEach;
+                        New[i] += ToEach;
                     }
                     return New;
                 }
