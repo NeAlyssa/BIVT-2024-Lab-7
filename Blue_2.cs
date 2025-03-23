@@ -227,10 +227,11 @@ namespace Lab_7
                     
                     int m= this.Participants.Length/2;
                     if (m > 10) m = 10;
+                    double n = 20.0 / m;
                     double[] sum = new double[m];
                     for(int i = 0; i < m; i++)
                     {
-                        sum[i] = this.Bank * 0.2;
+                        sum[i] = this.Bank * n/100;
                     }
                     sum[0]= 0.4 * this.Bank;
                     sum[1]= 0.25* this.Bank;
