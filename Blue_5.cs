@@ -49,7 +49,8 @@ public class Blue_5
         }
         public int TopPlace{
             get{
-            if (_sportsmen == null) return 0;
+            if (_sportsmen == null) return 18;
+            if (_sportsmen[0] == null) return 18;
             int m=18;
             
             for(int i=0;i<_sportsmen.Length;i++){
@@ -68,17 +69,17 @@ public class Blue_5
         }
         public void Add(Sportsman sportsman){
             if (_sportsmen == null || sportsman == null || _kol >= _sportsmen.Length) return;
-            if(_kol < _sportsmen.Length){
-                _sportsmen[_kol] = sportsman;
-                _kol++;
-            }
+            _sportsmen[_kol] = sportsman;
+            _kol++;
         }
         public void Add(Sportsman[] sportsman){
             if (_sportsmen == null || _sportsmen.Length==0||sportsman == null || _kol >= _sportsmen.Length) return;
             int i=0;
             while (_kol < _sportsmen.Length && i < sportsman.Length){
+                if (_sportsmen[i]!=null){
                 _sportsmen[_kol] = sportsman[i];
                 _kol++;
+                }
                 i++;
             }
         }

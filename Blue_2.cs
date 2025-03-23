@@ -139,7 +139,7 @@ public class Blue_2
             if (above > 10) { k=10;}
             else { k=above; }
             double[] prizes = new double[k];
-            double N = 20/k;
+            double N = 20.0/k;
             double percentage = N/100;
             for (int i =0;i<k;i++){
                 prizes[i] = (double) Math.Round(percentage * this.Bank,5);
