@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,9 +56,9 @@ namespace Lab_7
                     if (_minutes == null) return false;
                     foreach (int time in _minutes)
                     {
-                        if (time == 10) return false;
+                        if (time == 10) return true;
                     }
-                    return true;
+                    return false;
                 }
             }
 
@@ -80,7 +80,7 @@ namespace Lab_7
                 {
                     New[i] = _minutes[i];
                 }
-                New[New.Length - 1] = time;
+                New[_minutes.Length] = time;
                 _minutes = New;
 
             }
@@ -119,12 +119,12 @@ namespace Lab_7
                 {
                     if (_minutes == null) return false;
                     int FallsMore5 = 0;
-                    foreach (int fall in _minutes)
+                    foreach (var fall in _minutes)
                     {
                         if (fall == 5)  FallsMore5++;
                     }
-                    if (FallsMore5 > _minutes.Length * 0.1 || Total > _minutes.Length * 2) { return false; }
-                    return true;
+                    if (FallsMore5 > _minutes.Length * 0.1 || Total > _minutes.Length * 2) { return true; }
+                    return false;
                 }
             }
 
@@ -139,8 +139,9 @@ namespace Lab_7
 
         public class HockeyPlayer : Participant
         {
-            private int players=0;
-            private double TotalT=0;
+            //поля статические - считаем для всего класса
+            private static int players=0;
+            private static double TotalT=0;
             public HockeyPlayer ( string Name, string Surname) : base(Name, Surname) 
             {
                 players++;
@@ -153,11 +154,11 @@ namespace Lab_7
                     if (_minutes == null) return false;
                     foreach (int time in _minutes)
                     {
-                        if (time == 10) return false;
+                        if (time == 10) return true;
                     }
                     double allTime = TotalT / players;
-                    if (Total > allTime * 0.1) { return false; }
-                    return true;
+                    if (Total > allTime * 0.1) { return true; }
+                    return false;
                 }
             }
 
