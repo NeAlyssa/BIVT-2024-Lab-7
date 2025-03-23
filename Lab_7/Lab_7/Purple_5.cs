@@ -91,7 +91,7 @@ namespace Lab_7
             }
             public void Add(string[] answers)
             {
-                if (_responses == null || answers == null || answers.Length != 3) return;
+                if (_responses == null || answers == null || answers.Length < 3) return;
                 Response a = new Response(answers[0], answers[1], answers[2]);
                 Array.Resize(ref _responses, _responses.Length + 1);
                 _responses[_responses.Length - 1] = a;
@@ -200,6 +200,7 @@ namespace Lab_7
         {
             private Research[] _researches;
             private static int _index;
+            private int _thisindex;
             public Research[] Researches
             {
                 get
