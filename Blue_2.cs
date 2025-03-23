@@ -161,12 +161,12 @@ namespace Lab_7
                     int count = Participants.Length;
                     int halfCount = count / 2;
                     double[] prize = new double[halfCount];
-                    if (halfCount <= 10)
+                    if (halfCount < 10)
                     {
                         int N = 20 / halfCount;
                         for (int i = 3; i < halfCount; i++)
                         {
-                            prize[i] += 0.01 * N * Bank;
+                            prize[i] = 0.01 * N * Bank;
                         }
                     }
                     else
@@ -174,7 +174,7 @@ namespace Lab_7
                         int N = 10;
                         for(int i = 3; i < N; i++)
                         {
-                            prize[i] += 0.01 * N * Bank;
+                            prize[i] = 0.01 * N * Bank;
                         }
                     }
                     prize[0] = 0.4 * Bank;
