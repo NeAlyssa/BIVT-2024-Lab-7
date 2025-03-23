@@ -72,7 +72,7 @@ namespace Lab_7
             }
             public void SetCriterias(double[] coefs)
             {
-                if (coefs == null || _coefs == null || coefs.Length != 4) return;
+                if (coefs == null || _coefs == null || coefs.Length < 4) return;
                 for (int i = 0; i < 4; i++)
                     if (coefs[i] > 3.5 || coefs[i] < 2.5) return;
                 for (int i = 0; i < 4; i++)
@@ -80,8 +80,8 @@ namespace Lab_7
             }
             public void Jump(int[] marks)
             {
-                if (marks == null || _marks == null || marks.Length != 7 || indexJumper >=4 ) return;
-                for (int i = 0; i < marks.Length; i++)
+                if (marks == null || _marks == null || marks.Length < 7 || indexJumper >=4 ) return;
+                for (int i = 0; i < 7; i++)
                 {
                     _marks[indexJumper, i] = marks[i];
 
@@ -185,7 +185,7 @@ namespace Lab_7
             }
             public void Evaluate(Participant jumper)
             {
-                if (_judges == null || _judges.Length == 0) return;
+                if (_judges == null || _judges.Length == 0 || _judges.Length <7) return;
                 int[] marks = new int[7];
                 for (int i = 0; i<7; i++)
                 {
@@ -198,21 +198,22 @@ namespace Lab_7
             {
                 if (_participants == null || participant == null) return;
                 Evaluate(participant);
+                var newArray = new Participant[_participants.Length+1];
+                Array.Copy(_participants, newArray, _participants.Length);
+                newArray[_participants.Length] = participant;
                 Array.Resize(ref _participants, _participants.Length + 1);
-                _participants[_participants.Length - 1] = participant;
+                Array.Copy(newArray, _participants, newArray.Length);
             }
             public void Add(Participant[] participants)
             {
                 if (_participants == null || participants == null || participants.Length == 0) return;
-                foreach (var participant in participants)
-                {
-                    if (participant != null)
-                    {
-                        Evaluate(participant);
-                        Array.Resize(ref _participants, _participants.Length + 1);
-                        _participants[_participants.Length - 1] = participant;
-                    }
-                }
+                var newArray = new Participant[_participants.Length + participants.Length];
+                Array.Copy(_participants, newArray, _participants.Length);
+                Array.Copy(participants, 0, newArray, _participants.Length, participants.Length);
+                for (int i = _participants.Length; i < newArray.Length; i++)
+                    Evaluate(newArray[i]);
+                Array.Resize(ref _participants, _participants.Length + participants.Length);
+                Array.Copy(newArray, _participants, _participants.Length);
             }
             public void Sort()
             {
