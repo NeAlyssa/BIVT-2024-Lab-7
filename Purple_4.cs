@@ -104,7 +104,7 @@ namespace Lab_6
                 Sportsman[] men, women;
                 Split(out men, out women);
                 if(men.Length == 0 || women.Length == 0) return;
-                if (women[0].Time > men[0].Time)
+                if (women[0].Time > men[0].Time && men.Length != 0 && women.Length != 0)
                 {
                     (women, men) = (men, women);
                 }
