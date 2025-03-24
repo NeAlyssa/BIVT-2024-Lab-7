@@ -64,9 +64,9 @@ namespace Lab_7
                 {
                     if (_sportsmen == null) return 0;
                     int score = 0;
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < _sportsmen.Length; i++)
                     {
-                        if (_sportsmen[i].Place <= 5 && _sportsmen[i].Place != 0)
+                        if (_sportsmen[i].Place <= 5 && _sportsmen[i] != null)
                         {
                             score += 6 - _sportsmen[i].Place;
                         }
@@ -83,7 +83,7 @@ namespace Lab_7
                     int Min = 18;
                     for (int i = 0; i < 6; i++)
                     {
-                        if (_sportsmen[i]!= null &&Min > _sportsmen[i].Place && _sportsmen[i].Place != 0)
+                        if (_sportsmen[i]!= null &&Min > _sportsmen[i].Place && _sportsmen[i].Place > 0)
                         {
                             Min = _sportsmen[i].Place;
                         }
