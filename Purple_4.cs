@@ -129,7 +129,7 @@ namespace Lab_7
             public void Sort()
             {
                 if (_sportsmen == null) return;
-                _sportsmen = _sportsmen.OrderBy(x => x!=null? x.Time:double.MaxValue).ToArray();
+                _sportsmen = _sportsmen.OrderBy(x =>  x.Time).ToArray();
             }
             public static Group Merge(Group group1, Group group2)
             {
