@@ -187,9 +187,8 @@ namespace Lab_7
                 Participant participant = GetParticipantAt(index);
                 double bestJump = participant.BestJump;
                 participant = new Participant(participant.Name, participant.Surname);
+
                 participant.Jump(bestJump);  // Сохраняем лучший прыжок
-                participant.Jump(0);         // Первая новая попытка
-                participant.Jump(0);         // Вторая новая попытка
                 SetParticipant(index, participant);
 
             }
