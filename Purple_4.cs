@@ -180,8 +180,8 @@ namespace Lab_7
             {
                 if (_sportsman == null) return;
                 Split(out Sportsman[] men, out Sportsman[] women);
-                Sort(men);
-                Sort(women);
+                Sportsman.Sort(men);
+                Sportsman.Sort(women);
                 int i = 0, j = 0, k = 0;
                 if (men[0].Time <= women[0].Time)
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks == null) return 0;
+                    if (_marks == null || _target == 0) return 0;
                     var NewArray = new int[_marks.Length];
                     Array.Copy(_marks, NewArray, _marks.Length);
                     Array.Sort(NewArray);
@@ -64,7 +65,8 @@ namespace Lab_7
             {
                 if (distance < 0 || marks == null) return;
                 _distance = distance;
-                for (int i = 0; i < 5; i++)
+                if (marks.Length > 5) Array.Resize(ref marks, 5);
+                for (int i = 0; i < marks.Length; i++)
                 {
                     _marks[i] = marks[i];
                 }
@@ -100,7 +102,7 @@ namespace Lab_7
             private string _name;
             private int _standart;
             private Participant[] _participants;
-            private int _number;
+            private static int _number;
 
             public string Name => _name;
             public int Standard => _standart;
@@ -111,13 +113,17 @@ namespace Lab_7
                 _name = name;
                 _standart = standart;
                 _participants = new Participant[0];
+            }
+
+            static SkiJumping()
+            {
                 _number = 0;
             }
 
             public void Add(Participant participant)
             {
                 Array.Resize(ref _participants, _participants.Length + 1);
-                _participants[_participants.Length + 1] = participant;
+                _participants[_participants.Length - 1] = participant;
             }
 
             public void Add(Participant[] participants)

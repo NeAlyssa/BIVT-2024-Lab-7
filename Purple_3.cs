@@ -212,9 +212,10 @@ namespace Lab_7
 
             protected override void ModificateMood()
             {
-                for (double i = 0; i < 7; i++)
+                if (_moods == null) return;
+                for (int i = 0; i < _moods.Length; i++)
                 {
-                    _moods[i] += (i + 1) / 10;
+                    _moods[i] += (i + 1.0) / 10;
                 }
             }
         }
@@ -225,9 +226,10 @@ namespace Lab_7
 
             protected override void ModificateMood()
             {
-                for (double i = 0; i < 7; i++)
+                if (_moods == null) return;
+                for (int i = 0; i < _moods.Length; i++)
                 {
-                    _moods[i] *= (1 + (i + 1) / 100);
+                    _moods[i] *= (1 + (i + 1.0) / 100);
                 }
             }
         }
