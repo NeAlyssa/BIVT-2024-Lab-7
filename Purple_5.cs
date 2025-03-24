@@ -22,7 +22,7 @@ namespace Lab_7
             public string Animal => _animal;
             public string CharacterTrait => _characterTrait;
             public string Concept => _concept;
-            public string[] Answers => _answers;
+            private string[] Answers => _answers;
             public Response(string animal, string characterTrait, string concept)
             {
                 _animal = animal;
@@ -40,15 +40,15 @@ namespace Lab_7
                     switch (questionNumber)
                     {
                         case 1:
-                            if (response._answers[1] == _answers[1] && response._answers[1]!=null)
+                            if (response._answers[0] == _answers[0] && response._answers[0]!=null)
                                 count++;
                             break;
                         case 2:
-                            if (response._answers[2] == _answers[2] && response._answers[2] != null)
+                            if (response._answers[1] == _answers[1] && response._answers[1] != null)
                                 count++;
                             break;
                         case 3:
-                            if (response._answers[3] == _answers[3] && response._answers[3] != null)
+                            if (response._answers[2] == _answers[2] && response._answers[2] != null)
                                 count++;
                             break;
                     }
@@ -91,14 +91,6 @@ namespace Lab_7
                 _reserches = researches;
                 return ans;
             }
-            public string[] Copy(string[] answer, string n)
-            {
-                Array.Resize(ref answer, answer.Length + 1);
-                answer[answer.Length-1] = n;
-                return answer;
-
-            }
-
             public (string, double)[] GetGeneralReport(int question)
             {
                 if (_reserches == null || question < 1 || question > 3) return null;
@@ -109,15 +101,28 @@ namespace Lab_7
                     {
                         if (question == 1)
                         {
-                            if (n2.Animal != null) { answer = Copy(answer, n2.Animal); }
+                            if (n2.Animal != null) {
+                                Array.Resize(ref answer, answer.Length + 1);
+                                answer[answer.Length - 1] = n2.Animal;
+                            }
                         }
                         if (question == 2)
                         {
-                            if (n2.CharacterTrait != null) { answer = Copy(answer, n2.CharacterTrait); }
+                            if (n2.CharacterTrait != null) {
+                                {
+                                    Array.Resize(ref answer, answer.Length + 1);
+                                    answer[answer.Length - 1] = n2.CharacterTrait;
+                                }
+                            }
                         }
                         if (question == 3)
                         {
-                            if (n2.Concept != null) { answer = Copy(answer, n2.Concept); }
+                            if (n2.Concept != null) {
+                                {
+                                    Array.Resize(ref answer, answer.Length + 1);
+                                    answer[answer.Length - 1] = n2.Concept;
+                                }
+                            }
                         }
                     }
                 }
