@@ -39,19 +39,19 @@ namespace Lab_7
                     {
                         case 1:
                             {
-                                if (responses[i].Animal != "" || responses[i].Animal != "-"|| responses[i].Animal != null)
+                                if (responses[i].Animal != "" || responses[i].Animal != "-"|| responses[i].Animal != null && responses[i].Animal == Animal)
                                     count++;
                                 break;
                             }
                         case 2:
                             {
-                                if (responses[i].CharacterTrait != ""||  responses[i].CharacterTrait != "-" || responses[i].CharacterTrait != null)
+                                if (responses[i].CharacterTrait != ""||  responses[i].CharacterTrait != "-" || responses[i].CharacterTrait != null && responses[i].CharacterTrait == CharacterTrait)
                                     count++;
                                 break;
                             }
                         case 3:
                             {
-                                if (responses[i].Concept != "" || responses[i].Concept != ""|| responses[i].Concept != null)
+                                if (responses[i].Concept != "" || responses[i].Concept != ""|| responses[i].Concept != null && responses[i].Concept == Concept)
                                     count++;
                                 break;
                             }
