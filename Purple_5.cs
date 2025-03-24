@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static Lab_7.Purple_5;
@@ -206,13 +207,12 @@ namespace Lab_7
 
             public Research MakeResearch()
             {
-                string name = $"No_{count}_{DateTime.Now:MM/yy}";
+                string name = $"No_{count++}_{DateTime.Now:MM/yy}";
                 
-                Research re = new Research(name);
+                var re = new Research(name);
                 _researches=_researches.Append(re).ToArray();
-                count++;
+                
                 return re;
-
             }
 
             public (string, double)[] GetGeneralReport(int question)
@@ -224,7 +224,7 @@ namespace Lab_7
                 
                 for (int i = 0; i < _researches.Length; i++)
                 {
-                    for (int j = 0; j < _researches.Length; j++)
+                    for (int j = 0; j < _researches[i].Responses.Length; j++)
                     {
                         switch(question)
                         { 

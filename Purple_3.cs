@@ -163,9 +163,8 @@ namespace Lab_7
                 get
                 {
                     if (_participants == null) return default;
-                    var copy = new Participant[_participants.Length];
-                    Array.Copy(_participants, copy, _participants.Length);
-                    return copy;
+                    
+                    return _participants;
                 }
             }
 
@@ -174,9 +173,8 @@ namespace Lab_7
                 get
                 {
                     if (_judges == null) return default;
-                    var copy = new double[_judges.Length];
-                    Array.Copy(_judges, copy, _judges.Length);
-                    return copy;
+                    
+                    return _judges;
                 }
             }
 
@@ -196,7 +194,7 @@ namespace Lab_7
 
             public void Evaluate(double[] marks)
             {
-                if (marks== null || _participants==null || _judges==null || marks.Length ==0 || _judges.Length ==0) return;
+                if (marks== null || _participants==null || _judges==null) return;
                 for (int i = 0; i < _participants.Length; i++)
                 {
                     if (_participants[i].Score == 0)
@@ -205,6 +203,7 @@ namespace Lab_7
                         { 
                             _participants[i].Evaluate(marks[j] * _judges[j]);
                         }
+                        return;
                     }
                 }
             }
@@ -212,22 +211,22 @@ namespace Lab_7
             public void Add(Participant participant)
             {
                 if (_participants == null) return;
-                var a = new Participant[_participants.Length];
-                Array.Copy(_participants, a, _participants.Length);
-                a = a.Append(participant).ToArray();
-                _participants = a;
+                
+                _participants = _participants.Append(participant).ToArray();
+                 
             }
 
             public void Add(Participant[] participant)
             {
                 if (_participants == null || participant == null) return;
 
-                var a = new Participant[_participants.Length];
-                Array.Copy(_participants, a, _participants.Length);
-                a = a.Concat(participant).ToArray();
-                _participants = a;
+                _participants = _participants.Concat(participant).ToArray();
+                
             }
 
+            }
+
+        
             public class FigureSkating : Skating
             {
                 public FigureSkating(double[] _judges) : base(_judges) { }
@@ -244,17 +243,16 @@ namespace Lab_7
             public class IceSkating : Skating
             {
                 public IceSkating(double[] _judges) : base(_judges) { }
-                protected override void ModificateMood()
+            protected override void ModificateMood()
+            {
+                if (_judges == null) return;
+                for (int i = 0; i < _judges.Length; i++)
                 {
-                    if (_judges == null) return;
-                    for (int i = 0; i < _judges.Length; i++)
-                    {
-                        _judges[i] += _judges[i]*i/100;
-                    }
+                    _judges[i] += _judges[i] * i / 100;
                 }
             }
-
         }
+            
     }
 
         

@@ -79,9 +79,9 @@ namespace Lab_7
 
             public static void Sort(Participant[] array)
             {
-                if (array == null || array.Length == 0) return;
-                var array1 = array.OrderByDescending(x => x.Result).ToArray();
-                Array.Copy(array1, array, array.Length);
+                if (array == null) return;
+                array = array.OrderByDescending(x => x.Result).ToArray();
+                
             }
             public void Print()
             {
@@ -110,14 +110,13 @@ namespace Lab_7
                 }
             }
 
-            public Participant[] Participant
+            public Participant[] Participants
             {
                 get
                 {
-                    if (_participant == null) return 0;
-                    var a = new Participant[Participant.Length];
-                    Array.Copy(_participant, a, _participant.Length);
-                    return a;
+                    if (_participant == null) return null;
+                    
+                    return _participant;
                 }
             }
 
@@ -133,20 +132,17 @@ namespace Lab_7
             public void Add(Participant skijumper)
             {
                 if (_participant == null) return;
-                var a = new Participant[_participant.Length];
-                Array.Copy(_participant, a, _participant.Length);
-                a = a.Append(skijumper).ToArray();
-                _participant = a;
+                
+                _participant = _participant.Append(skijumper).ToArray();
+                
             }
 
             public void Add(Participant[] skijumpers)
             {
                 if (_participant == null || skijumpers == null) return;
                 
-                var a = new Participant[_participant.Length];
-                Array.Copy(_participant, a, _participant.Length);
-                a = a.Concat(skijumpers).ToArray();
-                _participant = a;
+                _participant = _participant.Concat(skijumpers).ToArray();
+                
             }
 
             public void Jump(int distance, int[]marks)
@@ -164,7 +160,7 @@ namespace Lab_7
             }
             public void Print()
             {
-                Console.WriteLine($"Название события : {Name}, Стандарт : {Standart}, Участники : {Participant}");
+                Console.WriteLine($"Название события : {Name}, Стандарт : {Standart}, Участники : {Participants}");
             }
         }
         public class JuniorSkiJumping : SkiJumping

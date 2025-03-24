@@ -162,9 +162,8 @@ namespace Lab_7
                 get
                 {
                     if (_judges == null) return null;
-                    Judge [] copy = new Judge[_judges.Length];
-                    Array.Copy(_judges, copy, _judges.Length);
-                    return copy;
+                    
+                    return _judges;
                 }
             }
             public Participant [] Participants
@@ -172,9 +171,7 @@ namespace Lab_7
                 get
                 {
                     if (_participants == null) return null;
-                    Participant [] copy = new Participant [_participants.Length];
-                    Array.Copy(_participants, copy, _participants.Length);
-                    return copy;
+                    return _participants;
                 }
             }
 

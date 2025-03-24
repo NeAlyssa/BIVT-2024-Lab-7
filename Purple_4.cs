@@ -67,7 +67,7 @@ namespace Lab_7
             public static void Sort(Sportsman[] array)
             {
                 if (array == null) return;
-                array = array.OrderBy(s => s.Time).ToArray();
+                Array.Copy(array.OrderBy(s => s.Time).ToArray(), array, array.Length);
             }
         }
         public class SkiMan : Sportsman
