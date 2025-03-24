@@ -76,16 +76,8 @@ namespace Lab_7
             private string _name;
             private Sportsman[] _sportsmen;
             public string Name => _name;
-            public Sportsman[] Sportsmen
-            {
-                get
-                {
-                    if (_sportsmen == null) return null;
-                    var newArray = new Sportsman[_sportsmen.Length];
-                    Array.Copy(_sportsmen, newArray, _sportsmen.Length);
-                    return newArray;
-                }
-            }
+            public Sportsman[] Sportsmen => _sportsmen;
+            
             public Group(string name)
             {
                 _name = name;
