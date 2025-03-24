@@ -20,20 +20,24 @@ namespace Lab_7
             public string Name => _name;
             public string Surname => _surname;
             public int Distance => _distance;
-            public int[] Marks => _marks;
+            public int[] Marks
+            {
+                get
+                {
+                    if (_marks == null) return default(int[]);
+
+                    var newArray = new int[_marks.Length];
+                    Array.Copy(_marks, newArray, _marks.Length);
+                    return newArray;
+                }
+            }
 
             public int Result
             {
                 get
                 {
-                    if (_marks == null) return 0;
-                    int sum = 0;
-                    for (int i = 0; i < _marks.Length; i++)
-                    {
-                        sum += _marks[i];
-                    }
-                    sum -= (_marks.Min() + _marks.Max());
-                    sum += 60 + (_distance - _target) * 2 > 0 ? 60 + (_distance - _target) * 2 : 0;
+                    if (_marks == null || _distance == 0) return 0;
+                    int sum = Math.Max(0, _marks.Sum() - _marks.Max() - _marks.Min() + 60 + (_distance - _target) * 2);
                     return sum;
                 }
             }
@@ -49,7 +53,7 @@ namespace Lab_7
 
             public void Jump(int distance, int[] marks, int target)
             {
-                if (_distance > 0 || marks == null || _marks == null) return;
+                if (_distance != 0 || marks == null || _marks == null || marks.Length != 5) return;
                 _distance = distance;
                 _target = target;
                 Array.Copy(marks, _marks, marks.Length);
@@ -59,19 +63,8 @@ namespace Lab_7
             {
                 if (array == null) return;
 
-                for (int i = 0; i < array.Length; i++)
-                {
-                    for (int j = 0; j < array.Length - i - 1; j++)
-                    {
-                        if (array[j].Result < array[j + 1].Result)
-                        {
-                            var t = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = t;
-                        }
-
-                    }
-                }
+                var sortedArray = array.OrderByDescending(x => x.Result).ToArray();
+                Array.Copy(sortedArray, array, array.Length);
             }
             public void Print()
             {

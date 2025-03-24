@@ -18,8 +18,28 @@ namespace Lab_7
             private int _marksCount;
             public string Name => _name;
             public string Surname => _surname;
-            public double[] Marks => _marks;
-            public int[] Places => _places;
+            public double[] Marks
+            {
+                get
+                {
+                    if (_marks == null) return default(double[]);
+
+                    var newArray = new double[_marks.Length];
+                    Array.Copy(_marks, newArray, _marks.Length);
+                    return newArray;
+                }
+            }
+            public int[] Places
+            {
+                get
+                {
+                    if (_places == null) return default(int[]);
+
+                    var newArray = new int[_places.Length];
+                    Array.Copy(_places, newArray, _places.Length);
+                    return newArray;
+                }
+            }
 
             public int Score => _places == null ? 0 : _places.Sum();
             public Participant(string name, string surname)
@@ -157,9 +177,6 @@ namespace Lab_7
                     }
                 }
             }
-
-
-
             public void Add(Participant skater)
             {
                 if (_participants == null) _participants = new Participant[0];

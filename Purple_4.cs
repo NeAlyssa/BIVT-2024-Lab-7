@@ -160,24 +160,46 @@ namespace Lab_7
 
             public void Shuffle()
             {
-                if (_sportsmen == null) return;
+                Sort(); 
+                Sportsman[] men, women;
+                Split(out men, out women);  
 
-                var sortedSkiMen = _sportsmen.Where(s => s is SkiMan).OrderBy(m => m.Time).ToArray(); ;
-                var sortedSkiWomen = _sportsmen.Where(s => s is SkiWoman).OrderBy(m => m.Time).ToArray(); ;
-
-                var result = new List<Sportsman>();
-                int menCount = sortedSkiMen.Count();
-                int womenCount = sortedSkiWomen.Count();
-                int i = 0, j = 0;
-
-                while (i < menCount || j < womenCount)
+                if (men.Length == 0 || men == null || women == null || women.Length == 0) 
                 {
-                    if (i < menCount) result.Add(sortedSkiMen[i++]);
-                    if (j < womenCount) result.Add(sortedSkiWomen[j++]);
+                    return;
                 }
-                _sportsmen = result.ToArray();
-            }
 
+                int pair = Math.Min(men.Length, women.Length);
+                int diff = men.Length - women.Length;
+
+                int i = 0, w = 0, m = 0;
+
+                if (men[0].Time < women[0].Time)
+                {
+                    while (i < pair * 2)
+                    {
+                        _sportsmen[i++] = men[m++];
+                        _sportsmen[i++] = women[w++];
+                    }
+                }
+                else
+                {
+                    while (i < pair * 2)
+                    {
+                        _sportsmen[i++] = women[w++];
+                        _sportsmen[i++] = men[m++];
+                    }
+                }
+
+                if (diff > 0 && m < men.Length) 
+                {
+                    _sportsmen[i++] = men[w++];
+                }
+                else if (diff < 0 && w < women.Length) 
+                {
+                    _sportsmen[i++] = women[w++];
+                }
+            }
             public void Print()
             {
                 Console.WriteLine($"Group name: {_name}");
