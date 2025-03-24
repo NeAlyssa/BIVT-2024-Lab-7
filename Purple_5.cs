@@ -247,7 +247,7 @@ namespace Lab_7
             
             public (string, double)[] GetGeneralReport(int question)
             {
-                
+                if (question < 1 || question > 3) return null;
                 var research = new Research("res");
                 foreach(var x in _researches)
                 {

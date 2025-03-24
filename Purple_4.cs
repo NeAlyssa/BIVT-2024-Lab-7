@@ -14,6 +14,8 @@ namespace Lab_7
             private string _surname;
             private double _time;
 
+            private bool _test;
+
             public string Name => _name;
             public string Surname => _surname;
             public double Time => _time;
@@ -23,11 +25,16 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _time = 0;
+                _test = false;
             }
 
             public void Run(double time)
             {
-                if (_time == 0) _time = time;
+                if (_test == false)
+                {
+                    _time = time;
+                    _test = true;
+                }
             }
 
             public void Print()
@@ -38,7 +45,7 @@ namespace Lab_7
             public static void Sort(Sportsman[] array)
             {
                 if(array == null) return;
-                array = array.OrderBy(x=> x!=null?x.Time : double.MaxValue).ToArray();
+                array = array.OrderBy(x=>x.Time ).ToArray();
             }
         }
 
@@ -104,7 +111,7 @@ namespace Lab_7
 
             public void Add(Sportsman[] s)
             {
-                if (_sportsmen == null) return;
+                if (_sportsmen == null || s == null) return;
                 Sportsman[] copy = new Sportsman[_sportsmen.Length + s.Length];
                 Array.Copy(_sportsmen, copy, _sportsmen.Length);
                 for (int i = 0; i < s.Length; i++)

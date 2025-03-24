@@ -42,8 +42,8 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks == null) return 0;
-                    int answer = 60;
+                    if (_marks == null || _marks.Length==0) return 0;
+                    int answer = 0;
                     int maxres = 0, minres = int.MaxValue;
                     for (int i = 0; i < _marks.Length; i++)
                     {
@@ -53,7 +53,7 @@ namespace Lab_7
                     }
                     answer = answer - maxres - minres;
                     int razn = _distance - _target;
-                    answer += razn * 2;
+                    answer += razn * 2+60;
 
                     return Math.Max(answer, 0);
 
@@ -74,6 +74,7 @@ namespace Lab_7
 
             public void Jump(int distance, int[] marks, int target)
             {
+                if(_marks == null || marks == null || _marks.Length != _marks.Length) return;
                 _distance = distance;
                 for (int i = 0; i < 5; i++) _marks[i] = marks[i];
                 _target = target;
@@ -105,21 +106,21 @@ namespace Lab_7
         public abstract class SkiJumping
         {
             private string _name;
-            private int _standart;
+            private int _standard;
             private Participant[] _participants;
 
             public string Name => _name;
             public Participant[] Participants => _participants;
-            public int Standart => _standart;
+            public int Standard => _standard;
             public SkiJumping(string name, int standart)
             {
                 _name = name;
-                _standart = standart;
+                _standard = standart;
                 _participants = new Participant[0];
             }
             public void Add(Participant participant)
             {
-                
+                if (_participants == null) return;
                 Participant[] arr = new Participant[_participants.Length+1];
                 Array.Copy(_participants, arr, _participants.Length);
                 arr[arr.Length-1] = participant;
@@ -134,12 +135,12 @@ namespace Lab_7
             }
             public void Jump(int distance, int[] marks)
             {
-                if (marks == null) return;
+                if (marks == null || _participants==null) return;
                 foreach(var x in _participants)
                 {
                     if (x.Distance == 0)
                     {
-                        x.Jump(distance, marks, _standart);
+                        x.Jump(distance, marks, _standard);
                         break;
                     }
                 }

@@ -132,7 +132,7 @@ namespace Lab_7
         {
             protected Participant[] _participants;
             protected double[] _moods;
-            public Participant[] Participant => _participants;
+            public Participant[] Participants => _participants;
             public double[] Moods => _moods;
             public Skating(double[] moods)
             {
