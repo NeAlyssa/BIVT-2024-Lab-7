@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Lab_7
+namespace Lab_6
 {
     public class Purple_4
     {
@@ -138,7 +138,7 @@ namespace Lab_7
                 if (_sportsmen == null || men == null) return;
                 var sportsmen = new Sportsman[_sportsmen.Length + men.Length];
                 Array.Copy(_sportsmen, sportsmen, _sportsmen.Length);
-                Array.ConstrainedCopy(men, 0, sportsmen, _sportsmen.Length, men.Length);
+                Array.Copy(men, sportsmen, men.Length);
                 _sportsmen = sportsmen;
             }
             public void Add(Group m)
