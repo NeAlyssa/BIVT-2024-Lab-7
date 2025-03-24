@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,7 +119,6 @@ namespace Lab_7
                 for (int i = 0; i < array.Length; i++)
                 {
                     if (array[i].Places == null) return;
-                    SortPlaces(array[i]);
                 }
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -166,7 +166,7 @@ namespace Lab_7
                 {
                     for (int j = 0; j < a.Places.Length - 1 - i; j++)
                     {
-                        if (a.Places[j] > a.Places[j + 1])
+                        if (a._places[j] > a._places[j + 1])
                         {
                             int temp = a._places[j];
                             a._places[j] = a._places[j + 1];
@@ -177,10 +177,14 @@ namespace Lab_7
             }
             private static bool ComparisonPlaces(Participant a, Participant b)
             {
+                SortPlaces(a);
+                SortPlaces(b);
                 if (a.Places == null || b.Places == null) return false;
                 for (int i = 0; i < a.Places.Length; i++)
                 {
+
                     if (a.Places[i] > b.Places[i])
+
                         return true;
                 }
                 return false;
