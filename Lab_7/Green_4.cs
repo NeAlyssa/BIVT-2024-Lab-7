@@ -102,7 +102,7 @@ namespace Lab_7
             }
             public double[] Jumps // Свойство прыжков.
             {
-                get { return _jumps; }
+                get { return (double[])_jumps.Clone(); }
             }
             public double BestJump // Свойство лучшего из них.
             {
