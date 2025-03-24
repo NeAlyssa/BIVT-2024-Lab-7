@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Lab_7.Blue_4;
 using static Lab_7.Blue_5;
 
 namespace Lab_7
@@ -88,7 +89,7 @@ namespace Lab_7
                     int maxi = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
-                        if (_sportsmen[i].Place != 0)
+                        if (_sportsmen[i] != null || _sportsmen[i].Place != 0)
                         {
                             maxi = Math.Min(maxi, _sportsmen[i].Place);
                         }
@@ -213,7 +214,8 @@ namespace Lab_7
                 if (teams == null || teams.Length == 0) return null;
 
                 double maxi = -1;
-               
+                if (teams[0] != null) maxi = teams[0].GetTeamStrength();
+
                 int maxind =0 ;
                 for (int i = 0; i < teams.Length; i++)
                 {
