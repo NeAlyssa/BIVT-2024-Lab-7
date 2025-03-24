@@ -221,7 +221,7 @@ namespace Lab_7
                 if (_sportsmen == null) return;
                 Sportsman[] men;
                 Sportsman[] women;
-                Sort();
+                Sportsman.Sort(_sportsmen);
                 Split(out men, out women);
                 if (men == null || women == null) return;
                 int koef;
