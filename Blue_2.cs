@@ -178,7 +178,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (this.Participants == null || this.Participants.Length < 3)
+                    if (Participants == null || Participants.Length < 3)
                     {
                         return null;
                     }
@@ -190,7 +190,7 @@ namespace Lab_7
                     //ищем остаток
                     double left = Bank * 0.20;
                     double ToEach = left / count;
-                    double[] New = new double[p.Length + count];
+                    double[] New = new double[count];
                     for (int i = 0; i < p.Length; i++)
                     {
                         New[i] = p[i];
