@@ -106,11 +106,13 @@ namespace Lab_7
 				_name = group.Name;
 				if (group.Sportsmen == null)
 				{
-					_sportsmen = new Sportsman[0];
-					return;
+					_sportsmen = null;
 				}
-				_sportsmen = new Sportsman[group.Sportsmen.Length];
-				Array.Copy(group.Sportsmen, _sportsmen, group.Sportsmen.Length);
+				else
+				{
+					_sportsmen = new Sportsman[group.Sportsmen.Length];
+					Array.Copy(group.Sportsmen, _sportsmen, group.Sportsmen.Length);
+				}
 			}
 
 			//методы
@@ -149,7 +151,7 @@ namespace Lab_7
 
 			public static Group Merge(Group g1, Group g2)
 			{
-				if (g1.Sportsmen == null || g2.Sportsmen == null)
+				if (g1.Sportsmen == null && g2.Sportsmen == null)
 				{
 
 					return new Group("Финалисты");

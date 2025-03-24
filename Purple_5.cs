@@ -32,20 +32,20 @@ namespace Lab_7
 			//методы
 			public int CountVotes(Response[] responses, int questionNumber)
 			{
-				if (responses == null || responses.Length == 0 || questionNumber < 1 || questionNumber > 3) return 0;
+				if (responses == null) return 0;
 
-
+				var entity = this;
 				if (questionNumber == 1)
 				{
-					return responses.Count(x => x.Animal != null && x.Animal.Length != 0);
+					return responses.Count(x => x.Animal != null && x.Animal == entity.Animal);
 				}
 				else if (questionNumber == 2)
 				{
-					return responses.Count(x => x.CharacterTrait != null && x.CharacterTrait.Length != 0);
+					return responses.Count(x => x.CharacterTrait != null && x.CharacterTrait== entity.CharacterTrait);
 				}
 				else if (questionNumber == 3)
 				{
-					return responses.Count(x => x.Concept != null && x.Concept.Length != 0);
+					return responses.Count(x => x.Concept != null && x.Concept == entity.Concept);
 				}
 				else
 				{
@@ -67,23 +67,23 @@ namespace Lab_7
 
 			//свойства
 			public string Name => _name;
-			public Response[] Responses => _responses;
-			//{
-			//	get
-			//	{
-			//		if(_responses == null)
-			//		{
-			//			return null;
-			//		}
-			//		if(_responses.Length == 0)
-			//		{
-			//			return null;
-			//		}
-			//		Response[] resps = new Response[_responses.Length];
-			//		Array.Copy(_responses, resps, _responses.Length);
-			//		return resps;
-			//	}
-			//}
+			public Response[] Responses
+			{
+				get
+				{
+					if(_responses == null)
+					{
+						return null;
+					}
+					if(_responses.Length == 0)
+					{
+						return null;
+					}
+					Response[] resps = new Response[_responses.Length];
+					Array.Copy(_responses, resps, _responses.Length);
+					return resps;
+				}
+			}
 
 
 			//конструкторы
@@ -151,17 +151,7 @@ namespace Lab_7
 		{
 			private Research[] _researches;
 			private static int _researchID;
-			public Research[] Researches
-			{
-				get
-				{
-					if(_researches == null)
-					{
-						return null;
-					}
-					return (Research[])_researches.Clone();
-				}
-			}
+			public Research[] Researches => _researches;
 			static Report()
 			{
 				_researchID = 1;

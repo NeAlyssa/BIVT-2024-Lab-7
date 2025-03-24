@@ -192,17 +192,8 @@ namespace Lab_7
 			private Judge[] _judges;
 			private Participant[] _participants;
 			public Judge[] Judges => _judges;
-			public Participant[] Participants
-			{
-				get
-				{
-					if (_participants == null)
-					{
-						return null;
-					}
-					return (Participant[])_participants.Clone();
-				}
-			}
+			public Participant[] Participants => _participants;
+			
 
 			//конструктор
 			public Competition(Judge[] judges)
@@ -250,7 +241,7 @@ namespace Lab_7
 				Array.Resize(ref _participants, _participants.Length + 1);
 				_participants[_participants.Length - 1] = jumper;
 
-				Evaluate(_participants[_participants.Length - 1]);
+				Evaluate(_participants[^1]);
 
             }
 

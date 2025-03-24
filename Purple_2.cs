@@ -26,9 +26,7 @@ namespace Lab_7
 				get
 				{
 					if (_marks == null) { return null; }
-					int[] marks = new int[5];
-					Array.Copy(_marks, marks, marks.Length);
-					return marks;
+					return (int[])_marks.Clone();	
 				}
 			}
 
@@ -85,7 +83,16 @@ namespace Lab_7
 
 			public string Name => _name;
 			public int Standard => _standard;
-			public Participant[] Participants => _participants;
+			public Participant[] Participants {
+				get
+				{
+					if(_participants == null)
+					{
+						return null;
+					}
+					return (Participant[])_participants.Clone();
+				}
+			}
 
 			// конструктор
 			public SkiJumping(string name, int standard)
@@ -98,6 +105,10 @@ namespace Lab_7
 			//методы
 			public void Add(Participant sportsman)
 			{
+				if(_participants == null)
+				{
+					_participants = new Participant[0];
+				}
 				Array.Resize(ref _participants, _participants.Length + 1);
 				_participants[_participants.Length - 1] = sportsman;
 			}
