@@ -178,9 +178,10 @@ namespace Lab_7
             {
                 Group New= new Group("Финалисты");
                 int i = 0, j = 0;
-                if (len <= 0|| Team1==null || Team2==null) return null;
+                if (len <= 0) return null;
                 while (i < len / 2 && j < len / 2)
                 {
+                    if (Team1[i] == null || Team2[j] == null) continue;
                     if (Team1[i].TotalScore >= Team2[j].TotalScore)
                     {
                         New.Add(Team2[i++]);
