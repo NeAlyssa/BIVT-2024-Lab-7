@@ -233,9 +233,9 @@ namespace Lab_7
                     {
                         sum[i] = this.Bank * n/100;
                     }
-                    sum[0]= 0.4 * this.Bank;
-                    sum[1]= 0.25* this.Bank;
-                    sum[2]= 0.15*this.Bank;
+                    sum[0]+= 0.4 * this.Bank;
+                    sum[1]+= 0.25* this.Bank;
+                    sum[2]+= 0.15*this.Bank;
 
                     return sum;
                 }
