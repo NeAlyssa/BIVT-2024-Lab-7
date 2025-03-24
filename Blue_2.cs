@@ -161,7 +161,7 @@ namespace Lab_7
                     int count = Participants.Length;
                     int halfCount = count / 2;
                     double[] prize = new double[halfCount];
-                    if (halfCount < 10)
+                    if (halfCount <= 10)
                     {
                         int N = 20 / halfCount;
                         for (int i = 3; i < halfCount; i++)
