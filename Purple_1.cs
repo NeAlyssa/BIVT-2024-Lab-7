@@ -200,7 +200,7 @@ namespace Lab_7
             }
             public void Evaluate(Participant jumper)
             {
-                if(jumper == null) return;
+                if(jumper == null || _judges == null || _judges.Length == 0) return;
                 int[] marks = new int[_judges.Length];
                 for(int jdg = 0;  jdg < _judges.Length; jdg++)
                 {
