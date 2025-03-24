@@ -69,10 +69,7 @@ namespace Lab_7
                 }
             }
 
-            private void Remove()
-            {
-                _jumps[_jumps.Length - 1] = 0;
-            }
+            
 
             public static void Sort(Participant[] array)
             {
