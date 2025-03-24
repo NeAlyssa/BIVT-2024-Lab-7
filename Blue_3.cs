@@ -114,7 +114,6 @@ namespace Lab_7
         {
             public BasketballPlayer(string name, string surname) : base(name, surname)
             {
-                _penaltyTimes = new int[0];
             }
             public override bool IsExpelled
             {
@@ -161,7 +160,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return false;
+                    if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
                     for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
                         if (_penaltyTimes[k] >= 10)
@@ -169,11 +168,7 @@ namespace Lab_7
                             return true;
                         }
                     }
-                    if (this.Total > 0.1 * _time / _player)
-                    {
-                        return true;
-                    }
-                    return false;
+                    return Total > 0.1 * (_time / _player);
                 }
 
             }
