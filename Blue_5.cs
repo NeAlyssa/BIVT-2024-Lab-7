@@ -54,6 +54,7 @@ public class Blue_5
             int m=18;
             
             for(int i=0;i<_sportsmen.Length;i++){
+                if(_sportsmen[i] == null) continue;
                 if (_sportsmen[i].Place < m && _sportsmen[i].Place > 0){
                     m=_sportsmen[i].Place;
                 }
