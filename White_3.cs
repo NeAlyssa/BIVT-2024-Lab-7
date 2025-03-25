@@ -11,17 +11,17 @@ namespace Lab_7
     {
         public class Student
         {
-            //поля
+            // Поля
             private string _name;
             private string _surname;
-            protected int[] _marks;
-            protected int _skipped;
+            protected int[] _marks;  
+            protected int _skipped;  
 
-            //свойства
+            // Свойства
             public string Name => _name;
             public string Surname => _surname;
             public int Skipped => _skipped;
-            public double AvgMark 
+            public double AvgMark
             {
                 get
                 {
@@ -29,11 +29,11 @@ namespace Lab_7
                     {
                         return 0;
                     }
-                    return (double)Sum(_marks) / _marks.Length; // Средняя оценка
+                    return (double)Sum(_marks) / _marks.Length;
                 }
             }
 
-            //конструкторы
+            //конструктор
             public Student(string name, string surname)
             {
                 _name = name;
@@ -42,96 +42,112 @@ namespace Lab_7
                 _skipped = 0;
             }
 
-            //защищённый конструктор копирования
+            //защищенный конструктор
             protected Student(Student student)
             {
                 _name = student._name;
                 _surname = student._surname;
-                _marks = (int[])student._marks.Clone(); // Клонируем массив
+                _marks = (int[])student._marks.Clone();
                 _skipped = student._skipped;
             }
 
-            public class Undergraduate : Student //класс-наследник
+            // Метод посещения урока
+            public void Lesson(int mark)
             {
-                //конструкторы
-                public Undergraduate(string name, string surname) : base(name, surname) { } 
-
-                public Undergraduate(Student student) : base(student) { }
-
-                ///методы
-                public void WorkOff(int mark) //метод отработки пропусков
+                if (mark == 0)
                 {
-                    if (_skipped > 0)
-                    {
-                        _skipped--; 
-                        Lesson(mark); 
-                    }
-                    else
-                    {
-                        for (int i = 0; i < _marks.Length; i++)
-                        {
-                            if (_marks[i] == 2) // Ищем двойку и заменяем на новую оценку
-                            {
-                                _marks[i] = mark;
-                                return;
-                            }
-                        }
-                    }
+                    _skipped++;
                 }
-
-                public new void Print()
+                else
                 {
-                    Console.WriteLine($"Студент: {Name} {Surname}, Средняя оценка: {AvgMark:F2}, Пропуски: {Skipped}");
+                    if (_marks == null) return;
+                    int[] newMarks = new int[_marks.Length + 1];
+                    for (int i = 0; i < _marks.Length; i++)
+                    {
+                        newMarks[i] = _marks[i];
+                    }
+                    newMarks[newMarks.Length - 1] = mark;
+                    _marks = newMarks;
                 }
             }
-                //методы
-                public void Lesson(int mark)
+
+            // Сортировка по количеству пропусков
+            public static void SortBySkipped(Student[] array)
+            {
+                if (array == null || array.Length == 0) return;
+                int n = array.Length;
+                bool sw;
+
+                for (int i = 0; i < n - 1; i++)
                 {
-                    if (mark == 0)
+                    sw = false;
+                    for (int j = 0; j < n - 1 - i; j++)
                     {
-                        _skipped++; // Увеличиваем количество пропусков
-                    }
-                    else
-                    {
-                        if (_marks == null ) return;
-                        int[] newMarks = new int[_marks.Length + 1];
-                        for (int i = 0; i < _marks.Length; i++)
+                        if (array[j].Skipped < array[j + 1].Skipped)
                         {
-                            newMarks[i] = _marks[i];
+                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                            sw = true;
                         }
-
-                        // Добавляем новый результат в конец массива
-                        newMarks[newMarks.Length - 1] = mark;
-                        _marks = newMarks;
                     }
+                    if (!sw) break;
                 }
+            }
 
-                public static void SortBySkipped(Student[] array)
+            public virtual void Print()
+            {
+                Console.WriteLine($"Имя: {_name}, Фамилия: {_surname}, Средняя оценка: {AvgMark:F2}, Пропуски: {_skipped}");
+            }
+
+            // Подсчет суммы оценок
+            private int Sum(int[] array)
+            {
+                int s = 0;
+                if (array == null || array.Length == 0) return 0;
+                for (int i = 0; i < array.Length; i++)
                 {
-                    if (array == null || array.Length == 0) return;
-                    int n = array.Length;
-                    bool sw;
+                    s += array[i];
+                }
+                return s;
+            }
+        }
 
-                    for (int i = 0; i < n - 1; i++)
+        // класс насследник
+        public class Undergraduate : Student
+        {
+            // конструктор
+            public Undergraduate(string name, string surname) : base(name, surname) { }
+
+            //конструктор
+            public Undergraduate(Student student) : base(student) { }
+
+            //метод WorkOff: возможность "отработать" пропуск
+            public void WorkOff(int mark)
+            {
+                if (_skipped > 0)
+                {
+                    _skipped--;
+                    Lesson(mark);
+                }
+                else
+                {
+                    for (int i = 0; i < _marks.Length; i++)
                     {
-                        sw = false;
-                        for (int j = 0; j < n - 1 - i; j++)
+                        if (_marks[i] == 2)  // Ищем двойку и заменяем
                         {
-                            if (array[j].Skipped < array[j + 1].Skipped) // Сортировка по убыванию пропусков
-                            {
-                                (array[j], array[j + 1]) = (array[j + 1], array[j]);
-                                sw = true;
-                            }
+                            _marks[i] = mark;
+                            return;
                         }
-                        if (!sw) break; // Если перестановок не было, массив уже отсортирован
                     }
                 }
+            }
 
-                public void Print()
-                {
-                    Console.WriteLine($"Имя: {_name}, Фамилия: {_surname}, Средняя оценка: {AvgMark:F2}, Пропуски: {_skipped}");
-                }
-                private int Sum(int[] array)
+            //метод Print()
+            public override void Print()
+            {
+                Console.WriteLine($"(Undergraduate) Имя: {Name}, Фамилия: {Surname}, Средняя оценка: {AvgMark:F2}, Пропуски: {Skipped}");
+            }
+
+            private int Sum(int[] array)
                 {
                     int s = 0;
                     if (array.Length == 0) return 0;

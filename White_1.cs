@@ -19,11 +19,11 @@ namespace Lab_7
             // статические поля 
             private static double _normative;
             private static int _jumpers;
-            private static int _disjumpers;
+            private static int _disqualified;
 
             //статические свойства
             public static int Jumpers => _jumpers;
-            public static int Disjumpers => _disjumpers;
+            public static int Disqualified => _disqualified;
 
 
             //свойства
@@ -38,7 +38,7 @@ namespace Lab_7
             {
                 _normative = 5;
                 _jumpers = 0;
-                _disjumpers = 0;
+                _disqualified = 0;
             }
 
             // Конструктор
@@ -79,7 +79,7 @@ namespace Lab_7
                     }
                     else
                     {
-                        _disjumpers++; // увеличиваем счетчик дисквалифицированных
+                        _disqualified++; // увеличиваем счетчик дисквалифицированных
                     }
                 }
 
