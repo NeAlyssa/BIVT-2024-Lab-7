@@ -42,7 +42,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks == null || _marks.Length==0) return 0;
+                    if (_marks == null || _marks.Length==0 || _distance==0 ) return 0;
                     int answer = 0;
                     int maxres = 0, minres = int.MaxValue;
                     for (int i = 0; i < _marks.Length; i++)

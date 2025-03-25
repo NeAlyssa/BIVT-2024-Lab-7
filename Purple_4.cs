@@ -45,7 +45,8 @@ namespace Lab_7
             public static void Sort(Sportsman[] array)
             {
                 if(array == null) return;
-                array = array.OrderBy(x=>x.Time ).ToArray();
+                var arr = array.OrderBy(x=>x.Time ).ToArray();
+                Array.Copy(arr, array, array.Length);
             }
         }
 
@@ -129,7 +130,8 @@ namespace Lab_7
             public void Sort()
             {
                 if (_sportsmen == null) return;
-                _sportsmen = _sportsmen.OrderBy(x =>  x.Time).ToArray();
+                var sp =_sportsmen.OrderBy(x =>  x.Time).ToArray();
+                Array.Copy(sp, _sportsmen, _sportsmen.Length);
             }
             public static Group Merge(Group group1, Group group2)
             {
