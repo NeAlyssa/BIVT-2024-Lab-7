@@ -108,20 +108,21 @@ namespace Lab_7
                         }
                         if (question == 2)
                         {
-                            if (n2.CharacterTrait != null) {
+                            if (n2.CharacterTrait != null) 
                                 {
                                     Array.Resize(ref answer, answer.Length + 1);
                                     answer[answer.Length - 1] = n2.CharacterTrait;
                                 }
-                            }
+                            
                         }
                         if (question == 3)
                         {
-                            if (n2.Concept != null) {
-                                {
+                            if (n2.Concept != null)
+                            {
+                                
                                     Array.Resize(ref answer, answer.Length + 1);
                                     answer[answer.Length - 1] = n2.Concept;
-                                }
+                                
                             }
                         }
                     }
@@ -136,8 +137,16 @@ namespace Lab_7
             private Response[] _responses;
 
             public string Name => _name;
-            public Response[] Responses => _responses;
-
+            public Response[] Responses
+            {
+                get
+                {
+                    if (_responses == null) return default;
+                    var copy = new Response[_responses.Length];
+                    Array.Copy(_responses, copy, copy.Length);
+                    return _responses;
+                }
+            }
 
             public Research(string name)
             {
