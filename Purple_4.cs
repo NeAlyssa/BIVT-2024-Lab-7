@@ -149,11 +149,11 @@ namespace Lab_6
             public void Sort()
             {
                 if (_sportsmen == null) return;
-                //_sportsmen = _sportsmen.OrderBy(p => p.Time).ToArray();
                 Array.Sort(_sportsmen, (x, y) =>
                 {
-                    if (x.Time < y.Time) return -1;
-                    else if (x.Time > y.Time) return 1;
+                    double A = x.Time - y.Time;
+                    if (A < 0) return -1;
+                    else if (A > 0) return 1;
                     else return 0;
                 });
             }
