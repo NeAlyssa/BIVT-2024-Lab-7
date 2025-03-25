@@ -212,16 +212,7 @@ namespace Lab_7
         {
             private Participant[] _participants;
             protected double[] _moods;
-            public Participant[] Participants
-            {
-                get
-                {
-                    if (_participants == null) return null;
-                    var newArray = new Participant[_participants.Length];
-                    Array.Copy(_participants, newArray, _participants.Length);
-                    return newArray;
-                }
-            }
+            public Participant[] Participants => _participants;
             public double[] Moods
             {
                 get
