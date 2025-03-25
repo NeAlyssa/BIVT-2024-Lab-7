@@ -162,9 +162,9 @@ namespace Lab_7
                     int halfCount = count / 2;
                     double[] prize = new double[Math.Min(halfCount, 10)];
                     double N = 20.0 / Math.Min(halfCount, 10);
-                    for (int i = 0; i < halfCount; i++)
+                    for (int i = 0; i < prize.Length; i++)
                     {
-                        prize[i] = 0.01 * N * Bank;
+                        prize[i] += 0.01 * N * Bank;
                     }
                     prize[0] += 0.4 * Bank;
                     prize[1] += 0.25 * Bank;
