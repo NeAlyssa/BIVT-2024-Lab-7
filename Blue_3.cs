@@ -153,6 +153,7 @@ namespace Lab_7
             public HockeyPlayer(string name, string surname) : base(name, surname)
             {
                 _player++;
+                _penaltyTimes = new int[0];
             }
 
             private int Times => _time;
