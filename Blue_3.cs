@@ -147,8 +147,8 @@ namespace Lab_7
         }
         public class HockeyPlayer : Participant
         {
-            private int _player = 0;
-            private int _time = 0;
+            private static int _player = 0;
+            private static int _time = 0;
 
             public HockeyPlayer(string name, string surname) : base(name, surname)
             {
