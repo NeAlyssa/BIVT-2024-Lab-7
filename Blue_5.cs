@@ -65,11 +65,11 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen[0] == null) return 0;
+                    if (_sportsmen == null || _sportsmen.Length == 0 || _sportsmen[0] == null) return 0;
 
                     int[] scores = { 0, 5, 4, 3, 2, 1 };
 
-                    return _sportsmen.Sum(s => (s.Place >= 1 && s.Place <= 5) ? scores[s.Place] : 0);
+                    return _sportsmen.Sum(s => (s != null && s.Place >= 1 && s.Place <= 5) ? scores[s.Place] : 0);
                 }
             }
             public int TopPlace // выводит наивысшее место, которое занял кто-то из членов команды. 
