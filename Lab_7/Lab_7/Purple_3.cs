@@ -134,14 +134,14 @@ namespace Lab_7
                         {
 
 
-                            if (ComparisonPlaces(array[j], array[j+1]))
+                            if (array[j].Places.Min() > array[j + 1].Places.Min())
                             {
                                 Participant temp = array[j];
                                 array[j] = array[j + 1];
                                 array[j + 1] = temp;
                             }
 
-                            else if (!(ComparisonPlaces(array[j+1], array[j])))
+                            else
                             {
                                 if (SumM(array[j]) < SumM(array[j + 1]))
                                 {
@@ -150,6 +150,7 @@ namespace Lab_7
                                     array[j + 1] = temp;
 
                                 }
+                            
                             }
 
                         }
