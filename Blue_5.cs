@@ -74,12 +74,14 @@ public class Blue_5
             _kol++;
         }
         public void Add(Sportsman[] sportsman){
-            if (_sportsmen == null || _sportsmen.Length==0||sportsman == null || _kol >= _sportsmen.Length) return;
+            if (_sportsmen == null || sportsman.Length == 0|| sportsman == null || _kol >= _sportsmen.Length) return;
             int i=0;
-            while (_kol < _sportsmen.Length && i < sportsman.Length){
-                if (_sportsmen[i]!=null){
-                _sportsmen[_kol] = sportsman[i];
-                _kol++;
+            while (_kol < _sportsmen.Length && i < sportsman.Length)
+            {
+                if (sportsman[i]!=null)
+                {
+                    _sportsmen[_kol] = sportsman[i];
+                    _kol++;
                 }
                 i++;
             }
