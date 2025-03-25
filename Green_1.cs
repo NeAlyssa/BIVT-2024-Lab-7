@@ -15,7 +15,7 @@ namespace Lab_7
             private string _trainer;
             private double _result;
 
-            private protected double _standard;
+            protected double _standard;
             private static int _passedCount;
 
             public string Surname => _surname;
