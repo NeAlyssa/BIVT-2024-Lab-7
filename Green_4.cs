@@ -57,17 +57,18 @@ namespace Lab_7
                 {
                     return;
                 }
-
-                for (int i = 0; i < _jumps.Length; i++)
+                if (result >= 0)
                 {
-                    if (_jumps[i] == 0)
+                    for (int i = 0; i < _jumps.Length; i++)
                     {
-                        _jumps[i] = result;
-                        return;
+                        if (_jumps[i] == 0)
+                        {
+                            _jumps[i] = result;
+                            return;
+                        }
                     }
                 }
             }
-
             public static void Sort(Participant[] array)
             {
                 if (array == null || array.Length == 0)
@@ -141,12 +142,15 @@ namespace Lab_7
             //сортировка
             public void Sort()
             {
-                Participant.Sort(_participants);
+                if (_participants != null)
+                {
+                    Participant.Sort(_participants);
+                }
             }
 
             protected Participant GetParticipantAt(int index)
             {
-                if (index >= 0 && index < _count)
+                if (_participants != null && index >= 0 && index < _count)
                 {
                     return _participants[index];
                 }
@@ -155,11 +159,12 @@ namespace Lab_7
 
             protected void SetParticipant(int index, Participant participant)
             {
-                if (index >= 0 && index < _count)
+                if (_participants != null && index >= 0 && index < _count)
                 {
                     _participants[index] = participant;
                 }
             }
+            //заменяет участника
             public void Print()
             {
                 Console.WriteLine($"Дисциплина: {Name}");
@@ -168,21 +173,20 @@ namespace Lab_7
                     participant.Print();
                 }
             }
-            public abstract void Retry(int index);
+            public abstract void Retry(int index);//абстрактный метод добавляет попытки
         }
 
         //класс-наследник
         public class LongJump : Discipline
         {
             public LongJump() : base("Long jump") { }
-
             public override void Retry(int index)
             {
                 Participant participant = GetParticipantAt(index);
                 double bestJump = participant.BestJump;
-                participant = new Participant(participant.Name, participant.Surname);//new
+                participant = new Participant(participant.Name, participant.Surname);
 
-                participant.Jump(bestJump);  // Сохраняем лучший прыжок
+                participant.Jump(bestJump);// Сохраняем лучший прыжок
                 SetParticipant(index, participant);
 
             }
@@ -190,15 +194,17 @@ namespace Lab_7
         public class HighJump : Discipline
         {
             public HighJump() : base("High jump") { }
-
             public override void Retry(int index)
             {
                 Participant participant = GetParticipantAt(index);
                 double[] jumps = participant.Jumps;
                 Participant new_Participant = new Participant(participant.Name, participant.Surname);
-                for (int i = 0; i < jumps.Length - 1; i++)
+                if (jumps != null && )
                 {
-                    new_Participant.Jump(jumps[i]);
+                    for (int i = 0; i < jumps.Length - 1; i++)
+                    {
+                        new_Participant.Jump(jumps[i]);
+                    }
                 }
                 SetParticipant(index, new_Participant);
             }
