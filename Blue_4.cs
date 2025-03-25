@@ -167,8 +167,8 @@ namespace Lab_7
                 group1.Sort();
                 group2.Sort();
                 Group New = new Group("Финалисты");
-                Group M=MergeEach(group1.ManTeams, group2.ManTeams, size/2);
-                Group W= MergeEach(group1.WomanTeams, group2.WomanTeams, size / 2);
+                Group M=MergeEach(group1.ManTeams, group2.ManTeams, size);
+                Group W= MergeEach(group1.WomanTeams, group2.WomanTeams, size);
                 New.Add(M.ManTeams);
                 New.Add(W.WomanTeams);
                 return New;
