@@ -151,7 +151,7 @@ namespace Lab_7
 
             public (string, double)[] GetGeneralReport(int question)
             {
-                if (_researches == null) return null;
+                if (_researches == null || question < 1 || question > 3) return null;
                 double count = 0;
                 var All = new Research("All");
                 var AnsArray = new (string, double)[0];
