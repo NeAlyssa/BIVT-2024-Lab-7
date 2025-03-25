@@ -68,8 +68,6 @@ namespace Lab_7
                 }
             }
 
-            
-
             public static void Sort(Participant[] array)
             {
                 if (array == null || array.Length == 0)
@@ -170,7 +168,7 @@ namespace Lab_7
                     participant.Print();
                 }
             }
-            public abstract void Retry(int index);//абстрактный метод добавляет попытки
+            public abstract void Retry(int index);
         }
 
         //класс-наследник
@@ -182,7 +180,7 @@ namespace Lab_7
             {
                 Participant participant = GetParticipantAt(index);
                 double bestJump = participant.BestJump;
-                participant = new Participant(participant.Name, participant.Surname);
+                participant = new Participant(participant.Name, participant.Surname);//new
 
                 participant.Jump(bestJump);  // Сохраняем лучший прыжок
                 SetParticipant(index, participant);
