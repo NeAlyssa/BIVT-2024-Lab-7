@@ -171,7 +171,8 @@ namespace Lab_7
 
             public Skating(double[] moods)
             {
-                _moods = moods;
+                _moods = new double[7];
+                Array.Copy(moods, _moods, 7);
                 ModificateMood();
                 _participants = new Participant[0];
                 _number = 0;
@@ -213,7 +214,7 @@ namespace Lab_7
             protected override void ModificateMood()
             {
                 if (_moods == null) return;
-                for (int i = 0; i < _moods.Length; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     _moods[i] += (i + 1.0) / 10;
                 }
@@ -227,7 +228,7 @@ namespace Lab_7
             protected override void ModificateMood()
             {
                 if (_moods == null) return;
-                for (int i = 0; i < _moods.Length; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     _moods[i] *= (1 + (i + 1.0) / 100);
                 }
