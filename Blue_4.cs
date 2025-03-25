@@ -133,8 +133,8 @@ namespace Lab_7
             public static Group Merge(Group group1, Group group2, int size)
             {
                 Group finaly = new Group("Финалисты");
-                Group manTeam = TeamMerge(group1.ManTeams, group2.ManTeams, group1.ManTeams.Length + group2.ManTeams.Length);
-                Group womanTeam = TeamMerge(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length + group2.WomanTeams.Length);
+                Group manTeam = TeamMerge(group1.ManTeams, group2.ManTeams,size);
+                Group womanTeam = TeamMerge(group1.WomanTeams, group2.WomanTeams, size);
                 finaly.Add(manTeam.ManTeams);
                 finaly.Add(womanTeam.WomanTeams);
                 return finaly;

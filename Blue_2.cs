@@ -160,26 +160,15 @@ namespace Lab_7
                     if (Participants == null || Participants.Length < 3) return default(double[]);
                     int count = Participants.Length;
                     int halfCount = count / 2;
-                    double[] prize = new double[halfCount];
-                    if (halfCount <= 10)
+                    double[] prize = new double[Math.Min(halfCount, 10)];
+                    double N = 20.0 / Math.Min(halfCount, 10);
+                    for (int i = 0; i < halfCount; i++)
                     {
-                        int N = 20 / halfCount;
-                        for (int i = 3; i < halfCount; i++)
-                        {
-                            prize[i] = 0.01 * N * Bank;
-                        }
+                        prize[i] = 0.01 * N * Bank;
                     }
-                    else
-                    {
-                        int N = 10;
-                        for(int i = 3; i < N; i++)
-                        {
-                            prize[i] = 0.01 * N * Bank;
-                        }
-                    }
-                    prize[0] = 0.4 * Bank;
-                    prize[1] = 0.25 * Bank;
-                    prize[2] = 0.15 * Bank;
+                    prize[0] += 0.4 * Bank;
+                    prize[1] += 0.25 * Bank;
+                    prize[2] += 0.15 * Bank;
                     return prize;
                 }
             }
