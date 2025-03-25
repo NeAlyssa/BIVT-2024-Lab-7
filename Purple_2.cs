@@ -17,11 +17,13 @@ namespace Lab_7
             private string _surname;
             private int _distance;
             private int[] _marks;
-            private int _target;
+            private int _result;
+            private bool flag;
             //свойства
             public string Name => _name;
             public string Surname => _surname;
             public int Distance => _distance;
+
 
             public int[] Marks
             {
@@ -34,47 +36,7 @@ namespace Lab_7
                 }
 
             }
-            public int Result
-            {
-                get
-                {
-                    if (_marks == null || _distance <= 0) { return 0; }
-                    int result = 0;
-                    int imax = 0, imin = 0;
-                    for (int i = 0; i < _marks.Length; i++)
-                    {
-                        if (_marks[i] > _marks[imax])
-                        {
-                            imax = i;
-                        }
-                        if (_marks[i] < _marks[imin])
-                        {
-                            imin = i;
-                        }
-                        result += _marks[i];
-                    }
-                    result -= (_marks[imax] + _marks[imin]);
-                    result += 60;
-                    if (_distance >= 120)
-                    {
-                        result += (_distance - 120) * 2;
-                        if (result < 0)
-                        {
-                            result = 0;
-                        }
-                    }
-                    else
-                    {
-                        result -= (120 - _distance) * 2;
-                        if (result < 0)
-                        {
-                            result = 0;
-                        }
-                    }
-
-                    return result;
-                }
-            }
+            public int Result => _result;
 
             //конструктор
             public Participant(string name, string surname)
@@ -82,7 +44,8 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _distance = 0;
-                _target = 0;
+                _result = 0;
+                flag = false;
                 _marks = new int[5];
 
                 for (int i = 0; i < _marks.Length; i++)
@@ -93,12 +56,36 @@ namespace Lab_7
             //методы
             public void Jump(int distance, int[] marks, int target)
             {
-                if (marks == null || _marks == null || marks.Length != _marks.Length) { return; }
-                _target = target;
+                if (marks == null || _marks == null || marks.Length != _marks.Length || flag == true || _distance <= 0) { return; }
                 _distance = distance;
+                flag = true;
                 for (int i = 0; i < _marks.Length; i++)
                 {
                     _marks[i] = marks[i];
+                }
+                int result = 0;
+                int imax = 0, imin = 0;
+                for (int i = 0; i < _marks.Length; i++)
+                {
+                    if (_marks[i] > _marks[imax])
+                    {
+                        imax = i;
+                    }
+                    if (_marks[i] < _marks[imin])
+                    {
+                        imin = i;
+                    }
+                    result += _marks[i];
+                }
+                result -= (_marks[imax] + _marks[imin]);
+                result += 60 + 2*(_distance - target);
+                if (result > 0)
+                {
+                    _result = result;
+                }
+                else
+                {
+                    _result = 0;
                 }
             }
             public static void Sort(Participant[] array)
@@ -156,7 +143,7 @@ namespace Lab_7
                 {
                     if (_participants[jmpr].Distance == 0)
                     {
-                        _participants[jmpr].Jump(distance, marks, Standard);
+                        _participants[jmpr].Jump(distance, marks, _standard);
                         break;
                     }
                 }
