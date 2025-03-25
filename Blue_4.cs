@@ -133,14 +133,17 @@ namespace Lab_7
             }
             public void Sort()
             {
+                if (_manTeams == null || _womanTeams == null) return;
                 SortGroup(_manTeams);
                 SortGroup(_womanTeams);
             }
 
             public static Group MergeTeams(Team[] group1, Team[] group2, int length)
             {
-                if (length <= 0) return null;
+                if (length <= 0 || group1 == null || group2 == null)
+                    return null;
                 Group finalGroup = new Group("Финалисты");
+
                 int i = 0; int j = 0;
                 while (i < length / 2 && j < length / 2)
                 {
@@ -204,16 +207,14 @@ namespace Lab_7
 
         public class ManTeam : Team
         {
-
             public ManTeam(string name) : base(name) { }
 
+        }
 
+        public class WomanTeam : Team
+        {
+            public WomanTeam(string name) : base(name) { }
 
-            public class WomanTeam : Team
-            {
-                public WomanTeam(string name) : base(name) { }
-
-            }
         }
     }
 }

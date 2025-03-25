@@ -74,16 +74,19 @@ namespace Lab_7
 
             public static void Sort(Participant[] array)
             {
-                if (array == null || array.Length == 0) { return; }
+                if (array == null || array.Length == 0) return;
+
                 for (int i = 0; i < array.Length; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
-                        if (array[j].Total > array[j + 1].Total)
+                        // Изменено на сортировку по убыванию
+                        if (array[j].Total < array[j + 1].Total)
+                        {
                             (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        }
                     }
                 }
-
             }
 
             public void Print()
@@ -116,18 +119,16 @@ namespace Lab_7
                         if (_penaltyTimes[i] >= 5) count++;
                     }
 
-                    if (count >= 0.1 * countMatches || this.Total >= 2 * countMatches)
-                        return true;
-                    return false;
+                    return (count >= 0.1 * countMatches || this.Total >= 2 * countMatches);
+                        
                 }
             }
 
             public override void PlayMatch(int countMatches)
             {
-                if (countMatches >= 0 ||countMatches <= 5)
-                {
-                    base.PlayMatch(countMatches);
-                }
+                if (countMatches < 0 || countMatches > 5) return;
+                base.PlayMatch(countMatches);
+                
             }
 
 
@@ -157,21 +158,21 @@ namespace Lab_7
                         if (_penaltyTimes[i] >= 10) return true;
                     }
 
-                    if (this.Total > 0.1 * _allPenaltyTime / _numPlayer) return true;
-
-                    return false;
+                    if (_numPlayer == 0) return false;
+                    double average = (double)_allPenaltyTime / _numPlayer;
+                    return this.Total > 0.1 * average;
                 }
             }
 
 
             public override void PlayMatch(int penaltyTime)
             {
-                if (_penaltyTimes == null) return;
+                if (_penaltyTimes == null || penaltyTime < 0) return;
                 base.PlayMatch(penaltyTime);
                 _allPenaltyTime += penaltyTime;
             }
 
-           
         }
+
     }
 }

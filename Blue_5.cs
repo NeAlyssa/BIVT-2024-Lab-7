@@ -8,7 +8,7 @@ namespace Lab_7
 {
     public class Blue_5
     {
-        public abstract class Sportsman
+        public class Sportsman
         {
             private string _name;
             private string _surname;
@@ -56,6 +56,7 @@ namespace Lab_7
                     int sum = 0;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
+                        if (_sportsmen[i] == null) continue;    
                         switch (_sportsmen[i].Place)
                         {
                             case 1:
@@ -93,10 +94,11 @@ namespace Lab_7
 
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (sportsman.Place < min && sportsman.Place != 0)
+                        if (sportsman == null) continue;   
+                        if (sportsman.Place < min && sportsman.Place > 0)
                             min = sportsman.Place;
 
-                    }
+                    }               
                     return min;
                 }
             }
@@ -108,21 +110,21 @@ namespace Lab_7
             }
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null || _curInd == 6) return;
-                _sportsmen[_curInd] = sportsman;
-                _curInd++;
+                if (_sportsmen == null || sportsman == null || _curInd >= _sportsmen.Length) return;
+                _sportsmen[_curInd++] = sportsman;
+              
 
             }
             public void Add(Sportsman[] sportsmen)
             {
-                if (sportsmen == null) return;
+                if (sportsmen == null || _sportsmen == null) return;
                 foreach (var sportsman in sportsmen)
                     Add(sportsman);
             }
 
             public static void Sort(Team[] teams)
             {
-                if (teams == null || teams.Length <= 1) return;
+                if (teams == null || teams.Length == 0) return;
 
                 for (int i = 0; i < teams.Length; i++)
                 {
@@ -156,7 +158,7 @@ namespace Lab_7
 
             public static Team GetChampion(Team[] teams)
             {
-                if (teams == null)
+                if (teams == null || teams.Length == 0)
                     return null;
 
                 Team winner = null;
@@ -185,13 +187,30 @@ namespace Lab_7
             public ManTeam(string name) : base(name) { }
             protected override double GetTeamStrength()
             {
-                double midPlace = 0;
-                foreach (Sportsman sportsman in Sportsmen)
-                    midPlace += sportsman.Place;
+                if (Sportsmen == null || Sportsmen.Length == 0)
+                    return 0;
 
-                midPlace /= 2;
-                return 100.0 / midPlace;
+                double totalPlace = 0;
+                int count = 0;
+
+                for (int i = 0; i < Sportsmen.Length; i++)
+                {
+                    Sportsman sportsman = Sportsmen[i];
+
+                    if (sportsman != null && sportsman.Place > 0)
+                    {
+                        totalPlace += sportsman.Place;
+                        count++;
+                    }
+                }
+
+                if (count == 0)
+                    return 0;
+
+                double averagePlace = totalPlace / count;
+                return 100.0 / averagePlace;
             }
+   
         }
 
         public class WomanTeam : Team
@@ -199,14 +218,29 @@ namespace Lab_7
             public WomanTeam(string name) : base(name) { }
             protected override double GetTeamStrength()
             {
+                if (Sportsmen == null || Sportsmen.Length == 0)
+                    return 0;
+
                 double sumPlace = 0;
                 double multPlace = 1;
-                foreach (Sportsman sportsman in Sportsmen)
+                int count = 0;
+
+                for (int i = 0; i < Sportsmen.Length; i++)
                 {
-                    sumPlace += sportsman.Place;
-                    multPlace *= sportsman.Place;
+                    Sportsman sportsman = Sportsmen[i];
+
+                    if (sportsman != null && sportsman.Place > 0)
+                    {
+                        sumPlace += sportsman.Place;
+                        multPlace *= sportsman.Place;
+                        count++;
+                    }
                 }
-                return 100.0 * sumPlace * Sportsmen.Length / multPlace;
+
+                if (count == 0 || multPlace == 0)
+                    return 0;
+
+                return (100.0 * sumPlace * count) / multPlace;
             }
 
         }

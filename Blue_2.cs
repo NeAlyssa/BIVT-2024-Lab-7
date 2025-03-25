@@ -57,7 +57,7 @@ namespace Lab_7
             // метод
             public void Jump(int[] result)
             {
-                if (result == null || _marks == null || result.Length < 5) return;
+                if (result == null || result.Length < 5) return;
                 int count1 = 0;
                 int count2 = 0;
                 for (int j = 0; j < 5; j++)
@@ -80,7 +80,7 @@ namespace Lab_7
 
             public static void Sort(Participant[] array)
             {
-                if (array == null || array.Length == 0) return;
+                if (array == null) return;
                 for (int i = 0; i < array.Length; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
@@ -96,7 +96,16 @@ namespace Lab_7
             }
             public void Print()
             {
-                Console.WriteLine($"Name: {_name}, Surname: {_surname}, Total score: {TotalScore}");
+                Console.WriteLine(_name + " " + _surname);
+                for (int i = 0; i < _marks.GetLength(0); i++)
+                {
+                    for (int j = 0; j < _marks.GetLength(1); j++)
+                    {
+                        Console.WriteLine(_marks[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine(TotalScore);
             }
         }
 
@@ -105,7 +114,7 @@ namespace Lab_7
             private string _name;
             private int _bank;
             private Participant[] _participants;
-            private int currentIndex;
+           
 
 
             public string Name => _name;
@@ -116,45 +125,37 @@ namespace Lab_7
             public abstract double[] Prize { get; }
 
 
+
             public WaterJump(string name, int bank)
             {
                 _name = name;
                 _bank = bank;
                 _participants = new Participant[0];
-                currentIndex = 0;
+              
             }
-        
+
             public void Add(Participant participants)
             {
-                if (_participants == null || currentIndex >= _participants.Length) return;
-                _participants[currentIndex++] = participants;
+                if (_participants == null) return;
+                Participant[] newParticipant = new Participant[_participants.Length + 1];
+                Array.Copy(_participants, newParticipant, _participants.Length);
+                newParticipant[newParticipant.Length - 1] = participants;
+                _participants = newParticipant;
+               
             }
 
 
             public void Add(Participant[] participants)
             {
-                if (participants == null) return;
+                if (participants == null || _participants == null || participants.Length == 0) return;
                 foreach (Participant p in participants)
                 {
                     Add(p);
                 }
-            } 
-
-
-            public void Print()
-            {
-                Console.WriteLine($"{_name}: bank = {_bank}");
-
-                double[] money = this.Prize;
-                if (money == null)
-                {
-                    Console.WriteLine("no money");
-                    return;
-                }
-                int k = 1;
-                foreach (double p in money)
-                    Console.WriteLine($"{k++, 2} plase - {p}");
             }
+
+
+           
         }
 
 
@@ -168,16 +169,14 @@ namespace Lab_7
                 {
                     double[] money = new double[3];
 
-                    money[0] = (double)(0.5 * this.Bank);
-                    money[1] = (double)(0.3 * this.Bank);
-                    money[2] = (double)(0.2 * this.Bank);
+                    money[0] = 0.5 * (double)this.Bank;
+                    money[1] = 0.3 * (double)this.Bank;
+                    money[2] = 0.2 * (double)this.Bank;
 
                     return money;
                 }
             }
         }
-
-
 
         public class WaterJump5m : WaterJump
         {
@@ -195,7 +194,7 @@ namespace Lab_7
                     else if (middle > 10) numParticipants = 10;
 
                     double N = 20 / numParticipants;
-                    double[] money = new double[numParticipants]; 
+                    double[] money = new double[numParticipants];
                     if (this.Participants.Length > 3)
                     {
                         for (int i = 0; i < numParticipants; i++)
@@ -209,9 +208,9 @@ namespace Lab_7
                     money[2] += (double)(0.15 * this.Bank);
 
                     return money;
-                    
+
                 }
-            
+
             }
         }
 
