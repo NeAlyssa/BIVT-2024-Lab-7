@@ -89,21 +89,18 @@ namespace Lab_7
                
                 for (int i = 0; i < 7; i++)
                 {
-                    for (int j = 0; j < participants.Length-1; j++)
-                    {
-                        double max = participants[j].Marks[i];
-                        int ind = j;
-                        for (int k = j + 1; k < participants.Length; k++)
+                    for (int j = 0; j < participants.Length; j++)
+                    { 
+                        for (int k = 0; k < participants.Length-j-1; k++)
                         {
-                            if (participants[k].Marks[i] > max)
+                            if (participants[k].Marks[i] < participants[k + 1].Marks[i])
                             {
-                                max = participants[k].Marks[i];
-                                ind = k;
+                                Participant temp = participants[k];
+                                participants[k] = participants[k+1];
+                                participants[k+1] = temp;
                             }
                         }
-                        Participant temp = participants[j];
-                        participants[j] = participants[ind];
-                        participants[ind] = temp;
+                        
                     }
                     for (int k = 0; k < participants.Length; k++)
                         participants[k]._places[i] = k + 1;
