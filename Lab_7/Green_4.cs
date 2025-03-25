@@ -102,7 +102,7 @@ namespace Lab_7
             }
             public double[] Jumps // Свойство прыжков.
             {
-                get { return (double[])_jumps.Clone(); }
+                get { return _jumps != null ? (double[])_jumps.Clone() : null; }
             }
             public double BestJump // Свойство лучшего из них.
             {
@@ -184,7 +184,7 @@ namespace Lab_7
             {
                 Participant participant = GetParticipantAt(index);
                 double[] jumps = participant.Jumps;
-                int count = jumps.Length;
+                int count = (jumps != null) ? jumps.Length : 0;
                 Participant newParticipant = new Participant(participant.Name, participant.Surname);
                 for (int i = 0; i < count - 1; i++)
                 {
