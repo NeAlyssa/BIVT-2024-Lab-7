@@ -249,7 +249,7 @@ namespace Lab_7
                     }
                     else
                     {
-                        if (i < women.Length)
+                        if (j < women.Length)
                         {
                             S[k] = women[j];
                             j++;

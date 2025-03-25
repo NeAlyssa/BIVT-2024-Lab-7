@@ -27,7 +27,7 @@ namespace Lab_7
             }
             public void Add(Participant p)
             {
-                if (_participants == null) return;
+                if (_participants == null || p.Marks == null) return;
                 _participants = _participants.Append(p).ToArray();
             }
             public void Add(Participant[] pp)
@@ -35,6 +35,7 @@ namespace Lab_7
                 if (_participants == null || pp == null) return;
                 foreach (Participant p in pp)
                 {
+                    if (p.Marks == null) continue;
                     _participants = _participants.Append(p).ToArray();
                 }
             }
@@ -102,7 +103,7 @@ namespace Lab_7
 
             public void Jump(int distance, int[] marks, int target)
             { 
-                if (marks == null || distance < 0 || marks.Length < _marks.Length || _distance == -1)
+                if (_marks == null || marks == null || distance < 0 || marks.Length < _marks.Length || _distance == -1)
                 _distance = distance;
                 int sm = 0;
                 int mn = int.MaxValue;

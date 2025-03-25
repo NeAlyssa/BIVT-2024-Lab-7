@@ -21,7 +21,7 @@ namespace Lab_7
             {
                 _participants = new Participant[0];
                 _moods = new double[7];
-                if (moods != null) return;
+                if (moods == null) return;
                 for (int i = 0; i < Math.Min(7, moods.Length); i++)
                 {
                     _moods[i] = moods[i];
@@ -46,7 +46,7 @@ namespace Lab_7
             }
             public void Add(Participant s)
             {
-                if (_participants == null) return;
+                if (_participants == null || s.Marks == null) return;
                 _participants = _participants.Append(s).ToArray();
             }
             public void Add(Participant[] ss)
@@ -54,6 +54,7 @@ namespace Lab_7
                 if (ss == null || _participants == null) return;
                 foreach (Participant s in ss)
                 {
+                    if (s.Marks == null) continue;
                     _participants = _participants.Append(s).ToArray();
                 }
             }
