@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -207,7 +208,7 @@ namespace Lab_7
 
             public Research MakeResearch()
             {
-                string name = $"No_{count++}_{DateTime.Now:MM/yy}";
+                string name = $"No_{count++}_{DateTime.Now.ToString("MM/yy", CultureInfo.InvariantCulture)}";
                 
                 var re = new Research(name);
                 _researches=_researches.Append(re).ToArray();
@@ -229,16 +230,16 @@ namespace Lab_7
                         switch(question)
                         { 
                             case 1:
-                                if (_researches[i].Responses[j].Animal == null) break;
-                                A=A.Append( _researches[i].Responses[j].Animal).ToArray();
+                                if (_researches[i].Responses[j].Animal != null) 
+                                    A=A.Append( _researches[i].Responses[j].Animal).ToArray();
                                 break;
                             case 2:
-                                if (_researches[i].Responses[j].CharacterTrait == null) break;
-                                A = A.Append(_researches[i].Responses[j].CharacterTrait).ToArray();
+                                if (_researches[i].Responses[j].CharacterTrait != null)
+                                      A = A.Append(_researches[i].Responses[j].CharacterTrait).ToArray();
                                 break;
                             case 3:
-                                if (_researches[i].Responses[j].Concept == null) break;
-                                A = A.Append(_researches[i].Responses[j].Concept).ToArray();
+                                if (_researches[i].Responses[j].Concept != null) 
+                                     A = A.Append(_researches[i].Responses[j].Concept).ToArray();
                                 break;
                         }
                         

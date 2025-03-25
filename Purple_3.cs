@@ -162,7 +162,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_participants == null) return default;
+                    if (_participants == null) return null;
                     
                     return _participants;
                 }
@@ -172,7 +172,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_judges == null) return default;
+                    if (_judges == null) return null;
                     
                     return _judges;
                 }
@@ -180,9 +180,11 @@ namespace Lab_7
 
             public Skating(double[] judges)
             {
-                _participants = new Participant[0];
-                _judges = new double[7];
                 if (judges == null || judges.Length != 7) return;
+                _judges = new double[7];
+                _participants = new Participant[0];
+                
+                
                 for (int i = 0; i < 7; i++)
                 {
                     _judges[i] = judges[i];
@@ -248,7 +250,7 @@ namespace Lab_7
                 if (_judges == null) return;
                 for (int i = 0; i < _judges.Length; i++)
                 {
-                    _judges[i] += _judges[i] * i / 100;
+                    _judges[i] *=1+(i+1) / 100;
                 }
             }
         }

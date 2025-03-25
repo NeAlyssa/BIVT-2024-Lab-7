@@ -14,7 +14,7 @@ namespace Lab_7
             private string _surname;
             private int _distance;
             private int[] _marks;
-
+            private int _k;
             public string Name { get { return _name; } }
             public string Surname { get { return _surname; } }
             public int Distance { get { return _distance; } }
@@ -44,17 +44,9 @@ namespace Lab_7
                     }
                     rez -= ma;
                     rez -= mi;
-                    if (Distance == 120) rez += 60;
-                    else if (Distance > 120)
-                    {
-                        rez += 60;
-                        rez += (Distance - 120) * 2;
-                    }
-                    else
-                    {
-                        rez += (60 - (120 - Distance) * 2);
-                    }
-                    return rez;
+                    rez += _k;
+                    if (rez < 0) return 0;
+                    else return rez;
                 }
             }
 
@@ -65,12 +57,14 @@ namespace Lab_7
                 _surname = surname;
                 _distance = -1;
                 _marks = new int[5];
+                _k = 0;
             }
             public void Jump(int distance, int[] marks, int target)
             {
                 if (distance < 0) return;
-                if (marks == null || marks.Length != 5 || _marks.Length != 5) return;
+                if (marks == null || marks.Length != _marks.Length || _marks ==null || distance<0) return;
                 _distance = distance;
+                _k = 60 + (_distance - target) * 2;
                 for (int i = 0; i < marks.Length; i++)
                 {
                     _marks[i] = marks[i];
@@ -102,7 +96,7 @@ namespace Lab_7
                     return _name;
                 }
             }
-            public int Standart
+            public int Standard
             {
                 get
                 {
@@ -160,7 +154,7 @@ namespace Lab_7
             }
             public void Print()
             {
-                Console.WriteLine($"Название события : {Name}, Стандарт : {Standart}, Участники : {Participants}");
+                Console.WriteLine($"Название события : {Name}, Стандарт : {Standard}, Участники : {Participants}");
             }
         }
         public class JuniorSkiJumping : SkiJumping
