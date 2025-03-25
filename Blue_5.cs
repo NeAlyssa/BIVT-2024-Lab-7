@@ -89,7 +89,7 @@ namespace Lab_7
                     int maxi = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
-                        if (_sportsmen[i] != null || _sportsmen[i].Place != 0)
+                        if (_sportsmen[i] != null && _sportsmen[i].Place != 0)
                         {
                             maxi = Math.Min(maxi, _sportsmen[i].Place);
                         }
@@ -107,7 +107,7 @@ namespace Lab_7
             }
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null) return;
+                if (_sportsmen == null|| sportsman == null) return;
                 if (_sportsmenind < _sportsmen.Length)
                 {
                     _sportsmen[_sportsmenind] = sportsman;
@@ -213,14 +213,14 @@ namespace Lab_7
                 //return champion;
                 if (teams == null || teams.Length == 0) return null;
 
-                double maxi = -1;
+                double maxi = 0;
                 if (teams[0] != null) maxi = teams[0].GetTeamStrength();
 
                 int maxind =0 ;
                 for (int i = 0; i < teams.Length; i++)
                 {
-                    if (teams[i] == null) continue;
-                    if (teams[i].GetTeamStrength() > maxi)
+                    //if (teams[i] != null) 
+                    if (teams[i] != null && teams[i].GetTeamStrength() > maxi)
                     {
                         maxi = teams[i].GetTeamStrength();
                         maxind = i;
