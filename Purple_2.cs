@@ -91,21 +91,7 @@ namespace Lab_7
             public static void Sort(Participant[] array)
             {
                 if (array == null) return;
-                for (int i = 1, j = 2; i < array.Length;)
-                {
-                    if (i == 0 || array[i - 1].Result >= array[i].Result)
-                    {
-                        i = j;
-                        j++;
-                    }
-                    else
-                    {
-                        Participant temp = array[i];
-                        array[i] = array[i - 1];
-                        array[i - 1] = temp;
-                        i--;
-                    }
-                }
+                Array.Sort(array, (x, y) => { return y.Result - x.Result; });
             }
             public void Print()
             {
@@ -128,11 +114,13 @@ namespace Lab_7
             }
             public void Add(Participant man)
             {
+                if (_participants == null) return;
                 Array.Resize(ref _participants, _participants.Length + 1);
                 _participants[_participants.Length - 1] = man;
             }
             public void Add(Participant[] men)
             {
+                if(_participants == null || men == null) return;
                 Array.Resize(ref _participants, _participants.Length + men.Length);
                 Array.Copy(men, _participants, men.Length);
             }
