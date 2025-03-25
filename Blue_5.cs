@@ -66,7 +66,7 @@ namespace Lab_7
                     int score = 0;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
-                        if (_sportsmen[i].Place <= 5 && _sportsmen[i] != null)
+                        if (_sportsmen[i] != null && _sportsmen[i].Place <= 5)
                         {
                             score += 6 - _sportsmen[i].Place;
                         }
