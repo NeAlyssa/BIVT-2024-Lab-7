@@ -172,7 +172,7 @@ namespace Lab_7
 				return newresearch;
 			}
 
-			public string GetData(Response rsp , int ques)
+			private string GetData(Response rsp , int ques)
 			{
 				switch (ques)
 				{
