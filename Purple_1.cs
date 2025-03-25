@@ -149,11 +149,10 @@ namespace Lab_7
         }
         public class Judge
         {
-            private string _name;
             private int[] _marks;
             private int _current;
 
-            public string Name => _name;
+            public string Name { get; private set; }
             public int[] Marks
             {
                 get
@@ -167,18 +166,20 @@ namespace Lab_7
 
             public Judge(string name, int[] marks)
             {
-                _name = name;
+                Name = name;
                 _marks = marks;
                 _current = 0;
             }
             public int CreateMark()
             {
+                if(_marks == null || _marks.Length == 0) return 0;
                 if(_current > _marks.Length-1)
                 {
                     _current = 0;
                 }
-                return _marks[_current];
+                int res = _marks[_current];
                 _current++;
+                return res;
             }
             public void Print()
             {
@@ -209,13 +210,15 @@ namespace Lab_7
             }
             public void Add(Participant man)
             {
+                if (_participants == null || man == null) return;
                 Array.Resize(ref _participants, _participants.Length+1);
                 _participants[_participants.Length-1] = man;
                 Evaluate(man);
             }
             public void Add(Participant[] men)
             {
-                foreach(Participant participant in men)
+                if (_participants == null || men == null) return;
+                foreach (Participant participant in men)
                 {
                     Add(participant);
                 }
