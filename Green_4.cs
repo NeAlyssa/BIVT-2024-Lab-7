@@ -144,7 +144,7 @@ namespace Lab_7
                 Participant.Sort(_participants);
             }
 
-            private protected Participant GetParticipantAt(int index)
+            protected Participant GetParticipantAt(int index)
             {
                 if (index >= 0 && index < _count)
                 {
@@ -153,7 +153,7 @@ namespace Lab_7
                 return default(Participant);
             }
 
-            private protected void SetParticipant(int index, Participant participant)
+            protected void SetParticipant(int index, Participant participant)
             {
                 if (index >= 0 && index < _count)
                 {
