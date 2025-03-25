@@ -54,11 +54,14 @@ namespace Lab_7
                     int summaryScore = 0;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (sportsman.Place == 1) summaryScore += 5;
-                        else if (sportsman.Place == 2) summaryScore += 4;
-                        else if (sportsman.Place == 3) summaryScore += 3;
-                        else if (sportsman.Place == 4) summaryScore += 2;
-                        else if (sportsman.Place == 5) summaryScore += 1;
+                        if (sportsman != null)
+                        {
+                            if (sportsman.Place == 1) summaryScore += 5;
+                            else if (sportsman.Place == 2) summaryScore += 4;
+                            else if (sportsman.Place == 3) summaryScore += 3;
+                            else if (sportsman.Place == 4) summaryScore += 2;
+                            else if (sportsman.Place == 5) summaryScore += 1;
+                        }
                     }
                     return summaryScore;
                 }
@@ -71,7 +74,7 @@ namespace Lab_7
                     int topPlace = 18;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (topPlace > sportsman.Place && sportsman.Place > 0)
+                        if (topPlace > sportsman.Place && sportsman.Place > 0 && sportsman != null)
                             topPlace = sportsman.Place;
                     }
                     return topPlace;

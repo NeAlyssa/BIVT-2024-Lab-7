@@ -87,7 +87,7 @@ namespace Lab_7
                     else count = 10;
                     double[] aboveAvarage = new double[count];
                     double N = 20.0 / aboveAvarage.Length;
-                    for (int i = 0; i < aboveAvarage.Length / 2; i++)
+                    for (int i = 0; i < aboveAvarage.Length; i++)
                     {
                         if (i == 0) aboveAvarage[i] = Bank * 0.4;
                         if (i == 1) aboveAvarage[i] = Bank * 0.25;

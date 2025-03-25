@@ -47,12 +47,12 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltyTimes == null) return true; 
+                    if (_penaltyTimes == null) return false; 
                     foreach (int i in _penaltyTimes)
                     {
-                        if (i == 10) return false;
+                        if (i == 10) return true;
                     }
-                    return true;
+                    return false;
                 }
             }
             public Participant(string name, string surname)
