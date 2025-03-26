@@ -36,8 +36,7 @@ namespace Lab_7
                 {
                     if (_penaltyTimes == null) return 0;
 
-                    else
-                        return _penaltyTimes.Sum();
+                    return _penaltyTimes.Length > 0 ? _penaltyTimes.Sum() : 0;
                 }
             }
 
@@ -52,6 +51,7 @@ namespace Lab_7
                         if (_penaltyTimes[i] == 10) return true;
                     }
                     return false;
+
                 }
             }
 
@@ -60,14 +60,13 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _penaltyTimes = new int[0];
-
             }
 
 
             public virtual void PlayMatch(int time)
             {
-                if (_penaltyTimes == null) return;
-                // добавляет в массив штрафов штрафное время
+                if (_penaltyTimes == null || time < 0) return;
+               
                 Array.Resize(ref _penaltyTimes, _penaltyTimes.Length + 1);
                 _penaltyTimes[_penaltyTimes.Length - 1] = time;
             }
@@ -76,14 +75,15 @@ namespace Lab_7
             {
                 if (array == null || array.Length == 0) return;
 
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < array.Length - 1; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
-                        // Изменено на сортировку по убыванию
                         if (array[j].Total < array[j + 1].Total)
                         {
-                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                            Participant temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
                         }
                     }
                 }
@@ -119,8 +119,9 @@ namespace Lab_7
                         if (_penaltyTimes[i] >= 5) count++;
                     }
 
-                    return (count >= 0.1 * countMatches || this.Total >= 2 * countMatches);
-                        
+                    return (count >= (countMatches / 10) || this.Total >= 2 * countMatches);
+
+
                 }
             }
 
@@ -151,16 +152,15 @@ namespace Lab_7
                 get
                 {
                     if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
-                    
+
                     for (int i = 0; i < _penaltyTimes.Length; i++)
                     {
-                     
                         if (_penaltyTimes[i] >= 10) return true;
                     }
 
                     if (_numPlayer == 0) return false;
-                    double average = (double)_allPenaltyTime / _numPlayer;
-                    return this.Total > 0.1 * average;
+                    double average = (_numPlayer > 0) ? (double)_allPenaltyTime / _numPlayer : 0;
+                    return this.Total > (int)(0.1 * average);
                 }
             }
 

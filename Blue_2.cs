@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks == null || _marks.Length == 0) return null;
+                    if (_marks == null) return null;
                     int[,] copy = new int[_marks.GetLength(0), _marks.GetLength(1)];
                     for (int i = 0; i < _marks.GetLength(0); i++)
                         for (int j = 0; j < _marks.GetLength(1); j++)
@@ -57,7 +58,7 @@ namespace Lab_7
             // метод
             public void Jump(int[] result)
             {
-                if (result == null || result.Length < 5) return;
+                if (result == null || _marks == null) return;
                 int count1 = 0;
                 int count2 = 0;
                 for (int j = 0; j < 5; j++)
@@ -96,13 +97,12 @@ namespace Lab_7
             }
             public void Print()
             {
-                Console.WriteLine(_name + " " + _surname);
+             
                 for (int i = 0; i < _marks.GetLength(0); i++)
                 {
-                    for (int j = 0; j < _marks.GetLength(1); j++)
-                    {
+                    for (int j = 0; j < _marks.GetLength(1); j++)          
                         Console.WriteLine(_marks[i, j]);
-                    }
+                    
                     Console.WriteLine();
                 }
                 Console.WriteLine(TotalScore);
@@ -130,7 +130,7 @@ namespace Lab_7
             {
                 _name = name;
                 _bank = bank;
-                _participants = new Participant[0];
+                _participants = null;
               
             }
 
@@ -141,13 +141,13 @@ namespace Lab_7
                 Array.Copy(_participants, newParticipant, _participants.Length);
                 newParticipant[newParticipant.Length - 1] = participants;
                 _participants = newParticipant;
-               
+
             }
 
 
             public void Add(Participant[] participants)
             {
-                if (participants == null || _participants == null || participants.Length == 0) return;
+                if (participants == null) return;
                 foreach (Participant p in participants)
                 {
                     Add(p);
@@ -167,8 +167,10 @@ namespace Lab_7
             {
                 get
                 {
-                    double[] money = new double[3];
+                    if (this.Participants == null || this.Participants.Length < 3)
+                        return null;
 
+                    double[] money = new double[3];
                     money[0] = 0.5 * (double)this.Bank;
                     money[1] = 0.3 * (double)this.Bank;
                     money[2] = 0.2 * (double)this.Bank;
@@ -186,21 +188,20 @@ namespace Lab_7
             {
                 get
                 {
+                    if (this.Participants == null || this.Participants.Length < 3)
+                        return null;
                     if (this.Participants == null || this.Participants.Length < 3) return null;
 
                     int middle = this.Participants.Length / 2;
-                    int numParticipants = 0;
-                    if (middle <= 10) numParticipants = middle;
-                    else if (middle > 10) numParticipants = 10;
-
-                    double N = 20 / numParticipants;
-                    double[] money = new double[numParticipants];
-                    if (this.Participants.Length > 3)
+                    int n;
+                    if (middle > 10) n = 10;                   
+                    else n = middle;
+                    
+                    double N = 20.0 / (double)n;
+                    double[] money = new double[n];
+                    for (int i = 3; i < middle - 1; i++)
                     {
-                        for (int i = 0; i < numParticipants; i++)
-                        {
-                            money[i] = (double)(N / 100 * this.Bank);
-                        }
+                        money[i] = Math.Round((double)this.Bank * (N / 100), 5);
                     }
 
                     money[0] += (double)(0.4 * this.Bank);

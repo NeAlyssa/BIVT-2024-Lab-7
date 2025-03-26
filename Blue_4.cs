@@ -118,7 +118,7 @@ namespace Lab_7
                 // гномья эффективная сортировка 
                 for (int i = 1, j = 2; i < teams.Length;)
                 {
-                    if (i == 0 || teams[i].TotalScore <= teams[i - 1].TotalScore)
+                    if (i == 0 || teams[i].TotalScore >= teams[i - 1].TotalScore)
                     {
                         i = j;
                         j++;
