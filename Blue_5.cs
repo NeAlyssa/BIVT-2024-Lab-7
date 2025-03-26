@@ -108,17 +108,24 @@ public class Blue_5
             if (teams == null || teams.Length == 0) return null;
             double max;
             int imax=0;
-            if (teams[0] == null) { max=0;  }
-            else { max = teams[0].GetTeamStrength();}
-            for (int i=1;i<teams.Length;i++){
+            if (teams[0] == null) 
+            { 
+                max=0;  
+            }
+            else 
+            { 
+                max = teams[0].GetTeamStrength();
+            }
+            for (int i=1;i<teams.Length;i++)
+            {
                 if (teams[i] == null) continue;
-                if(teams[i].GetTeamStrength() > max){
+                if (teams[i].GetTeamStrength() > max)
+                {
                     max = teams[i].GetTeamStrength();
                     imax = i ;
                 }
             }
-            Team maxt = teams[imax];
-            return maxt;
+            return teams[imax];
 
         }
         public void Print()
