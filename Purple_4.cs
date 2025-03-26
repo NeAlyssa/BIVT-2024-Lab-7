@@ -192,7 +192,7 @@ namespace Lab_7
 
 				while (j < m)
 				{
-					merg[k++] = g1.Sportsmen[j++];
+					merg[k++] = g2.Sportsmen[j++];
 				}
 
 				Group ng = new Group("Финалисты");

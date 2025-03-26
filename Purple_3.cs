@@ -153,12 +153,13 @@ namespace Lab_7
 			}
 			public Skating(double[] moods)
 			{
-				if(moods == null)
+				if(moods == null || moods.Length < 7)
 				{
 					return;
 				}
-				_moods = new double[moods.Length];
-				Array.Copy(moods, _moods, moods.Length);
+
+				_moods = new double[7];
+				Array.Copy(moods, _moods, _moods.Length);
 				ModificateMood();
 				_participants = new Participant[0];
 
@@ -213,7 +214,7 @@ namespace Lab_7
 			public FigureSkating(double[] moods) : base(moods) { }
 			protected override void ModificateMood()
 			{
-				if(_moods == null) { return; }
+				if(_moods == null || _moods.Length < 7) { return; }
 				for(int i = 0; i < _moods.Length; ++i)
 				{
 					_moods[i] += (i + 1) / 10.0;

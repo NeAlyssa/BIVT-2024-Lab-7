@@ -16,6 +16,7 @@ namespace Lab_7
 			private int _dictance;
 			private int[] _marks;
 			private int _target;
+			private bool _jumped;
 
 			// свойства
 			public string Name { get { return _name; } }
@@ -35,6 +36,7 @@ namespace Lab_7
 				get
 				{
 					if (_marks == null) { return 0; }
+					if (!_jumped) { return 0; }
 					int total = Math.Max(0, _marks.Sum() - _marks.Max() - Marks.Min() + 60 + (_dictance - _target) * 2);
 					return total;
 
@@ -56,10 +58,11 @@ namespace Lab_7
 			{
 				if (this.Distance != 0) return;
 				if (marks == null) return;
-				if (marks.Length != 5) return;
+				if (marks.Length <5 ) return;
 				_dictance = distance;
 				_marks = marks;
 				_target = target;
+				_jumped = true;
 			}
 
 			public static void Sort(Participant[] array)

@@ -71,11 +71,7 @@ namespace Lab_7
 			{
 				get
 				{
-					if(_responses == null)
-					{
-						return null;
-					}
-					if(_responses.Length == 0)
+					if (_responses == null)
 					{
 						return null;
 					}
@@ -96,7 +92,7 @@ namespace Lab_7
 			//методы
 			public void Add(string[] answers)
 			{
-				if (_responses == null || answers == null || answers.Length != 3)
+				if (_responses == null || answers == null )
 				{
 					return;
 				}
@@ -185,7 +181,7 @@ namespace Lab_7
 			}
 			public (string, double)[] GetGeneralReport(int question)
 			{
-				if(question < 1 || question > 3) { return null; }
+				if(question < 1 || question > 3 || _researches == null) { return null; }
 				var target = _researches.SelectMany(rs => rs.Responses).Where(rsp => GetData(rsp, question) != null);
 				int trc = target.Count();
 				var group_of_resps = target.GroupBy(rsp => GetData(rsp, question));
