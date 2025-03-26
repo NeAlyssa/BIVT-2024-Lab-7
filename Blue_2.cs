@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System;
 
 namespace Lab_7
 {
@@ -11,14 +6,14 @@ namespace Lab_7
     {
         public struct Participant
         {
-            //поля
             private string _name;
             private string _surname;
             private int[,] _marks;
             private int _count;
-            //публичные свойства
+
             public string Name => _name;
             public string Surname => _surname;
+
             public int[,] Marks
             {
                 get
@@ -33,21 +28,21 @@ namespace Lab_7
                         }
                     }
                     return r;
-
                 }
             }
+
             public int TotalScore
             {
                 get
                 {
                     if (_marks == null) return 0;
-
                     int sum = 0;
                     foreach (var mark in _marks)
                         sum += mark;
                     return sum;
                 }
             }
+
             public Participant(string name, string surname)
             {
                 _name = name;
@@ -55,17 +50,18 @@ namespace Lab_7
                 _marks = new int[2, 5];
                 _count = 0;
             }
+
             public void Jump(int[] result)
             {
-                if (result == null) return;
-                if (_marks == null) return;
+                if (result == null || _marks == null) return;
                 for (int i = 0; i < 5; i++)
                 {
                     _marks[_count, i] = result[i];
                 }
                 _count++;
             }
-            public static void Sort(Participant[] array) // p1.Sort(array) Participant.Sort(array)
+
+            public static void Sort(Participant[] array)
             {
                 if (array == null || array.Length == 0) return;
                 for (int i = 0; i < array.Length; i++)
@@ -96,10 +92,9 @@ namespace Lab_7
                 }
             }
         }
-        
+
         public abstract class WaterJump
         {
-
             private string _name;
             private int _bank;
             protected Participant[] _participants;
@@ -107,8 +102,16 @@ namespace Lab_7
 
             public string Name => _name;
             public int Bank => _bank;
-            public Participant[] Participants => _participants;
 
+            public Participant[] Participants
+            {
+                get
+                {
+                    Participant[] result = new Participant[_count];
+                    Array.Copy(_participants, result, _count);
+                    return result;
+                }
+            }
 
             public abstract double[] Prize { get; }
 
@@ -116,64 +119,80 @@ namespace Lab_7
             {
                 _name = name;
                 _bank = bank;
-                _participants = new Participant[0];
+                _participants = new Participant[10]; 
+                _count = 0;
             }
-          
+
             public void Add(Participant participant)
             {
-                if (_participants == null) return;
-                Participant[] array = new Participant[_participants.Length + 1];
-                Array.Copy(_participants, array, _participants.Length);
-                array[_participants.Length] = participant;
-                _participants = array;
-            }
-            public void Add(Participant[] participants)
-            {
-                if (participants == null || _participants == null) return;
-                foreach (Participant participant in participants)
+                if (_count >= _participants.Length) 
                 {
-                    Add(participant);
+                    Participant[] newArray = new Participant[_participants.Length * 2];
+                    Array.Copy(_participants, newArray, _participants.Length);
+                    _participants = newArray;
                 }
 
+                _participants[_count] = participant;
+                _count++;
             }
 
+            public void Add(Participant[] participants)
+            {
+                if (participants == null) return;
+
+                while (_count + participants.Length > _participants.Length)
+                {
+                    Participant[] newArray = new Participant[_participants.Length * 2];
+                    Array.Copy(_participants, newArray, _participants.Length);
+                    _participants = newArray;
+                }
+
+                foreach (var p in participants)
+                {
+                    _participants[_count] = p;
+                    _count++;
+                }
+            }
         }
+
         public class WaterJump3m : WaterJump
         {
             public WaterJump3m(string name, int bank) : base(name, bank) { }
+
             public override double[] Prize
             {
                 get
                 {
-                    if (Participants == null || Participants.Length < 3) return default(double[]);
-                    double[] prise = new double[3] { 0.5 * Bank, 0.3 * Bank, 0.2 * Bank };
-                    return prise;
+                    if (Participants.Length < 3) return new double[0];
+                    return new double[] { 0.5 * Bank, 0.3 * Bank, 0.2 * Bank };
                 }
             }
         }
+
         public class WaterJump5m : WaterJump
         {
             public WaterJump5m(string name, int bank) : base(name, bank) { }
+
             public override double[] Prize
             {
                 get
                 {
-                    if (Participants == null || Participants.Length < 3) return null;
-                   
-                    int n = Participants.Length, k;
-                    k = n / 2;
+                    if (Participants.Length < 3) return new double[0];
+
+                    int n = Participants.Length, k = n / 2;
                     double[] prize = new double[k];
 
                     if (k <= 10)
                     {
                         for (int i = 3; i < k; i++)
-                            prize[i] = 0.01 * Bank * (20/k);
+                            prize[i] = 0.01 * Bank * (20 / k);
                     }
                     else
                     {
                         for (int i = 3; i < 10; i++)
                             prize[i] = 0.01 * Bank * 10;
                     }
+
                     prize[0] = 0.4 * Bank;
                     prize[1] = 0.25 * Bank;
                     prize[2] = 0.15 * Bank;
