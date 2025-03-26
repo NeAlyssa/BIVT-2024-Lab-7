@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -97,6 +97,7 @@ namespace Lab_7
                 string[] answer = new string[0];
                 foreach (var n1 in _reserches)
                 {
+					if(n1.Responses==null) continue;
                     foreach (var n2 in n1.Responses)
                     {
                         if (question == 1)
@@ -137,16 +138,7 @@ namespace Lab_7
             private Response[] _responses;
 
             public string Name => _name;
-            public Response[] Responses
-            {
-                get
-                {
-                    if (_responses == null) return default;
-                    var copy = new Response[_responses.Length];
-                    Array.Copy(_responses, copy, copy.Length);
-                    return _responses;
-                }
-            }
+            public Response[] Responses => _responses;
 
             public Research(string name)
             {
