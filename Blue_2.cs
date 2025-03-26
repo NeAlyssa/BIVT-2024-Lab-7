@@ -89,10 +89,10 @@ namespace Lab_7
                     double N = 20.0 / aboveAvarage.Length;
                     for (int i = 0; i < aboveAvarage.Length; i++)
                     {
-                        if (i == 0) aboveAvarage[i] = Bank * 0.4;
-                        if (i == 1) aboveAvarage[i] = Bank * 0.25;
-                        if (i == 2) aboveAvarage[i] = Bank * 0.15;
-                        aboveAvarage[i] = Bank * (N / 100);
+                        if (i == 0) aboveAvarage[i] += Bank * 0.4;
+                        if (i == 1) aboveAvarage[i] += Bank * 0.25;
+                        if (i == 2) aboveAvarage[i] += Bank * 0.15;
+                        aboveAvarage[i] += Bank * (N / 100);
                     }
                     return aboveAvarage;
                 }
