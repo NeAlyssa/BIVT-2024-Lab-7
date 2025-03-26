@@ -102,8 +102,8 @@ namespace Lab_7
             }
 
             public void Jump(int distance, int[] marks, int target)
-            { 
-                if (_marks == null || marks == null || distance < 0 || marks.Length < _marks.Length || _distance == -1)
+            {
+                if (_marks == null || marks == null || distance < 0 || marks.Length < _marks.Length || _distance != -1) return;
                 _distance = distance;
                 int sm = 0;
                 int mn = int.MaxValue;
