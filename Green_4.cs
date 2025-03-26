@@ -34,9 +34,10 @@ namespace Lab_7
                 {
                     participants1 = new Participant[0];
                 }
-
-                Array.Resize(ref participants1, count1 + 1);
-                participants1[count1] = participant;
+                Participant[] newArray = new Participant[participants1.Length + 1];
+                Array.Copy(participants1, newArray, count1); 
+                newArray[count1] = participant;
+                participants1 = newArray;
                 count1++;
             }
             public void Add(Participant[] participants)
@@ -66,7 +67,7 @@ namespace Lab_7
                     }
                 }
             }
-            private protected Participant GetParticipantAt(int index)
+            protected Participant GetParticipantAt(int index)
             {
                 if (index >= 0 && participants1 != null)
                 {
@@ -78,9 +79,9 @@ namespace Lab_7
 
                 return default(Participant);
             }
-            private protected void SetParticipant(int index, Participant participant)
+            protected void SetParticipant(int index, Participant participant)
             {
-                if (participants1 != null && index >= 0)
+                if (participants1 != null && index >= 0 && index <= count1)
                 {
 
 
@@ -97,43 +98,7 @@ namespace Lab_7
                     participant.Print();
                 }
             }
-            public class LongJump : Discipline
-            {
-                public LongJump() : base("Long jump") { }
 
-                public override void Retry(int index)
-                {
-                    Participant participant = GetParticipantAt(index);
-
-                    double BestJump = participant.BestJump;
-
-
-
-                    participant = new Participant(participant.Name, participant.Surname);
-
-                    participant.Jump(BestJump);
-
-                    SetParticipant(index, participant);
-                }
-            }
-            public class HighJump : Discipline
-            {
-                public HighJump() : base("High jump") { }
-
-                public override void Retry(int index)
-                {
-                    Participant participant = GetParticipantAt(index);
-
-                    double[] jumps = participant.Jumps;
-                    Participant new_ = new Participant(participant.Name, participant.Surname);
-
-                    for (int i = 0; i < jumps.Length - 1; i++)
-                    {
-                        new_.Jump(jumps[i]);
-                    }
-                    SetParticipant(index, new_);
-                }
-            }
 
             public abstract void Retry(int index);
 
@@ -185,12 +150,15 @@ namespace Lab_7
                     return;
                 }
 
-                for (int i = 0; i < jumps1.Length; i++)
-                {
-                    if (jumps1[i] == 0)
+                if (result > 0)
+                { 
+                    for (int i = 0; i < jumps1.Length; i++)
                     {
-                        jumps1[i] = result;
-                        return;
+                        if (jumps1[i] == 0)
+                        {
+                            jumps1[i] = result;
+                            return;
+                        }
                     }
                 }
             }
@@ -223,6 +191,42 @@ namespace Lab_7
                 Console.WriteLine($"Спортсмен: {Name} {Surname}");
                 Console.WriteLine($"все прыжки участника: {string.Join(", ", Jumps)}");
                 Console.WriteLine($"самый лучший прыжок: {BestJump:F2}");
+            }
+        }
+
+        public class LongJump : Discipline
+        {
+            public LongJump() : base("Long jump") { }
+            public override void Retry(int index)
+            {
+                Participant participant = GetParticipantAt(index);
+                double bestJump = participant.BestJump;
+                participant = new Participant(participant.Name, participant.Surname);
+
+                participant.Jump(bestJump);
+                SetParticipant(index, participant);
+
+            }
+        }
+        public class HighJump : Discipline
+        {
+            public HighJump() : base("High jump") { }
+            public override void Retry(int index)
+            {
+                Participant participant = GetParticipantAt(index);
+
+                double[] jumps = participant.Jumps;
+
+                Participant new_Participant = new Participant(participant.Name, participant.Surname);
+
+                if (jumps != null)
+                {
+                    for (int i = 0; i < jumps.Length - 1; i++)
+                    {
+                        new_Participant.Jump(jumps[i]);
+                    }
+                }
+                SetParticipant(index, new_Participant);
             }
         }
     }
