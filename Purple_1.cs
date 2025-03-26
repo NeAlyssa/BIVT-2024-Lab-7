@@ -118,7 +118,7 @@ namespace Lab_7
             public void Jump(int[] marks)
             {
                 if (_marks == null || marks == null || _current >= _marks.GetLength(0) || _marks.GetLength(1) != marks.Length) return;
-                for (int j = 0; j < _marks.GetLength(1); j++)
+                for (int j = 0; j < marks.GetLength(1); j++)
                 {
                     _marks[_current, j] = marks[j];
                 }
@@ -153,16 +153,6 @@ namespace Lab_7
             private int _current;
 
             public string Name { get; private set; }
-            public int[] Marks
-            {
-                get
-                {
-                    if (_marks == null) return null;
-                    int[] copy1 = new int[_marks.Length];
-                    Array.Copy(_marks, copy1, _marks.Length);
-                    return copy1;
-                }
-            }
 
             public Judge(string name, int[] marks)
             {
@@ -207,13 +197,14 @@ namespace Lab_7
                 {
                     marks[jdg] = _judges[jdg].CreateMark();
                 }
+                jumper.Jump(marks);
             }
             public void Add(Participant man)
             {
                 if (_participants == null || man == null) return;
                 Array.Resize(ref _participants, _participants.Length+1);
-                _participants[_participants.Length-1] = man;
                 Evaluate(man);
+                _participants[_participants.Length-1] = man;
             }
             public void Add(Participant[] men)
             {
@@ -226,24 +217,8 @@ namespace Lab_7
             }
             public void Sort()
             {
-                if (_participants == null) return;
-                for (int i = 1, j = 2; i < _participants.Length;)
-                {
-                    if (i == 0 || _participants[i - 1].TotalScore > _participants[i].TotalScore)
-                    {
-                        i = j;
-                        j++;
-                    }
-                    else
-                    {
-                        Participant temp = _participants[i];
-                        _participants[i] = _participants[i - 1];
-                        _participants[i - 1] = temp;
-                        i--;
-                    }
-                }
+                Participant.Sort(_participants);
             }
         }
     }
 }
-
