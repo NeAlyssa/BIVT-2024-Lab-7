@@ -261,7 +261,7 @@ namespace Lab_7
                     }
                 }
                 if (count == 0 || countp==0) return 0;
-                return 100 / countp / count;
+                return 100.0/ countp / count;
             }
         }
 
@@ -286,7 +286,7 @@ namespace Lab_7
                     }
                 }
                 
-                return 100 * countp * ch / pr;
+                return 100.0* countp * ch / pr;
             }
         }
     }
