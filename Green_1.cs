@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +23,7 @@ namespace Lab_7
 
 
 
-            private protected double _standart;
+            protected double _standart;
 
             private static int _passedCount;
 
@@ -40,23 +40,28 @@ namespace Lab_7
 
             public static Participant[] GetTrainerParticipants(Participant[] participants, Type participantType, string trainer)
             {
-                Participant[] result = new Participant[participants.Length]; // массив для нужых участников
-                int count = 0;
-                foreach (var participant in participants)
+                int cnt= 0;
+                for (int i = 0; i < participants.Length; i++)
                 {
-                    
-                    if (participants != null && participants.GetType() == participantType && participant.Trainer == trainer)
+                    if (participants[i] != null && participants[i].GetType() == participantType && participants[i].Trainer == trainer)
                     {
-                        result[count] = participant; 
-                        count++;
+                        cnt++;
                     }
                 }
-                Participant[] Result = new Participant[count];
-                Array.Copy(result, Result, count);
+                Participant[] result = new Participant[cnt];
 
-                return Result;
+                int index = 0;
+                for (int i = 0; i < participants.Length; i++)
+                {
+                    if (participants[i] != null && participants[i].GetType() == participantType && participants[i].Trainer == trainer)
+                    {
+                        result[index] = participants[i];
+                        index++;
+                    }
+                }
+                return result;
             }
-            public abstract double Standart { get; }
+
 
             static Participant()
             {
@@ -99,16 +104,18 @@ namespace Lab_7
         }
         public class Participant100M : Participant
         {
-            public override double Standart => 12;
-
-            public Participant100M(string surname, string group, string trainer) : base(surname, group, trainer) { }
+            public Participant100M(string surname, string group, string trainer) : base(surname, group, trainer)
+            {
+                _standart = 12;
+            }
         }
 
         public class Participant500M : Participant
         {
-            public override double Standart => 90;
-
-            public Participant500M(string surname, string group, string trainer) : base(surname, group, trainer) { }
+            public Participant500M(string surname, string group, string trainer) : base(surname, group, trainer)
+            {
+                _standart = 90;
+            }
         }
 
     }
