@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +34,7 @@ namespace Lab_7
 
         public class Student : Human
         {
-            private static int excell= 0;
+            private static int otl= 0;
             private int[] marks1;
 
 
@@ -48,15 +48,15 @@ namespace Lab_7
                     return arrays;
                 }
             }
-            public static int ExcellentAmount => excell;
+            public static int ExcellentAmount => otl;
 
             public double AvgMark
             {
                 get
                 {
-                    int cnt = 0;
+                    
                     if (marks1 == null) return 0;
-
+                    int cnt = 0;
                     double sum = 0;
 
                     foreach (int mark in marks1)
@@ -77,7 +77,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (marks1 == null || marks1.Length == 0)
+                    if (marks1 == null)
                         return false;
                     for (int i = 0; i < marks1.Length; i++)
                     {
@@ -101,15 +101,16 @@ namespace Lab_7
                     Console.WriteLine("неправильные   оценки");
                     return;
                 }
-                if (marks1.Length == 0 || marks1 == null)
-                {
-                    return;
-                }
+
                 for (int i = 0; i < marks1.Length; i++)
                 {
                     if (marks1[i] == 0)
                     {
                         marks1[i] = mark;
+                        if (IsExcellent)
+                        {
+                            otl++;
+                        }
                         return;
                     }
                 }
@@ -117,7 +118,7 @@ namespace Lab_7
 
             public static void SortByAvgMark(Student[] array)
             {
-                if (array == null || array.Length == 0)
+                if (array == null)
                 {
                     return;
                 }
