@@ -182,21 +182,22 @@ namespace Lab_7
             {
                 if (judges == null || judges.Length != 7) return;
                 _judges = new double[7];
-                _participants = new Participant[0];
                 
                 
-                for (int i = 0; i < 7; i++)
+                
+                for (int i = 0; i < Math.Min(judges.Length, 7); i++)
                 {
                     _judges[i] = judges[i];
                 }
                 ModificateMood();
+                _participants = new Participant[0];
             }
 
             protected abstract void ModificateMood();
 
             public void Evaluate(double[] marks)
             {
-                if (marks== null || _participants==null || _judges==null) return;
+                if (marks== null || _participants==null || marks.Length< _judges.Length || _judges==null) return;
                 for (int i = 0; i < _participants.Length; i++)
                 {
                     if (_participants[i].Score == 0)
@@ -250,7 +251,7 @@ namespace Lab_7
                 if (_judges == null) return;
                 for (int i = 0; i < _judges.Length; i++)
                 {
-                    _judges[i] *=1+(i+1) / 100;
+                    _judges[i] += (_judges[i] * (1 + i) / 100.0);
                 }
             }
         }

@@ -209,7 +209,7 @@ namespace Lab_7
             public Research MakeResearch()
             {
                 string name = $"No_{count++}_{DateTime.Now.ToString("MM/yy", CultureInfo.InvariantCulture)}";
-                
+                if (_researches == null) _researches = new Research[0];
                 var re = new Research(name);
                 _researches=_researches.Append(re).ToArray();
                 
@@ -225,6 +225,7 @@ namespace Lab_7
                 
                 for (int i = 0; i < _researches.Length; i++)
                 {
+                    if (_researches[i].Responses == null) continue;
                     for (int j = 0; j < _researches[i].Responses.Length; j++)
                     {
                         switch(question)
