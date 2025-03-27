@@ -62,10 +62,10 @@ namespace Lab_7
             public void Jump(int distance, int[] marks, int target)
             {
                 if (distance < 0) return;
-                if (marks == null || marks.Length != _marks.Length || _marks ==null || distance<0) return;
+                if (marks == null || _marks == null || distance < 0) return;
                 _distance = distance;
                 _k = 60 + (_distance - target) * 2;
-                for (int i = 0; i < marks.Length; i++)
+                for (int i = 0; i < _marks.Length; i++)
                 {
                     _marks[i] = marks[i];
                 }
@@ -75,7 +75,7 @@ namespace Lab_7
             {
                 if (array == null) return;
                 array = array.OrderByDescending(x => x.Result).ToArray();
-                
+
             }
             public void Print()
             {
@@ -87,7 +87,7 @@ namespace Lab_7
             private string _name;
             private int _standart;
             private Participant[] _participant;
-            
+
 
             public string Name
             {
@@ -109,7 +109,7 @@ namespace Lab_7
                 get
                 {
                     if (_participant == null) return null;
-                    
+
                     return _participant;
                 }
             }
@@ -122,32 +122,32 @@ namespace Lab_7
             }
 
 
-        
+
             public void Add(Participant skijumper)
             {
                 if (_participant == null) return;
-                
+
                 _participant = _participant.Append(skijumper).ToArray();
-                
+
             }
 
             public void Add(Participant[] skijumpers)
             {
                 if (_participant == null || skijumpers == null) return;
-                
+
                 _participant = _participant.Concat(skijumpers).ToArray();
-                
+
             }
 
-            public void Jump(int distance, int[]marks)
+            public void Jump(int distance, int[] marks)
             {
-                if (_participant == null || marks==null) return;
+                if (_participant == null || marks == null) return;
                 for (int i = 0; i < _participant.Length; i++)
                 {
                     if (_participant[i].Distance == -1)
                     {
                         _participant[i].Jump(distance, marks, _standart);
-                        
+                        break;
                     }
                 }
 
