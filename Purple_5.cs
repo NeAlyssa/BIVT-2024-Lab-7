@@ -19,8 +19,8 @@ namespace Lab_7
 
             public string Animal
             {
-                get 
-                { 
+                get
+                {
                     return _animal;
                 }
 
@@ -49,13 +49,13 @@ namespace Lab_7
 
             public int CountVotes(Response[] responses, int questionNumber)
             {
-                if (questionNumber < 1 || questionNumber > 3 || responses==null) return 0;
+                if (questionNumber < 1 || questionNumber > 3 || responses == null) return 0;
                 int k = 0;
-                for (int i=0; i<responses.Length; i++)
+                for (int i = 0; i < responses.Length; i++)
                 {
-                    if (questionNumber==1)
+                    if (questionNumber == 1)
                     {
-                        if (responses[i]._animal == _animal && responses[i]._animal!=null) k++;
+                        if (responses[i]._animal == _animal && responses[i]._animal != null) k++;
                     }
                     else if (questionNumber == 2)
                     {
@@ -65,7 +65,7 @@ namespace Lab_7
                     {
                         if (responses[i]._concept == _concept && responses[i]._concept != null) k++;
                     }
-                    
+
                 }
 
                 return k;
@@ -108,7 +108,7 @@ namespace Lab_7
                 string[] answer = new string[3];
                 for (int i = 0; i < Math.Min(3, answers.Length); i++)
                 {
-                    answer[i]= answers[i];
+                    answer[i] = answers[i];
                 }
                 var response1 = new Response[_responses.Length + 1];
                 Array.Copy(_responses, response1, _responses.Length);
@@ -120,7 +120,7 @@ namespace Lab_7
                 question--;
                 if (_responses == null || question < 0 || question > 2) return null;
                 int k = 0;
-                string[]answer = new string[_responses.Length];
+                string[] answer = new string[_responses.Length];
                 for (int i = 0; i < _responses.Length; i++)
                 {
                     int a = 1;
@@ -128,7 +128,7 @@ namespace Lab_7
                     for (int j = 0; j < i; j++)
                     {
                         var array2 = new string[] { _responses[j].Animal, _responses[j].CharacterTrait, _responses[j].Concept };
-                        if (array1[question] == array2[question] && array1[question]!=null)
+                        if (array1[question] == array2[question] && array1[question] != null)
                         {
                             a++;
                             break;
@@ -164,7 +164,7 @@ namespace Lab_7
                 Array.Sort(counts, answer);
                 Array.Reverse(answer);
                 string[] answer1 = new string[Math.Min(answer.Length, 5)];
-                Array.Copy(answer, answer1, 5);
+                Array.Copy(answer, answer1, Math.Min(answer.Length, 5));
                 return answer1;
 
             }
@@ -173,10 +173,10 @@ namespace Lab_7
             {
                 Console.WriteLine(_name);
                 if (_responses == null) return;
-                foreach (var x in _responses) 
-                { 
+                foreach (var x in _responses)
+                {
                     x.Print();
-               
+
                 }
             }
         }
@@ -190,7 +190,7 @@ namespace Lab_7
                 get
                 {
                     if (_researches == null) return default;
-                   // var a = new Research[_researches.Length];
+                    // var a = new Research[_researches.Length];
                     //Array.Copy(_researches, a, _researches.Length);
                     return _researches;
                 }
@@ -211,8 +211,8 @@ namespace Lab_7
                 string name = $"No_{count++}_{DateTime.Now.ToString("MM/yy", CultureInfo.InvariantCulture)}";
                 if (_researches == null) _researches = new Research[0];
                 var re = new Research(name);
-                _researches=_researches.Append(re).ToArray();
-                
+                _researches = _researches.Append(re).ToArray();
+
                 return re;
             }
 
@@ -221,35 +221,35 @@ namespace Lab_7
                 if (_researches == null || _researches.Length == 0 || question < 1 || question > 3) return null;
 
                 //int k = 0;
-                string[] A= new string[0];
-                
+                string[] A = new string[0];
+
                 for (int i = 0; i < _researches.Length; i++)
                 {
                     if (_researches[i].Responses == null) continue;
                     for (int j = 0; j < _researches[i].Responses.Length; j++)
                     {
-                        switch(question)
-                        { 
+                        switch (question)
+                        {
                             case 1:
-                                if (_researches[i].Responses[j].Animal != null) 
-                                    A=A.Append( _researches[i].Responses[j].Animal).ToArray();
+                                if (_researches[i].Responses[j].Animal != null)
+                                    A = A.Append(_researches[i].Responses[j].Animal).ToArray();
                                 break;
                             case 2:
                                 if (_researches[i].Responses[j].CharacterTrait != null)
-                                      A = A.Append(_researches[i].Responses[j].CharacterTrait).ToArray();
+                                    A = A.Append(_researches[i].Responses[j].CharacterTrait).ToArray();
                                 break;
                             case 3:
-                                if (_researches[i].Responses[j].Concept != null) 
-                                     A = A.Append(_researches[i].Responses[j].Concept).ToArray();
+                                if (_researches[i].Responses[j].Concept != null)
+                                    A = A.Append(_researches[i].Responses[j].Concept).ToArray();
                                 break;
                         }
-                        
+
                     }
                 }
                 return (A.GroupBy(s => s).Select(t => (t.Key, (double)(t.Count() * 100.00) / A.Length)).ToArray());
 
+            }
         }
-      }
-        
+
     }
 }
