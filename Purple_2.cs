@@ -27,7 +27,7 @@ namespace Lab_7
             }
             public void Add(Participant p)
             {
-                if (_participants == null || p.Marks == null) return;
+                if (_participants == null) return;
                 _participants = _participants.Append(p).ToArray();
             }
             public void Add(Participant[] pp)
