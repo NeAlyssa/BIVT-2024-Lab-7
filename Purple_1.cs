@@ -118,7 +118,7 @@ namespace Lab_7
             public void Jump(int[] marks)
             {
                 if (_marks == null || marks == null || _current >= _marks.GetLength(0) || _marks.GetLength(1) != marks.Length) return;
-                for (int j = 0; j < marks.GetLength(1); j++)
+                for (int j = 0; j < marks.Length; j++)
                 {
                     _marks[_current, j] = marks[j];
                 }
@@ -222,3 +222,4 @@ namespace Lab_7
         }
     }
 }
+
