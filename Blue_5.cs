@@ -158,7 +158,7 @@ public class Blue_5
             double sumplaces = 0;
             //int l = this.Sportsmen.Length;
             int l=0;
-            int proizplaces=0;
+            int proizplaces=1;
             foreach(Sportsman person in this.Sportsmen){
                 if (person == null) continue;
                 sumplaces+= person.Place;
