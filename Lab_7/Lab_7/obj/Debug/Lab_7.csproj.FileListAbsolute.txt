@@ -1,0 +1,7 @@
+C:\Users\Диментий\source\repos\Lab_7\Lab_7\bin\Debug\Lab_7.exe.config
+C:\Users\Диментий\source\repos\Lab_7\Lab_7\bin\Debug\Lab_7.exe
+C:\Users\Диментий\source\repos\Lab_7\Lab_7\bin\Debug\Lab_7.pdb
+C:\Users\Диментий\source\repos\Lab_7\Lab_7\obj\Debug\Lab_7.csproj.AssemblyReference.cache
+C:\Users\Диментий\source\repos\Lab_7\Lab_7\obj\Debug\Lab_7.csproj.CoreCompileInputs.cache
+C:\Users\Диментий\source\repos\Lab_7\Lab_7\obj\Debug\Lab_7.exe
+C:\Users\Диментий\source\repos\Lab_7\Lab_7\obj\Debug\Lab_7.pdb
