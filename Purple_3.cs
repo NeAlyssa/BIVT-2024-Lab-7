@@ -84,24 +84,22 @@ namespace Lab_7
 
 			public static void SetPlaces(Participant[] array)
 			{
-				if (array == null || array.Length == 0) { return; }
-				if (array.Any(x => x._marks == null || x._places == null)) { return; }
-				if (array.Any(x => x._filled < 6)) { return; }
-				for (int i = 0; i < 7; i++)
-				{
-					var sortedarr = array.Where(x => x.Marks != null && x.Places != null).OrderByDescending(x => x.Marks[i]).ToArray();
-					for (int j = 0; j < sortedarr.Length; j++)
-					{
-						sortedarr[j]._places[i] = j + 1;
+                if (array == null || array.Length == 0) return;
 
-					}
-					if (i == 6)
-					{
-						sortedarr = sortedarr.Concat(array.Where(x => x.Marks == null)).ToArray();
-						Array.Copy(sortedarr, array, array.Length);
-					}
-				}
-			}
+                var filter = array
+                        .Where(p => p.Marks != null && p.Places != null)
+                        .ToArray();
+
+                for (int judge = 0; judge < 7; judge++)
+                {
+                    filter = filter.OrderByDescending(p => p._marks[judge]).ToArray();
+                    for (int j = 0; j < filter.Length; j++) filter[j]._places[judge] = j + 1;
+                }
+
+                var comb = filter.Concat(array.Where(p => p._marks == null || p._places == null)).ToArray();
+
+                Array.Copy(comb, array, array.Length);
+            }
 			public static void Sort(Participant[] array)
 			{
 				if (array == null || array.Length < 2) { return; }

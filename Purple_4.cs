@@ -216,39 +216,46 @@ namespace Lab_7
 
 			public void Shuffle()
 			{
-				if(_sportsmen == null)
-				{
-					return;
-				}
-				var sortmen = _sportsmen.Where(t => t is SkiMan).OrderBy(t => t.Time).ToArray();
-				var sortwomen = _sportsmen.Where(t => t is SkiWoman).OrderBy(t => t.Time).ToArray();
-				int menc = sortmen.Length;
-				int womenc = sortwomen.Length;
-				var final = new Sportsman[menc + womenc];
-				int i = 0, j = 0, pos = 0 ;
-				while( i < menc || j < womenc)
-				{
-					if(i < menc)
-					{
-						final[pos++] = sortmen[i++];
-					}
-					if(j < womenc)
-					{
-						final[pos++] = sortwomen[j++];
-					}
-				}
-				_sportsmen = final;
-			}
-			public void Print()
-			{
-				Console.WriteLine("Имя группы: " + this.Name);
-				if (this.Sportsmen.Length == null) return;
-				foreach (var man in this.Sportsmen)
-				{
-					Console.WriteLine();
-					man.Print();
-				}
-			}
+                Sort(); 
+                Sportsman[] men, women;
+                Split(out men, out women); 
+
+                if (men.Length == 0 || men == null || women == null || women.Length == 0) 
+                {
+                    return;
+                }
+
+                int match = Math.Min(men.Length, women.Length);
+                int rem = men.Length - women.Length;
+
+                int i = 0, w = 0, m = 0;
+
+                if (men[0].Time < women[0].Time)
+                {
+                    while (i < match * 2)
+                    {
+                        _sportsmen[i++] = men[m++];
+                        _sportsmen[i++] = women[w++];
+                    }
+                }
+                else
+                {
+                    while (i < match * 2)
+                    {
+                        _sportsmen[i++] = women[w++];
+                        _sportsmen[i++] = men[m++];
+                    }
+                }
+
+                if (rem > 0 && m < men.Length) 
+                {
+                    _sportsmen[i++] = men[w++];
+                }
+                else if (rem < 0 && w < women.Length) 
+                {
+                    _sportsmen[i++] = women[w++];
+                }
+            }
 
 		}
 	}

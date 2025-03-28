@@ -108,10 +108,6 @@ namespace Lab_7
 			//методы
 			public void Add(Participant sportsman)
 			{
-				if(_participants == null)
-				{
-					_participants = new Participant[0];
-				}
 				Array.Resize(ref _participants, _participants.Length + 1);
 				_participants[_participants.Length - 1] = sportsman;
 			}
