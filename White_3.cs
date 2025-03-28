@@ -93,7 +93,7 @@ namespace Lab_7
                 }
             }
 
-            public virtual void Print()
+            public void Print()
             {
                 Console.WriteLine($"Имя: {_name}, Фамилия: {_surname}, Средняя оценка: {AvgMark:F2}, Пропуски: {_skipped}");
             }
@@ -142,7 +142,7 @@ namespace Lab_7
             }
 
             //метод Print()
-            public override void Print()
+            public void Print()
             {
                 Console.WriteLine($"(Undergraduate) Имя: {Name}, Фамилия: {Surname}, Средняя оценка: {AvgMark:F2}, Пропуски: {Skipped}");
             }
