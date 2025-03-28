@@ -1,6 +1,6 @@
 using System;
 
-namespace Lab_6
+namespace Lab_7
 {
     public abstract class Team
     {
