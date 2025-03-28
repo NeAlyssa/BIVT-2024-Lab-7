@@ -74,7 +74,7 @@ namespace Lab_7
                     int topPlace = 18;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (topPlace > sportsman.Place && sportsman.Place > 0 && sportsman != null)
+                        if (sportsman != null && topPlace > sportsman.Place && sportsman.Place > 0)
                             topPlace = sportsman.Place;
                     }
                     return topPlace;
