@@ -17,7 +17,7 @@ namespace Lab_7
 
 
 
-            public int Count => count1;
+            
             public string Name => name1;
             public Participant[] Participants => participants1;
 
