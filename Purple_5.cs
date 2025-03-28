@@ -129,7 +129,7 @@ namespace Lab_7
             private static int _number;
 
             public Research[] Researches => _researches;
-            
+
             static Report()
             {
                 _number = 1;
@@ -158,11 +158,14 @@ namespace Lab_7
 
                 foreach (var r in _researches)
                 {
-                    foreach (var rr in r.Responses)
+                    if (r.Responses != null)
                     {
-                        var ans = new string[] { rr.Animal, rr.CharacterTrait, rr.Concept };
-                        All.Add(ans);
-                        if (ans[question - 1] != null) count++;
+                        foreach (var rr in r.Responses)
+                        {
+                            var ans = new string[] { rr.Animal, rr.CharacterTrait, rr.Concept };
+                            All.Add(ans);
+                            if (ans[question - 1] != null) count++;
+                        }
                     }
                 }
 

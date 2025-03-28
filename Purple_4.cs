@@ -155,7 +155,7 @@ namespace Lab_7
                     gr.Add(group2._sportsman[j++]);
                 return gr;
             }
-            
+
             public void Split(out Sportsman[] men, out Sportsman[] women)
             {
                 men = new Sportsman[0];

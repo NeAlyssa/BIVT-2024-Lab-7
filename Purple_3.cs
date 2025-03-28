@@ -172,7 +172,7 @@ namespace Lab_7
             public Skating(double[] moods)
             {
                 _moods = new double[7];
-                Array.Copy(moods, _moods, 7);
+                if (moods != null) Array.Copy(moods, _moods, 7);
                 ModificateMood();
                 _participants = new Participant[0];
                 _number = 0;
@@ -182,7 +182,7 @@ namespace Lab_7
 
             public void Evaluate(double[] marks)
             {
-                if (marks == null) return;
+                if (marks == null || _participants == null || _number >= _participants.Length) return;
                 if (marks.Length > 7) Array.Resize(ref marks, 7);
                 for (int i = 0; i < marks.Length; i++)
                 {
@@ -193,6 +193,7 @@ namespace Lab_7
 
             public void Add(Participant participant)
             {
+                if (_participants == null) _participants = new Participant[0];
                 Array.Resize(ref _participants, _participants.Length + 1);
                 _participants[_participants.Length + 1] = participant;
             }
