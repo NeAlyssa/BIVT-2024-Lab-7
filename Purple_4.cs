@@ -63,14 +63,7 @@ namespace Lab_7
             private Sportsman[] _sportsmen;
 
             public string Name => _name;
-            public Sportsman[] Sportsmen
-            {
-                get
-                {
-                    if (_sportsmen == null) { return null; }
-                    return _sportsmen;
-                }
-            }
+            public Sportsman[] Sportsmen => _sportsmen;
             public Group(string name)
             {
                 _name = name;
@@ -108,19 +101,19 @@ namespace Lab_7
                 {
                     (women, men) = (men, women);
                 }
-                int ind = 0, i = 0;
-                while(i < women.Length && i < men.Length)
+                int ind = 0, i1 = 0, i2 = 0;
+                while(i1 < women.Length && i2 < men.Length)
                 {
-                    _sportsmen[ind++] = women[i++];
-                    _sportsmen[ind++] = men[i++];
+                    _sportsmen[ind++] = women[i1++];
+                    _sportsmen[ind++] = men[i2++];
                 }
-                while(i < women.Length)
+                while(i1 < women.Length)
                 {
-                    _sportsmen[ind++] = women[i++];
+                    _sportsmen[ind++] = women[i1++];
                 }
-                while(i < men.Length)
+                while(i2 < men.Length)
                 {
-                    _sportsmen[ind++] = men[i++];
+                    _sportsmen[ind++] = men[i2++];
                 }
                 
             }
