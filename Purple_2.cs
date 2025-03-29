@@ -43,7 +43,7 @@ namespace Lab_7
             {
                 _name = name;
                 _surname = surname;
-                _distance = 0;
+                _distance = -1;
                 _result = 0;
                 flag = false;
                 _marks = new int[5];
@@ -56,7 +56,7 @@ namespace Lab_7
             //методы
             public void Jump(int distance, int[] marks, int target)
             {
-                if (marks == null || _marks == null || marks.Length != _marks.Length || flag == true || _distance <= 0) { return; }
+                if (marks == null || _marks == null || marks.Length != _marks.Length || flag == true) { return; }
                 _distance = distance;
                 flag = true;
                 for (int i = 0; i < _marks.Length; i++)
@@ -129,9 +129,9 @@ namespace Lab_7
                 if(_participants == null || marks == null) return;
                 for (int jmpr = 0; jmpr < _participants.Length; jmpr++)
                 {
-                    if (_participants[jmpr].Distance == 0)
+                    if (_participants[jmpr].Distance == -1)
                     {
-                        _participants[jmpr].Jump(distance, marks, _standard);
+                        _participants[jmpr].Jump(distance, marks, Standard);
                         break;
                     }
                 }
