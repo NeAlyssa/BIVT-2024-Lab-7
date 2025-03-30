@@ -74,7 +74,8 @@ namespace Lab_7
             public static void Sort(Participant[] array)
             {
                 if (array == null) return;
-                array = array.OrderByDescending(x => x.Result).ToArray();
+                var array1 = array.OrderByDescending(x => x.Result).ToArray();
+                Array.Copy(array1, array, array.Length);
 
             }
             public void Print()
