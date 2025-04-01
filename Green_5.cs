@@ -10,18 +10,27 @@ namespace Lab_7
 {
     public class Green_5
     {
-        public class Student
+        public struct Student
         {
             private string _name;
             private string _surname;
             private int[] _marks;
-            public string Name { get { return _name; } }
-            public string Surname { get { return _surname; } }
-            public int[] Marks { get { return _marks; } }
-            public Student(string name, string surname)
+            public string Name
             {
-                _name = name;
-                _surname = surname;
+                get { return _name; }
+            }
+            public string Surname
+            {
+                get { return _surname; }
+            }
+            public int[] Marks
+            {
+                get { return _marks; }
+            }
+            public Student(string n, string sn)
+            {
+                _name = n;
+                _surname = sn;
                 _marks = new int[5];
                 for (int i = 0; i < _marks.Length; i++)
                 {
@@ -32,31 +41,35 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks == null || _marks.Length == 0)
+                    if (_marks.Length == 0 || _marks == null)
                     {
                         return 0;
                     }
-                    double sum = 0;
+                    double s = 0;
                     for (int i = 0; i < _marks.Length; i++)
                     {
-                        sum += _marks[i];
+                        s += _marks[i];
                     }
-                    return sum / _marks.Length;
+                    return s / _marks.Length;
                 }
             }
-            public void Exam(int mark)
+            public void Exam(int mrk)
             {
-                if (_marks == null || _marks.Length == 0)
+                if (_marks.Length == 0 || _marks == null)
                 {
                     return;
                 }
-                for (int i = 0; i < _marks.Length; i++)
+                int ind = 0;
+                bool foundZero = false;
+
+                while (ind < _marks.Length && !foundZero)
                 {
-                    if (_marks[i] == 0)
+                    if (_marks[ind] == 0)
                     {
-                        _marks[i] = mark;
-                        break;
+                        _marks[ind] = mrk;
+                        foundZero = true;
                     }
+                    ind++;
                 }
             }
             public void Print()
@@ -67,195 +80,221 @@ namespace Lab_7
         public class Group
         {
             private string _name;
-            private Student[] _students;
+            private Green_5.Student[] _students;
             private int _studentCount;
-            public string Name { get { return _name; } }
-            public Student[] Students { get { return _students; } }
+            public string Name
+            {
+                get { return _name; }
+            }
+            public Green_5.Student[] Students
+            {
+                get { return _students; }
+            }
             public virtual double AvgMark
             {
                 get
                 {
-                    if (_students == null || _studentCount == 0)
+                    if (_studentCount == 0 || _students == null)
                     {
                         return 0;
                     }
-                    double totalSum = 0;
-                    int totalCount = 0;
-                    for (int i = 0; i < _studentCount; i++)
+                    double sum = 0d;
+                    int count = 0;
+                    int i = 0;
+                    while (i < _studentCount)
                     {
-                        foreach (double mark in _students[i].Marks)
+                        var marks = _students[i].Marks;
+                        int j = 0;
+                        while (j < marks.Length)
                         {
-                            totalSum += mark;
-                            totalCount++;
+                            sum += marks[j];
+                            count++;
+                            j++;
                         }
+                        i++;
                     }
-                    return totalCount == 0 ? 0 : totalSum / totalCount;
+                    return count > 0 ? sum / count : 0d;
                 }
             }
             public Group(string name)
             {
                 _name = name;
-                _students = new Student[0];
+                _students = new Green_5.Student[0];
                 _studentCount = 0;
             }
-            public void Add(Student student)
+            public void Add(Green_5.Student student)
             {
                 if (_students == null)
                 {
-                    _students = new Student[0];
+                    _students = new Green_5.Student[0];
                 }
                 Array.Resize(ref _students, _studentCount + 1);
                 _students[_studentCount] = student;
                 _studentCount++;
             }
-            public void Add(Student[] newStudents)
+            public void Add(Green_5.Student[] ns)
             {
-                if (newStudents == null)
+                if (ns == null)
                 {
                     return;
                 }
                 if (_students == null)
                 {
-                    _students = new Student[0];
+                    _students = new Green_5.Student[0];
                 }
-                int newLength = _studentCount + newStudents.Length;
-                Array.Resize(ref _students, newLength);
-                for (int i = 0; i < newStudents.Length; i++)
+                int nl = _studentCount + ns.Length;
+                Array.Resize(ref _students, nl);
+                for (int i = 0; i < ns.Length; i++)
                 {
-                    _students[_studentCount + i] = newStudents[i];
+                    _students[_studentCount + i] = ns[i];
                 }
-                _studentCount = newLength;
+                _studentCount = nl;
             }
-            public static void SortByAvgMark(Group[] array)
+            public static void SortByAvgMark(Group[] arr)
             {
-                if (array == null || array.Length == 0)
+                bool hasSwaps;
+                int sortRange = arr.Length;
+                while (sortRange > 1)
                 {
-                    return;
-                }
-                bool swapped;
-                do
-                {
-                    swapped = false;
-                    for (int i = 0; i < array.Length - 1; i++)
+                    hasSwaps = false;
+                    int currentIndex = 0;
+                    while (currentIndex < sortRange - 1)
                     {
-                        if (array[i].AvgMark < array[i + 1].AvgMark)
+                        if (arr[currentIndex].AvgMark < arr[currentIndex + 1].AvgMark)
                         {
-                            Group temp = array[i];
-                            array[i] = array[i + 1];
-                            array[i + 1] = temp;
-                            swapped = true;
+                            (arr[currentIndex + 1], arr[currentIndex]) =
+                                (arr[currentIndex], arr[currentIndex + 1]);
+                            hasSwaps = true;
                         }
+                        currentIndex++;
                     }
-                } while (swapped);
+                    sortRange--;
+                    if (!hasSwaps) break;
+                }
             }
             public void Print()
             {
                 Console.WriteLine("{0,-12} {1,-15:F2}", Name, AvgMark);
             }
         }
-        public class EliteGroup : Group
+        public class EliteGroup : Group.
         {
-            public EliteGroup(string name) : base(name) { }
+            private string _name;
+            public EliteGroup(string name) : base(name)
+            {
+                _name = name;
+            }
             public override double AvgMark
             {
                 get
                 {
-                    if (Students == null || Students.Length == 0)
+                    if (Students.Length == 0 || Students == null)
                     {
                         return 0;
                     }
-                    double totalWeightedSum = 0;
-                    double totalWeight = 0;
+                    double sumweight = 0;
+                    double weight = 0;
                     foreach (Student student in Students)
                     {
-                        double studentWeightedSum = 0;
-                        double studentWeightTotal = 0;
-                        foreach (int mark in student.Marks)
+                        double stuws = 0;
+                        double stuw = 0;
+                        foreach (int mrk in student.Marks)
                         {
-                            if (mark != 0)
+                            if (mrk != 0)
                             {
-                                switch (mark)
+                                switch (mrk)
                                 {
                                     case 5:
-                                        studentWeightedSum += mark * 1;
-                                        studentWeightTotal += 1;
+                                        stuws += mrk * 1;
+                                        stuw += 1;
                                         break;
                                     case 4:
-                                        studentWeightedSum += mark * 1.5;
-                                        studentWeightTotal += 1.5;
+                                        stuws += mrk * 1.5;
+                                        stuw += 1.5;
                                         break;
                                     case 3:
-                                        studentWeightedSum += mark * 2;
-                                        studentWeightTotal += 2;
+                                        stuws += mrk * 2;
+                                        stuw += 2;
                                         break;
                                     case 2:
-                                        studentWeightedSum += mark * 2.5;
-                                        studentWeightTotal += 2.5;
+                                        stuws += mrk * 2.5;
+                                        stuw += 2.5;
+                                        break;
+                                    default:
                                         break;
                                 }
                             }
                         }
-                        if (studentWeightTotal > 0)
+                        if (stuw > 0)
                         {
-                            totalWeightedSum += studentWeightedSum;
-                            totalWeight += studentWeightTotal;
+                            sumweight += stuws;
+                            weight += stuw;
                         }
                     }
-                    return totalWeight == 0 ? 0 : totalWeightedSum / totalWeight;
+                    return weight == 0 ? 0 : sumweight / weight;
                 }
             }
         }
         public class SpecialGroup : Group
         {
-            public SpecialGroup(string name) : base(name) { }
+            private string _name;
+            public SpecialGroup(string name) : base(name)
+            {
+                _name = name;
+            }
             public override double AvgMark
             {
                 get
                 {
-                    if (Students == null || Students.Length == 0)
+                    if (Students.Length == 0 || Students == null)
                     {
                         return 0;
                     }
-                    double totalWeightedSum = 0;
-                    double totalWeight = 0;
+                    double weights = 0;
+                    double weight = 0;
                     foreach (Student student in Students)
                     {
-                        double studentWeightedSum = 0;
-                        double studentWeightTotal = 0;
-                        foreach (int mark in student.Marks)
+                        double stuws = 0;
+                        double stuw = 0;
+                        foreach (int mrk in student.Marks)
                         {
-                            if (mark != 0)
+                            if (mrk != 0)
                             {
-                                switch (mark)
+                                switch (mrk)
                                 {
                                     case 5:
-                                        studentWeightedSum += mark * 1;
-                                        studentWeightTotal += 1;
+                                        stuws += mrk * 1;
+                                        stuw += 1;
                                         break;
                                     case 4:
-                                        studentWeightedSum += mark * 0.75;
-                                        studentWeightTotal += 0.75;
+                                        stuws += mrk * 0.75;
+                                        stuw += 0.75;
                                         break;
                                     case 3:
-                                        studentWeightedSum += mark * 0.5;
-                                        studentWeightTotal += 0.5;
+                                        stuws += mrk * 0.5;
+                                        stuw += 0.5;
                                         break;
                                     case 2:
-                                        studentWeightedSum += mark * 0.25;
-                                        studentWeightTotal += 0.25;
+                                        stuws += mrk * 0.25;
+                                        stuw += 0.25;
+                                        break;
+                                    default:
                                         break;
                                 }
                             }
                         }
-                        if (studentWeightTotal > 0)
+                        if (stuw > 0)
                         {
-                            totalWeightedSum += studentWeightedSum;
-                            totalWeight += studentWeightTotal;
+                            weights += stuws;
+                            weight += stuw;
                         }
                     }
-                    return totalWeight == 0 ? 0 : totalWeightedSum / totalWeight;
+                    return weight == 0 ? 0 : weights / weight;
                 }
             }
         }
     }
+
+
+
 }

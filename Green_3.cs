@@ -10,13 +10,13 @@ namespace Lab_7
 {
     public class Green_3
     {
-        public class Student .
+        public class Student 
         {
             private string _name; 
-            private string _surname; 
-            private int[] _marks;
-            private bool _isExpelled;
-            private int _examCount; 
+            private string _surname;
+            private int[] _marks; 
+            private bool _isExpelled; 
+            private int _examCount;
             private int _id; 
             private static int _nextId; 
             private bool _restored;
@@ -24,7 +24,7 @@ namespace Lab_7
             {
                 _nextId = 1;
             }
-            public Student(string name, string surname)
+            public Student(string name, string surname) 
             {
                 _id = _nextId++;
                 _name = name;
@@ -34,75 +34,117 @@ namespace Lab_7
                 {
                     _marks[i] = 0;
                 }
-                _isExpelled = false;
-                _examCount = 0;
                 _restored = false;
+                _examCount = 0;
+                _isExpelled = false;
             }
-            public string Name => _name; 
-            public string Surname => _surname; 
-            public int[] Marks => (int[])_marks.Clone(); 
-            public int ID => _id; 
+            public string Name 
+            {
+                get { return _name; }
+            }
+            public string Surname 
+            {
+                get { return _surname; }
+            }
+            public int ID 
+            {
+                get { return _id; }
+            }
+            public int[] Marks 
+            {
+                get { return _marks != null ? (int[])_marks.Clone() : null; }
+            }
             public double AvgMark 
             {
                 get
                 {
-                    if (_marks == null || _examCount == 0)
+                    if (_examCount == 0 || _marks == null)
                     {
                         return 0;
                     }
-                    double sum = 0;
+                    double s = 0;
                     for (int i = 0; i < _examCount; i++)
                     {
-                        sum += _marks[i];
+                        s += _marks[i];
                     }
-                    return sum / _examCount;
+                    return s / _examCount;
                 }
             }
             public bool IsExpelled 
             {
                 get
                 {
-                    if (_restored) return false;
-                    if (_examCount == 0) return false;
-                    return _marks.Take(_examCount).Any(m => m < 3);
+                    if (_restored)
+                    {
+                        return false;
+                    }
+                    if (_examCount == 0)
+                    {
+                        return false;
+                    }
+                    for (int i = 0; i < _examCount; i++)
+                    {
+                        if (_marks[i] < 3)
+                        {
+                            return true;
+                        }
+                    }
+
+                    {
+                        return false;
+                    }
                 }
             }
-            public void Exam(int mark) 
+            public void Exam(int mrk) 
             {
-                if (_examCount >= 3 || (_isExpelled && !_restored))
+                if (_marks.Length == 0 || _marks == null)
+                {
+                    return;
+                }
+                if (_examCount >= 3)
+                {
+                    return;
+                }
+                if (_isExpelled && !_restored)
                 {
                     return;
                 }
                 if (_restored)
                 {
-                    _restored = false;
                     _isExpelled = false;
+                    _restored = false;
+                    
                 }
-                _marks[_examCount++] = mark;
-
-                if (mark < 3)
+                _marks[_examCount] = mrk;
+                _examCount++;
+                if (mrk < 3)
                 {
                     _isExpelled = true;
                 }
             }
-            public void Restore() 
+            public void Restore()
             {
-                _restored = true;
                 _isExpelled = false;
+                _restored = true;
+                
             }
-            public static void SortByAvgMark(Student[] array) 
+            public static void SortByAvgMark(Student[] arr)
             {
-                if (array == null || array.Length == 0) return;
-
+                if (arr.Length == 0 || arr == null)
+                {
+                    return;
+                }
                 bool swapped;
                 do
                 {
                     swapped = false;
-                    for (int i = 0; i < array.Length - 1; i++)
+                    for (int i = 0; i < arr.Length - 1; i++)
                     {
-                        if (array[i].AvgMark < array[i + 1].AvgMark)
+                        if (arr[i].AvgMark < arr[i + 1].AvgMark)
                         {
-                            (array[i], array[i + 1]) = (array[i + 1], array[i]);
+                            Student t = arr[i];
+                            arr[i] = arr[i+1];
+                            arr[i+1] = t;
                             swapped = true;
                         }
                     }
@@ -115,38 +157,79 @@ namespace Lab_7
         }
         public class Commission 
         {
-            public static void Sort(Student[] students)
+            public static void Sort(Student[] std) 
             {
                 bool swapped;
                 do
                 {
                     swapped = false;
-                    for (int i = 0; i < students.Length - 1; i++)
+                    for (int i = 0; i < std.Length - 1; i++)
                     {
-                        if (students[i].ID > students[i + 1].ID)
+                        if (std[i].ID > std[i+1].ID)
                         {
-                            (students[i], students[i + 1]) = (students[i + 1], students[i]);
+                            Student temp = std[i];
+                            std[i] = std[i+1];
+                            std[i+1] = temp;
                             swapped = true;
                         }
                     }
                 } while (swapped);
             }
-            public static Student[] Expel(ref Student[] students) 
+            public static Student[] Expel(ref Student[] sdt)
             {
-                Student[] expelled = students.Where(s => s.IsExpelled).ToArray();
-                students = students.Where(s => !s.IsExpelled).ToArray();
-                return expelled;
+                int k = 0;
+                for (int i = 0; i < sdt.Length; i++)
+                {
+                    if (sdt[i].IsExpelled == true)
+                    {
+                        k++;
+                    }
+                }
+                int ind = 0;
+                Student[] exsdt = new Student[k];
+                for (int i = 0; i < sdt.Length; i++)
+                {
+                    if (sdt[i].IsExpelled == true)
+                    {
+                        exsdt[ind++] = sdt[i];
+                    }
+                }
+                sdt = sdt.Where(x => !(x.IsExpelled)).ToArray();
+                return exsdt;
             }
             public static void Restore(ref Student[] students, Student restored) 
             {
-                if (students.Any(s => s.ID == restored.ID)) return;
-                if (restored.IsExpelled && restored.ID >= 1)
+                bool studentExists = false;
+                int checkIndex = 0;
+                while (checkIndex < students.Length && !studentExists)
                 {
-                    int insertPos = Math.Min(restored.ID - 1, students.Length);
-                    students = students.Take(insertPos)
-                                       .Append(restored)
-                                       .Concat(students.Skip(insertPos))
-                                       .ToArray();
+                    if (students[checkIndex].ID == restored.ID)
+                    {
+                        studentExists = true;
+                    }
+                    checkIndex++;
+                }
+                if (!studentExists && restored.IsExpelled && restored.ID >= 1)
+                {
+                    int targetPosition = restored.ID - 1;
+                    if (targetPosition > students.Length)
+                    {
+                        targetPosition = students.Length;
+                    }
+                    Student[] updatedStudents = new Student[students.Length + 1];
+                    int copyIndex = 0;
+                    while (copyIndex < targetPosition)
+                    {
+                        updatedStudents[copyIndex] = students[copyIndex];
+                        copyIndex++;
+                    }
+                    updatedStudents[targetPosition] = restored;
+                    while (copyIndex < students.Length)
+                    {
+                        updatedStudents[copyIndex + 1] = students[copyIndex];
+                        copyIndex++;
+                    }
+                    students = updatedStudents;
                 }
             }
         }

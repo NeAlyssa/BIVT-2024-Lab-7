@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Lab_7.Green_4;
 
 namespace Lab_7
 {
@@ -12,114 +13,186 @@ namespace Lab_7
     {
         public abstract class Discipline
         {
-            private readonly string _name;
-            private readonly List<Participant> _participants = new();
-            public string Name => _name;
-            public IReadOnlyList<Participant> Participants => _participants.AsReadOnly();
-            protected Discipline(string name)
+            private string _name;
+            private Participant[] _participants;
+            private int _participantCount;
+            public string Name
+            {
+                get { return _name; }
+            }
+            public Participant[] Participants
+            {
+                get { return _participants; }
+            }
+            public Discipline(string name)
             {
                 _name = name;
+                _participants = new Participant[0];
+                _participantCount = 0;
             }
-            public void Add(Participant participant)
+            public void Add(Participant par)
             {
-                _participants.Add(participant);
+                if (_participants == null)
+                {
+                    _participants = new Participant[0];
+                }
+                Array.Resize(ref _participants, _participantCount + 1);
+                _participants[_participantCount] = par;
+                _participantCount++;
             }
-            public void Add(IEnumerable<Participant> participants)
+            public void Add(Participant[] par)
             {
-                _participants.AddRange(participants);
+                int k = par.Length;
+                for (int i = 0; i < k; i++)
+                {
+                    Add(_participants[i]);
+                }
             }
             public void Sort()
             {
-                _participants.Sort((p1, p2) => p2.BestJump.CompareTo(p1.BestJump));
+                if (_participants != null && _participantCount > 0)
+                {
+                    Participant.Sort(_participants);
+                }
             }
             public void Print()
             {
-                Console.WriteLine($"Дисциплина: {Name}");
-                if (_participants.Count > 0)
+                Console.WriteLine("Дисциплина: " + Name);
+                if (_participantCount > 0 && _participants != null)
                 {
-                    foreach (var participant in _participants)
-                        participant.Print();
+                    for (int i = 0; i < _participantCount; i++)
+                    {
+                        _participants[i].Print();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Нет участников.");
+                    Console.WriteLine("Нет участниц");
                 }
             }
-            protected Participant GetParticipantAt(int index)
+            private protected Participant GetParticipantAt(int ind)
             {
-                return index >= 0 && index < _participants.Count ? _participants[index] : default;
-            }
-            protected void SetParticipant(int index, Participant participant)
-            {
-                if (index >= 0 && index < _participants.Count)
-                    _participants[index] = participant;
-            }
-            public abstract void Retry(int index);
-        }
-        public readonly struct Participant
-        {
-            public string Name { get; }
-            public string Surname { get; }
-            private readonly double[] _jumps;
-            public IReadOnlyList<double> Jumps => _jumps.ToArray();
-            public double BestJump => _jumps.Length > 0 ? _jumps.Max() : 0;
-            public Participant(string name, string surname)
-            {
-                Name = name;
-                Surname = surname;
-                _jumps = new double[3];
-            }
-            public Participant(string name, string surname, double[] jumps)
-            {
-                Name = name;
-                Surname = surname;
-                _jumps = jumps ?? new double[3];
-            }
-            public Participant Jump(double result)
-            {
-                if (result < 0) return this;
-
-                double[] newJumps = (double[])_jumps.Clone();
-                for (int i = 0; i < newJumps.Length; i++)
+                if (_participants != null && ind >= 0 && ind < _participantCount)
                 {
-                    if (newJumps[i] == 0)
-                    {
-                        newJumps[i] = result;
-                        break;
-                    }
+                    return _participants[ind];
                 }
-                return new Participant(Name, Surname, newJumps);
+                return default(Participant);
             }
-            public static void Sort(Participant[] participants)
+            private protected void SetParticipant(int ind, Participant par)
             {
-                Array.Sort(participants, (p1, p2) => p2.BestJump.CompareTo(p1.BestJump));
+                if (ind >= 0 && _participants != null && ind < _participantCount)
+                {
+                    _participants[ind] = par;
+                }
+            }
+            public abstract void Retry(int ind);
+        }
+        public struct Participant
+        {
+            private string _name;
+            private string _surname;
+            private double[] _jumps;
+            private int _index;
+            public string Name
+            {
+                get { return _name; }
+            }
+            public string Surname
+            {
+                get { return _surname; }
+            }
+            public double[] Jumps
+            {
+                get { return _jumps != null ? (double[])_jumps.Clone() : null; }
+            }
+            public double BestJump
+            {
+                get
+                {
+                    if (_jumps.Length == 0 || _jumps == null)
+                    {
+                        return 0;
+                    }
+                    return _jumps.Max();
+                }
+            }
+            public Participant(string n, string sn)
+            {
+                _name = n;
+                _surname = sn;
+                _jumps = new double[3];
+                _index = 0;
+            }
+            public void Jump(double res)
+            {
+                if (_jumps.Length == 0 || _jumps == null)
+                {
+                    return;
+                }
+                if (_index < 3 && res >= 0)
+                {
+                    _jumps[_index] = res;
+                    _index++;
+                }
+            }
+            public static void Sort(Participant[] arr)
+            {
+                if (arr == null || arr.Length == 0)
+                {
+                    return;
+                }
+                bool swapped;
+                do
+                {
+                    swapped = false;
+                    for (int i = 0; i < arr.Length - 1; i++)
+                    {
+                        if (arr[i].BestJump < arr[i + 1].BestJump)
+                        {
+                            Participant t = arr[i];
+                            arr[i] = arr[i + 1];
+                            arr[i + 1] = t;
+                            swapped = true;
+                        }
+                    }
+                } while (swapped);
             }
             public void Print()
             {
-                Console.WriteLine($"{Name,-12} {Surname,-12} {BestJump,8:F2}");
+                Console.WriteLine("{0,-12} {1,-10} {2,-15:F2}", Name, Surname, BestJump);
             }
         }
         public class LongJump : Discipline
         {
-            public LongJump() : base("Long Jump") { }
-            public override void Retry(int index)
+            public LongJump() : base("Long jump")
             {
-                Participant participant = GetParticipantAt(index);
-                SetParticipant(index, new Participant(participant.Name, participant.Surname).Jump(participant.BestJump));
+            }
+            public override void Retry(int ind)
+            {
+                Participant participant = GetParticipantAt(ind);
+                double BestJump = participant.BestJump;
+                participant = new Participant(participant.Name, participant.Surname);
+                participant.Jump(BestJump);
+                SetParticipant(ind, participant);
             }
         }
         public class HighJump : Discipline
         {
-            public HighJump() : base("High Jump") { }
-            public override void Retry(int index)
+            public HighJump() : base("High jump")
             {
-                Participant participant = GetParticipantAt(index);
-                double[] jumps = participant.Jumps.ToArray();
-
-                if (jumps.Length > 1)
+            }
+            public override void Retry(int ind)
+            {
+                Participant participant = GetParticipantAt(ind);
+                double[] j = participant.Jumps;
+                int k = (j != null) ? j.Length : 0;
+                Participant newParticipant = new Participant(participant.Name, participant.Surname);
+                for (int i = 0; i < k - 1; i++)
                 {
-                    SetParticipant(index, new Participant(participant.Name, participant.Surname, jumps[..^1]));
+                    newParticipant.Jump(j[i]);
                 }
+                SetParticipant(ind, newParticipant);
             }
         }
     }
+}

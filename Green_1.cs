@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Lab_7
 {
@@ -16,88 +14,120 @@ namespace Lab_7
             private string _group;
             private string _trainer;
             private double _result;
-            private bool _hasResult;
-            private protected double _standard;
-            private static int _countPassed;
-            private static bool _isPrinted = false;
-            private static bool _isPrintedTrainer = false;
-            static Participant()
-            {
-                _countPassed = 0;
-            }
-            public static Participant[] FindParticipantsByTrainer(Participant[] list, Type type, string trainerName)
-            {
-                int num = 0;
-                foreach (var p in list)
-                {
-                    if (p != null && p.GetType() == type && p.Trainer == trainerName)
-                    {
-                        num++;
-                    }
-                }
-                Participant[] filtered = new Participant[num];
-                int index = 0;
-                foreach (var p in list)
-                {
-                    if (p != null && p.GetType() == type && p.Trainer == trainerName)
-                    {
-                        filtered[index++] = p;
-                    }
-                }
-                return filtered;
-            }
-            public Participant(string surname, string group, string trainer)
-            {
-                _standard = 100;
-                _surname = surname;
-                _group = group;
-                _trainer = trainer;
-                _result = 0;
-                _hasResult = false;
-            }
+            private bool _resultFilled;
+            protected double _standard;
+            private static int _passedCount;
             public string Surname => _surname;
             public string Group => _group;
             public string Trainer => _trainer;
             public double Result => _result;
-            public bool HasPassed => _hasResult && _result <= _standard && _result > 0;
-            public static int PassedCount => _countPassed;
-            public void Run(double time)
+            public static int PassedTheStandard => _passedCount;
+            public bool HasPassed => _resultFilled && _result > 0 && _result <= _standard;
+            static Participant()
             {
-                if (time <= 0 || _hasResult)
+                _passedCount = 0;
+            }
+            public static Participant[] GetTrainerParticipants(Participant[] participants, Type participantType, string trainer)
+            {
+                int cnt = 0;
+                int i = 0;
+                while (i < participants.Length)
+                {
+                    if (participants[i] != null && participants[i].GetType() == participantType && participants[i].Trainer == trainer)
+                    {
+                        cnt++;
+                    }
+                    i++;
+                }
+
+                Participant[] res = new Participant[cnt];
+                int ind = 0;
+                i = 0;
+                while (i < participants.Length)
+                {
+                    if (participants[i] != null && participants[i].GetType() == participantType && participants[i].Trainer == trainer)
+                    {
+                        res[ind++] = participants[i];
+                    }
+                    i++;
+                }
+                return res;
+            }
+            public Participant(string surname, string trainer, string group)
+            {
+                _standard = 100;
+                _surname = surname;
+                _trainer = trainer;
+                _group = group;
+                _result = 0;
+                _resultFilled = false;
+            }
+            public string Surname 
+            {
+                get { return _surname; }
+            }
+            public string Trainer  
+            {
+                get { return _trainer; }
+            }
+            public string Group 
+            {
+                get { return _group; }
+            }
+            public double Result 
+            {
+                get { return _result; }
+            }
+            public bool HasPassed  
+            {
+                get { return _resultFilled && _result <= _standard && _result > 0; }
+            }
+            public static int PassedTheStandard 
+            {
+                get { return _passedCount; }
+            }
+            public void Run(double res)
+            {
+                if (res <= 0)
                 {
                     return;
                 }
-                _result = time;
-                _hasResult = true;
-
-                if (time <= _standard)
+                if (!_resultFilled) 
                 {
-                    _countPassed++;
+                    _result = res; 
+                    _resultFilled = true;
+                    if (res <= _standard) 
+                    {
+                        _passedCount++;
+                    }
                 }
             }
             public void Print()
             {
-                if (!_isPrinted)
+                if (!_Printed)
                 {
-                    Console.WriteLine("Число участников, выполнивших норматив: {0}", PassedCount);
-                    _isPrinted = true;
+                    Console.WriteLine("Всего нормативов за все забеги преодолено: {0}", PassedTheStandard);
+                    _Printed = true;
                 }
-                Console.WriteLine("{0,-12} {1,-10} {2,-12} {3,-10:F2} {4,-10}", Surname, Group, Trainer, Result, HasPassed);
+                Console.WriteLine("{0,-12} {1,-10} {2,-12} {3,-10} {4,-10}", Surname, Group, Trainer, Result.ToString("F2"), HasPassed);
             }
         }
-        public class Sprinter100M : Participant
+        public class Participant100M : Participant
         {
-            public Sprinter100M(string surname, string group, string trainer) : base(surname, group, trainer)
+            public Participant100M(string surname, string group, string trainer) : base(surname, group, trainer)
             {
                 _standard = 12;
             }
         }
-        public class Sprinter500M : Participant
+        public class Participant500M : Participant 
         {
-            public Sprinter500M(string surname, string group, string trainer) : base(surname, group, trainer)
+            public Participant500M(string surname, string group, string trainer) : base(surname, group, trainer)
             {
-                _standard = 90;
+                _standard = 90; 
             }
         }
     }
+
+
+
 }
