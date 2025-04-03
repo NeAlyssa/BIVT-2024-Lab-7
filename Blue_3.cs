@@ -18,7 +18,7 @@ namespace Lab_7
 
             public string Name => _name;
             public string Surname => _surname;
-            public int[] PenaltyTimes
+            public int[] Penalties
             {
                 get
                 {
