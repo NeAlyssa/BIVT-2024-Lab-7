@@ -2,6 +2,8 @@ using System;
 
 namespace Lab_7
 {
+     public class Blue_3
+ {
     public abstract class Team
     {
         protected string _name;
@@ -164,4 +166,5 @@ namespace Lab_7
             Console.WriteLine("");
         }
     }
+}
 }
