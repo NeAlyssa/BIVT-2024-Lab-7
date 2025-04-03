@@ -2,7 +2,7 @@ using System;
 
 namespace Lab_7
 {
-     public class Blue_3
+     public class Blue_4
  {
     public abstract class Team
     {
