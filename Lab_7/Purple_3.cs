@@ -220,30 +220,30 @@ namespace Lab_7
                 Array.Resize(ref _participants, _participants.Length + skaters.Length);
                 Array.Copy(skaters, _participants, skaters.Length);
             }
-            public class FigureSkating : Skating
-            {
-                public FigureSkating(double[] moods) : base(moods) { }
+        }
+        public class FigureSkating : Skating
+        {
+            public FigureSkating(double[] moods) : base(moods) { }
 
-                protected override void ModificateMood()
+            protected override void ModificateMood()
+            {
+                if (_moods == null) return;
+                for (int i = 0; i < _moods.Length; i++)
                 {
-                    if (_moods == null) return;
-                    for (int i = 0; i < _moods.Length; i++)
-                    {
-                        _moods[i] += (i + 1) / 10.0;
-                    }
+                    _moods[i] += (i + 1) / 10.0;
                 }
             }
-            public class IceSkating : Skating
-            {
-                public IceSkating(double[] moods) : base(moods) { }
+        }
+        public class IceSkating : Skating
+        {
+            public IceSkating(double[] moods) : base(moods) { }
 
-                protected override void ModificateMood()
+            protected override void ModificateMood()
+            {
+                if (_moods == null) return;
+                for (int i = 0; i < _moods.Length; i++)
                 {
-                    if (_moods == null) return;
-                    for (int i = 0; i < _moods.Length; i++)
-                    {
-                        _moods[i] *= 1 + (i + 1) / 100.0;
-                    }
+                    _moods[i] *= 1 + (i + 1) / 100.0;
                 }
             }
         }

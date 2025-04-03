@@ -48,6 +48,8 @@
     <Compile Include="Purple_1.cs" />
     <Compile Include="Purple_2.cs" />
     <Compile Include="Purple_3.cs" />
+    <Compile Include="Purple_4.cs" />
+    <Compile Include="Purple_5.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
