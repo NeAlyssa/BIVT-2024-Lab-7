@@ -141,7 +141,7 @@ namespace Lab_7
             protected Participant[] _participants;
             protected double[] _moods;
 
-            public Participant[] Participant
+            public Participant[] Participants
             { get
                 {
                     if (_participants == null) return null;
