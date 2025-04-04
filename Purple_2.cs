@@ -90,7 +90,7 @@ namespace Lab_7
             private Participant[] _participants;
 
             public string Name => _name;
-            public int Standart => _standart;
+            public int Standard => _standart;
             public Participant[] Participants
             {
                 get
