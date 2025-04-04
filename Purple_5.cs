@@ -136,7 +136,7 @@ namespace Lab_7
         public class Report
         {
             public Research[] _researches;
-            private static int _ind = 0;
+            private static int _ind;
 
             public Research[] Researches => _researches; 
 
@@ -151,10 +151,10 @@ namespace Lab_7
             public Research MakeResearch()
             {
                 if (_researches == null) return default;
-                string date = DateTime.Now.ToString("MM/YY", CultureInfo.InvariantCulture);
+                var date = DateTime.Now.ToString("MM/YY", CultureInfo.InvariantCulture);
                 Research research = new Research($"No_{_ind++}_{date}");
-                //Array.Resize(ref Researches, Researches.Length + 1); почему не работает?
-                _researches = Researches.Append(research).ToArray();
+                Array.Resize(ref _researches, _researches.Length + 1);
+                _researches[_researches.Length - 1] = research;
                 return research;
             }
             public (string, double)[] GetGeneralReport(int question)
