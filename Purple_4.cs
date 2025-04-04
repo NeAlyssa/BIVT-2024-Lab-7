@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Lab_7.Purple_4;
 
 namespace Lab_7
 {
@@ -34,6 +35,14 @@ namespace Lab_7
                     _time = time;
                     _timeSet = true;
                 }
+            }
+
+            public static void Sort(Sportsman[] array)
+            {
+                if (array == null) return;
+                array = array
+                    .OrderBy(sportsman => sportsman?.Time ?? double.MaxValue)
+                    .ToArray();
             }
             public void Print() { }
         }
@@ -120,10 +129,9 @@ namespace Lab_7
             public void Sort()
             {
                 if (_sportsmen == null) { return; }
-                Sportsman[] newArray = _sportsmen
-                    .OrderBy(sportsman => sportsman.Time)
+                _sportsmen = _sportsmen
+                    .OrderBy(sportsman => sportsman?.Time ?? double.MaxValue)
                     .ToArray();
-                Array.Copy(newArray, _sportsmen, _sportsmen.Length);
             }
 
             public static Group Merge(Group group1, Group group2)
