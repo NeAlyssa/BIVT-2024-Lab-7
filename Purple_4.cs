@@ -101,21 +101,24 @@ namespace Lab_7
                 {
                     (women, men) = (men, women);
                 }
-                int ind = 0, i1 = 0, i2 = 0;
-                while(i1 < women.Length && i2 < men.Length)
+                int ind = 0, i = 0;
+                while(i < women.Length && i < men.Length)
                 {
-                    _sportsmen[ind++] = women[i1++];
-                    _sportsmen[ind++] = men[i2++];
+                    _sportsmen[ind++] = women[i];
+                    _sportsmen[ind++] = men[i];
+                    i++;
                 }
-                while(i1 < women.Length)
+                while(i < women.Length)
                 {
-                    _sportsmen[ind++] = women[i1++];
+                    _sportsmen[ind++] = women[i];
+                    i++;
                 }
-                while(i2 < men.Length)
+                while(i < men.Length)
                 {
-                    _sportsmen[ind++] = men[i2++];
+                    _sportsmen[ind++] = men[i];
+                    i++;
                 }
-                
+                 
             }
             public void Add(Sportsman man)
             {
