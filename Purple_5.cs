@@ -31,7 +31,7 @@ namespace Lab_7
                 if (questionNumber == 1)
                 {
                     var current = this.Animal;
-                    if (current != "")
+                    if (current != null)
                     {
                         foreach (var x in responses)
                         {
@@ -46,7 +46,7 @@ namespace Lab_7
                 else if (questionNumber == 2)
                 {
                     var current = this.CharacterTrait;
-                    if (current != "")
+                    if (current != null)
                     {
                         foreach (var x in responses)
                         {
@@ -60,7 +60,7 @@ namespace Lab_7
                 else if (questionNumber == 3)
                 {
                     var current = this.Concept;
-                    if (current != "")
+                    if (current != null)
                     {
                         foreach (var x in responses)
                         {
@@ -135,8 +135,10 @@ namespace Lab_7
 
         public class Report
         {
-            public Research[] Researches { get; private set; }
+            public Research[] _researches;
             private static int _ind = 0;
+
+            public Research[] Researches => _researches; 
 
             static Report()
             {
@@ -144,21 +146,22 @@ namespace Lab_7
             }
             public Report()
             {
-                Researches = new Research[0];
+                _researches = new Research[0];
             }
             public Research MakeResearch()
             {
-                 string date = DateTime.Now.ToString("MM/YY", CultureInfo.InvariantCulture);
+                if (_researches == null) return default;
+                string date = DateTime.Now.ToString("MM/YY", CultureInfo.InvariantCulture);
                 Research research = new Research($"No_{_ind++}_{date}");
                 //Array.Resize(ref Researches, Researches.Length + 1); почему не работает?
-                Researches = Researches.Append(research).ToArray();
+                _researches = Researches.Append(research).ToArray();
                 return research;
             }
             public (string, double)[] GetGeneralReport(int question)
             {
-                if(Researches == null || Researches.Length == 0 || question < 1 || question > 3) return null;
+                if(_researches == null || _researches.Length == 0 || question < 1 || question > 3) return null;
                 string[] answers = new string[0];
-                foreach (Research reserch in Researches)
+                foreach (Research reserch in _researches)
                 {
                     foreach(Response response in reserch.Responses)
                     {
