@@ -29,6 +29,7 @@ namespace Lab_7
 
             public int CountVotes(Response[] responses, int questionNumber)
             {
+                if (responses == null || questionNumber < 1 || questionNumber > 3) return;
                 int c = 0;
                 if (questionNumber == 1)
                 {
@@ -76,7 +77,7 @@ namespace Lab_7
 
             public void Add(string[] answers)
             {
-                if (answers == null) return;
+                if (answers == null || _responses == null) return;
                 var NewArray = new Response[_responses.Length + 1];
                 Array.Copy(_responses, NewArray, _responses.Length);
                 var Resp = new Response(answers[0], answers[1], answers[2]);

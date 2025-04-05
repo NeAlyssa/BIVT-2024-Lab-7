@@ -120,7 +120,7 @@ namespace Lab_7
 
             public void Add(Participant participant)
             {
-                if (_participants == null) _participants = new Participant[0];
+                if (_participants == null) return;
                 Array.Resize(ref _participants, _participants.Length + 1);
                 _participants[_participants.Length - 1] = participant;
             }
