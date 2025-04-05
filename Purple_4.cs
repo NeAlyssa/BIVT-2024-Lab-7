@@ -133,7 +133,11 @@ namespace Lab_7
                 if (_sportsmen == null || men == null) return;
                 var sportsmen = new Sportsman[_sportsmen.Length + men.Length];
                 Array.Copy(_sportsmen, sportsmen, _sportsmen.Length);
-                Array.Copy(men, sportsmen, men.Length);
+                int ind = 0;
+                for(int i = _sportsmen.Length; i < sportsmen.Length; i++)
+                {
+                    sportsmen[i] = men[ind++];
+                }
                 _sportsmen = sportsmen;
             }
             public void Add(Group m)
