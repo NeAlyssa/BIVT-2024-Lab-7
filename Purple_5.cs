@@ -135,7 +135,7 @@ namespace Lab_7
 
         public class Report
         {
-            public Research[] _researches;
+            private Research[] _researches;
             private static int _ind;
 
             public Research[] Researches => _researches; 
