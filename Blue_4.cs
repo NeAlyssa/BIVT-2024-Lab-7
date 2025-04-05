@@ -1,170 +1,217 @@
+
 using System;
 
 namespace Lab_7
 {
-     public class Blue_4
- {
-    public abstract class Team
+    public class Blue_4
     {
-        protected string _name;
-        protected int[] _scores;
 
-        public string Name => _name;
-        public int[] Scores
+        public abstract class Team
         {
-            get
+
+            private string _name;
+            private int[] _scores;
+
+            public string Name => _name;
+            public int[] Scores
             {
-                if (_scores == null) return null;
-                int[] newarr = new int[_scores.Length];
-                for (int i = 0; i < _scores.Length; i++)
-                    newarr[i] = _scores[i];
-                return newarr;
-            }
-        }
-        public int TotalScore
-        {
-            get
-            {
-                if (_scores == null || _scores.Length == 0) return 0;
-                int total = 0;
-                for (int i = 0; i < _scores.Length; i++)
-                    total += _scores[i];
-                return total;
-            }
-        }
-
-        protected Team(string name)
-        {
-            _name = name;
-            _scores = new int[0];
-        }
-
-        public void PlayMatch(int result)
-        {
-            int[] newarr = new int[_scores.Length + 1];
-            for (int i = 0; i < _scores.Length; i++)
-                newarr[i] = _scores[i];
-            newarr[_scores.Length] = result;
-            _scores = newarr;
-        }
-
-        public void Print()
-        {
-            Console.Write($"{_name}: {TotalScore}");
-            Console.WriteLine("");
-        }
-    }
-
-    public class ManTeam : Team
-    {
-        public ManTeam(string name) : base(name) { }
-    }
-
-    public class WomanTeam : Team
-    {
-        public WomanTeam(string name) : base(name) { }
-    }
-
-    public class Group
-    {
-        private string _name;
-        private Team[] _manTeams;
-        private Team[] _womanTeams;
-        private int _manCount;
-        private int _womanCount;
-
-        public string Name => _name;
-        public Team[] ManTeams => _manTeams;
-        public Team[] WomanTeams => _womanTeams;
-
-        public Group(string name)
-        {
-            _name = name;
-            _manTeams = new Team[12];
-            _womanTeams = new Team[12];
-            _manCount = 0;
-            _womanCount = 0;
-        }
-
-        public void Add(Team team)
-        {
-            if (team is ManTeam && _manCount < 12)
-                _manTeams[_manCount++] = team;
-            else if (team is WomanTeam && _womanCount < 12)
-                _womanTeams[_womanCount++] = team;
-        }
-
-        public void Add(Team[] teams)
-        {
-            for (int i = 0; i < teams.Length; i++)
-                Add(teams[i]);
-        }
-
-        private void SortTeams(ref Team[] teams, int count)
-        {
-            for (int i = 0; i < count - 1; i++)
-            {
-                for (int j = 0; j < count - i - 1; j++)
+                get
                 {
-                    if (teams[j].TotalScore < teams[j + 1].TotalScore)
+                    if (_scores == null) return null;
+                    int[] newarr = new int[_scores.Length];
+                    for (int i = 0; i < newarr.Length; i++)
                     {
-                        Team temp = teams[j];
-                        teams[j] = teams[j + 1];
-                        teams[j + 1] = temp;
+                        newarr[i] = _scores[i];
+                    }
+                    return newarr;
+                }
+            }
+            public int TotalScore
+            {
+                get
+                {
+                    int time;
+                    time = 0;
+                    if (_scores == null) return 0;
+                    for (int i = 0; i < _scores.Length; i++)
+                    {
+                        time += _scores[i];
+                    }
+                    return time;
+                }
+            }
+
+            public Team(string Name)
+            {
+                _name = Name;
+                _scores = new int[0];
+            }
+
+            public void PlayMatch(int result)
+            {
+                if (_scores == null) return;
+
+                var newarr = new int[_scores.Length + 1];
+                for (int i = 0; i < _scores.Length; i++)
+                {
+                    newarr[i] = _scores[i];
+                }
+                newarr[newarr.Length - 1] = result;
+                _scores = newarr;
+            }
+
+            public void Print()
+            {
+                Console.WriteLine($"{_name} {TotalScore}");
+            }
+        }
+        public class ManTeam : Team
+        {
+            public ManTeam(string Name) : base(Name) { }
+        }
+        public class WomanTeam : Team
+        {
+            public WomanTeam(string Name) : base(Name) { }
+        }
+
+        public class Group
+        {
+
+            private string _name;
+            private ManTeam[] _ManTeams;
+            private WomanTeam[] _WomanTeams;
+            private int _countM;
+            private int _countW;
+
+            public string Name => _name;
+
+            public Team[] ManTeams => _ManTeams;
+            public Team[] WomanTeams => _WomanTeams;
+            public int countM => _countM;
+            public int countW => _countW;
+
+            public Group(string Name)
+            {
+                _name = Name;
+                _ManTeams = new ManTeam[12];
+                _WomanTeams = new WomanTeam[12];
+                _countM = 0;
+                _countW = 0;
+            }
+
+            public void Add(Team team)
+            {
+                if (team == null || _ManTeams == null || _WomanTeams == null) return;
+                if (team is ManTeam)
+                {
+                    if (_countM < _ManTeams.Length)
+                    {
+                        ManTeam manTeam = team as ManTeam;
+                        _ManTeams[_countM] = manTeam;
+                        _countM++;
+                    }
+                }
+                else if (team is WomanTeam)
+                {
+                    if (_countW < _WomanTeams.Length)
+                    {
+                        WomanTeam womanTeam = team as WomanTeam;
+                        _WomanTeams[_countW] = womanTeam;
+                        _countW++;
                     }
                 }
             }
-        }
 
-        public void Sort()
-        {
-            SortTeams(ref _manTeams, _manCount);
-            SortTeams(ref _womanTeams, _womanCount);
-        }
-
-        public static Group Merge(Group group1, Group group2)
-        {
-            Group result = new Group("Финалисты");
-            group1.Sort();
-            group2.Sort();
-
-            int i = 0, j = 0;
-            while (i < 6 && j < 6)
+            public void Add(Team[] teams)
             {
-                if (group1.ManTeams[i].TotalScore >= group2.ManTeams[j].TotalScore)
-                    result.Add(group1.ManTeams[i++]);
-                else
-                    result.Add(group2.ManTeams[j++]);
+                if (_ManTeams == null || _WomanTeams == null) return;
+                foreach (var team in teams)
+                {
+                    Add(team);
+                }
             }
-            while (i < 6) result.Add(group1.ManTeams[i++]);
-            while (j < 6) result.Add(group2.ManTeams[j++]);
-
-            i = 0; j = 0;
-            while (i < 6 && j < 6)
+            private void EachSort(Team[] teams)
             {
-                if (group1.WomanTeams[i].TotalScore >= group2.WomanTeams[j].TotalScore)
-                    result.Add(group1.WomanTeams[i++]);
-                else
-                    result.Add(group2.WomanTeams[j++]);
+                if (teams == null || teams.Length == 0) return;
+                for (int i = 0; i < teams.Length; i++)
+                {
+                    for (int j = 0; j < teams.Length - i - 1; j++)
+                    {
+                        if (teams[j] != null && teams[j + 1] != null)
+                            if (teams[j].TotalScore < teams[j + 1].TotalScore)
+                            {
+                                var a = teams[j];
+                                teams[j] = teams[j + 1];
+                                teams[j + 1] = a;
+                            }
+                    }
+                }
             }
-            while (i < 6) result.Add(group1.WomanTeams[i++]);
-            while (j < 6) result.Add(group2.WomanTeams[j++]);
+            public void Sort()
+            {
+                EachSort(_ManTeams);
+                EachSort(_WomanTeams);
+            }
 
-            return result;
-        }
+            public static Group Merge(Group group1, Group group2, int size)
+            {
+                if (size <= 0) return null;
+                group1.Sort();
+                group2.Sort();
+                Group New = new Group("Финалисты");
+                Group M = MergeEach(group1.ManTeams, group2.ManTeams, size);
+                Group W = MergeEach(group1.WomanTeams, group2.WomanTeams, size);
+                New.Add(M.ManTeams);
+                New.Add(W.WomanTeams);
+                return New;
+            }
 
-        public void Print()
-        {
-            Console.Write($"{_name}:\nМужские команды:\n");
-            for (int i = 0; i < _manCount; i++)
-                _manTeams[i].Print();
+            private static Group MergeEach(Team[] Team1, Team[] Team2, int len)
+            {
+                Group New = new Group("Финалисты");
+                int i = 0, j = 0;
+                if (len <= 0) return null;
+                while (i < len / 2 && j < len / 2)
+                {
+                    if (Team1[i] == null || Team2[j] == null) continue;
+                    if (Team1[i].TotalScore >= Team2[j].TotalScore)
+                    {
+                        New.Add(Team2[i++]);
+                    }
+                    else
+                    {
+                        New.Add(Team2[j++]);
+                    }
+                }
+                while (i < len / 2)
+                {
+                    New.Add(Team1[i++]);
+                }
 
-            Console.Write("Женские команды:\n");
-            for (int i = 0; i < _womanCount; i++)
-                _womanTeams[i].Print();
+                while (j < len / 2)
+                {
+                    New.Add(Team2[j++]);
+                }
+                return New;
+            }
 
-            Console.WriteLine("");
+            public void Print()
+            {
+                Console.Write($"{_name} ");
+                for (int i = 0; i < _ManTeams.Length; i++)
+                {
+                    _ManTeams[i].Print();
+                }
+                Console.WriteLine("");
+
+                Console.Write($"{_name} ");
+                for (int i = 0; i < _WomanTeams.Length; i++)
+                {
+                    _WomanTeams[i].Print();
+                }
+                Console.WriteLine("");
+            }
+
         }
     }
-}
 }
