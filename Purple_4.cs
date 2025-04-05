@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_7.Purple_4;
 
 namespace Lab_7
 {
@@ -40,9 +39,11 @@ namespace Lab_7
             public static void Sort(Sportsman[] array)
             {
                 if (array == null) return;
-                array = array
+                
+                var newArr = array
                     .OrderBy(sportsman => sportsman?.Time ?? double.MaxValue)
                     .ToArray();
+                Array.Copy(newArr, array, newArr.Length);
             }
             public void Print() { }
         }
