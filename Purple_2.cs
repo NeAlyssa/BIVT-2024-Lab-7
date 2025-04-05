@@ -27,7 +27,9 @@ namespace Lab_7
 				get
 				{
 					if (_marks == null) { return null; }
-					return (int[])_marks.Clone();	
+					var newarr = new int[_marks.Length];
+					Array.Copy(_marks, newarr, _marks.Length);
+					return newarr;
 				}
 			}
 
@@ -35,8 +37,8 @@ namespace Lab_7
 			{
 				get
 				{
-					if (_marks == null) { return 0; }
-					if (!_jumped) { return 0; }
+					if (_marks == null || _dictance == 0) { return 0; }
+					
 					int total = Math.Max(0, _marks.Sum() - _marks.Max() - Marks.Min() + 60 + (_dictance - _target) * 2);
 					return total;
 
@@ -56,13 +58,13 @@ namespace Lab_7
 			// методы
 			public void Jump(int distance, int[] marks, int target)
 			{
-				if (this.Distance != 0) return;
+				if (_dictance != 0 || _marks == null) return;
 				if (marks == null) return;
-				if (marks.Length <5 ) return;
+				if (marks.Length !=5 ) return;
 				_dictance = distance;
-				_marks = marks;
 				_target = target;
-				_jumped = true;
+				Array.Copy(marks, _marks, marks.Length);
+				
 			}
 
 			public static void Sort(Participant[] array)
@@ -86,16 +88,7 @@ namespace Lab_7
 
 			public string Name => _name;
 			public int Standard => _standard;
-			public Participant[] Participants {
-				get
-				{
-					if(_participants == null)
-					{
-						return null;
-					}
-					return (Participant[])_participants.Clone();
-				}
-			}
+			public Participant[] Participants => _participants;
 
 			// конструктор
 			public SkiJumping(string name, int standard)
@@ -114,15 +107,10 @@ namespace Lab_7
 
 			public void Add(Participant[] sportsmen)
 			{
-				if (sportsmen == null)
-				{
-					return;
-				}
 				foreach(Participant el in sportsmen)
 				{
 					Add(el);
 				}
-
 			}
 			public void Jump(int distance, int[] marks)
 			{

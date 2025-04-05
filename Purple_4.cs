@@ -14,7 +14,6 @@ namespace Lab_7
 			private string _name;
 			private string _surname;
 			private double _time;
-			private bool _time_set;
 
 			// свойства
 			public string Name { get { return _name; } }
@@ -27,16 +26,15 @@ namespace Lab_7
 				_name = name;
 				_surname = surname;
 				_time = 0.0;
-				_time_set = false;
+				
 			}
 
 			//методы
 			public void Run(double time)
 			{
-				if (_time_set) { return; }
-				if (_time != default(double)) { return; }
+				if (_time != 0.0) { return; }
 				_time = time;
-				_time_set = true;
+				
 			}
 			public static void Sort(Sportsman[] array)
 			{
@@ -96,7 +94,6 @@ namespace Lab_7
 			public Group(string name)
 			{
 				_name = name;
-				_sportsmen = null;
 				_sportsmen = new Sportsman[0];
 
 			}
@@ -106,7 +103,8 @@ namespace Lab_7
 				_name = group.Name;
 				if (group.Sportsmen == null)
 				{
-					_sportsmen = null;
+					_sportsmen = new Sportsman[0];
+					return;
 				}
 				else
 				{
@@ -154,18 +152,11 @@ namespace Lab_7
 				if (g1.Sportsmen == null && g2.Sportsmen == null)
 				{
 
-					return new Group("Финалисты");
+					return default(Group);
 				}
-				if (g2.Sportsmen == null)
-				{
-					return new Group("Финалисты");
-				}
-				if (g1.Sportsmen == null)
-				{
-					return new Group("Финалисты");
-				}
+                Group ng = new Group("Финалисты");
 
-				g1.Sort();
+                g1.Sort();
 				g2.Sort();
 
 				Sportsman[] merg = new Sportsman[g1.Sportsmen.Length + g2.Sportsmen.Length];
@@ -195,7 +186,7 @@ namespace Lab_7
 					merg[k++] = g2.Sportsmen[j++];
 				}
 
-				Group ng = new Group("Финалисты");
+				
 				ng.Add(merg);
 				return ng;
 

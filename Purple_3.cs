@@ -61,7 +61,7 @@ namespace Lab_7
 			{
 				_name = name;
 				_surname = surname;
-				_marks = new double[7];
+				_marks = new double[7]; 
 				_places = new int[7];
 				_filled = 0;
 				for (int i = 0; i < _marks.Length; i++)
