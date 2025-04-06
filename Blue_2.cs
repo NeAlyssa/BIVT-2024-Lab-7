@@ -21,12 +21,8 @@ namespace Lab_7
                     if (_marks == null) return null;
                     int[,] r = new int[_marks.GetLength(0), _marks.GetLength(1)];
                     for (int i = 0; i < _marks.GetLength(0); i++)
-                    {
                         for (int j = 0; j < _marks.GetLength(1); j++)
-                        {
                             r[i, j] = _marks[i, j];
-                        }
-                    }
                     return r;
                 }
             }
@@ -53,25 +49,25 @@ namespace Lab_7
 
             public void Jump(int[] result)
             {
-                if (result == null || _marks == null) return;
+                if (result == null || _marks == null || result.Length != 5 || _count >= _marks.GetLength(0))
+                    return;
+
                 for (int i = 0; i < 5; i++)
-                {
                     _marks[_count, i] = result[i];
-                }
                 _count++;
             }
 
             public static void Sort(Participant[] array)
             {
                 if (array == null || array.Length == 0) return;
-                for (int i = 0; i < array.Length; i++)
+
+                for (int i = 1; i < array.Length; i++)
                 {
-                    for (int j = 0; j < array.Length - i - 1; j++)
+                    for (int j = i; j > 0 && array[j].TotalScore > array[j - 1].TotalScore; j--)
                     {
-                        if (array[j].TotalScore < array[j + 1].TotalScore)
-                        {
-                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
-                        }
+                        var temp = array[j];
+                        array[j] = array[j - 1];
+                        array[j - 1] = temp;
                     }
                 }
             }
@@ -84,9 +80,7 @@ namespace Lab_7
                     for (int i = 0; i < _marks.GetLength(0); i++)
                     {
                         for (int j = 0; j < _marks.GetLength(1); j++)
-                        {
                             Console.Write($"{_marks[i, j]} ");
-                        }
                         Console.WriteLine();
                     }
                 }
@@ -119,38 +113,31 @@ namespace Lab_7
             {
                 _name = name;
                 _bank = bank;
-                _participants = new Participant[10]; 
+                _participants = new Participant[10];
                 _count = 0;
             }
 
             public void Add(Participant participant)
             {
-                if (_count >= _participants.Length) 
+                if (_participants == null) return;
+
+                if (_count >= _participants.Length)
                 {
                     Participant[] newArray = new Participant[_participants.Length * 2];
                     Array.Copy(_participants, newArray, _participants.Length);
                     _participants = newArray;
                 }
 
-                _participants[_count] = participant;
-                _count++;
+                _participants[_count++] = participant;
             }
 
             public void Add(Participant[] participants)
             {
-                if (participants == null) return;
-
-                while (_count + participants.Length > _participants.Length)
-                {
-                    Participant[] newArray = new Participant[_participants.Length * 2];
-                    Array.Copy(_participants, newArray, _participants.Length);
-                    _participants = newArray;
-                }
+                if (participants == null || participants.Length == 0) return;
 
                 foreach (var p in participants)
                 {
-                    _participants[_count] = p;
-                    _count++;
+                    Add(p);
                 }
             }
         }
@@ -163,7 +150,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants.Length < 3) return new double[0];
+                    if (Participants.Length < 3) return null;
                     return new double[] { 0.5 * Bank, 0.3 * Bank, 0.2 * Bank };
                 }
             }
@@ -177,27 +164,26 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Participants.Length < 3) return new double[0];
+                    var participants = Participants;
+                    if (participants.Length < 3) return null;
 
-                    int n = Participants.Length, k = n / 2;
-                    double[] prize = new double[k];
+                    double[] basePrize = { 0.4 * Bank, 0.25 * Bank, 0.15 * Bank };
 
-                    if (k <= 10)
-                    {
-                        for (int i = 3; i < k; i++)
-                            prize[i] = 0.01 * Bank * (20 / k);
-                    }
-                    else
-                    {
-                        for (int i = 3; i < 10; i++)
-                            prize[i] = 0.01 * Bank * 10;
-                    }
+                    int count = participants.Length / 2;
+                    if (count < 3) count = 3;
+                    if (count > 10) count = 10;
 
-                    prize[0] = 0.4 * Bank;
-                    prize[1] = 0.25 * Bank;
-                    prize[2] = 0.15 * Bank;
+                    double bonusPool = 0.20 * Bank;
+                    double bonusPerPerson = bonusPool / count;
 
-                    return prize;
+                    double[] finalPrizes = new double[count];
+                    for (int i = 0; i < 3; i++)
+                        finalPrizes[i] = basePrize[i];
+
+                    for (int i = 0; i < count; i++)
+                        finalPrizes[i] += bonusPerPerson;
+
+                    return finalPrizes;
                 }
             }
         }
