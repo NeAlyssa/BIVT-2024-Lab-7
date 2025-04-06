@@ -16,9 +16,9 @@ namespace Lab_7
 			private double _time;
 
 			// свойства
-			public string Name { get { return _name; } }
-			public string Surname { get { return _surname; } }
-			public double Time { get { return _time; } }
+			public string Name => _name;
+			public string Surname => _surname;
+			public double Time => _time;
 
 			//конструктор
 			public Sportsman(string name, string surname)
@@ -77,7 +77,7 @@ namespace Lab_7
 			private Sportsman[] _sportsmen;
 
 			//свойства
-			public string Name { get { return _name; } }
+			public string Name => _name;
 			public Sportsman[] Sportsmen => _sportsmen;
 			//{
 			//	get
@@ -131,7 +131,7 @@ namespace Lab_7
 				}
 
 				int len = _sportsmen.Length;
-				Array.Resize(ref _sportsmen, len + sportsmen.Length);
+				Array.Resize(ref _sportsmen, _sportsmen.Length + sportsmen.Length);
 				Array.Copy(sportsmen, 0, _sportsmen, len, sportsmen.Length);
 			}
 
@@ -152,42 +152,40 @@ namespace Lab_7
 				if (g1.Sportsmen == null && g2.Sportsmen == null)
 				{
 
-					return default(Group);
+					return new Group("Финалисты");
 				}
                 Group ng = new Group("Финалисты");
 
                 g1.Sort();
 				g2.Sort();
 
-				Sportsman[] merg = new Sportsman[g1.Sportsmen.Length + g2.Sportsmen.Length];
-				int n = g1.Sportsmen.Length, m = g2.Sportsmen.Length, i = 0, j = 0, k = 0;
+				int n = g1.Sportsmen.Length, m = g2.Sportsmen.Length, i = 0, j = 0;
 
 
 				while (i < n && j < m)
 				{
-					if (g1.Sportsmen[i].Time > g2.Sportsmen[j].Time)
+					if (g1.Sportsmen[i].Time <= g2.Sportsmen[j].Time)
 					{
-						merg[k++] = g2.Sportsmen[j++];
+						ng.Add(g1.Sportsmen[j++]);
 					}
 					else
 					{
-						merg[k++] = g1.Sportsmen[i++];
+						ng.Add(g2.Sportsmen[i++]);
 					}
 				}
 
 				while (i < n)
 				{
-					merg[k++] = g1.Sportsmen[i++];
+					ng.Add(g1.Sportsmen[i++]);
 				}
 
 
 				while (j < m)
 				{
-					merg[k++] = g2.Sportsmen[j++];
+					ng.Add(g2.Sportsmen[j++]);
 				}
 
 				
-				ng.Add(merg);
 				return ng;
 
 			}
@@ -240,7 +238,7 @@ namespace Lab_7
 
                 if (rem > 0 && m < men.Length) 
                 {
-                    _sportsmen[i++] = men[w++];
+                    _sportsmen[i++] = men[m++];
                 }
                 else if (rem < 0 && w < women.Length) 
                 {
