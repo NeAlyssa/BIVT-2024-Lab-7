@@ -149,7 +149,7 @@ namespace Lab_7
                 _marks = marks.ToArray();
                 im = 0;
             }
-            public int CreatMark()
+            public int CreateMark()
             {
                 if (_marks == null) return 0;
                 if (im >= _marks.Length) im =0;
@@ -184,7 +184,7 @@ namespace Lab_7
                 int[] res = new int[_judges.Length];
                 for (int i =0;i<_judges.Length;i++)
                 {
-                    res[i] = _judges[i].CreatMark();
+                    res[i] = _judges[i].CreateMark();
                 }
                 jumper.Jump(res);
             }
