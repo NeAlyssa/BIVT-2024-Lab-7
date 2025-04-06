@@ -1,14 +1,18 @@
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Lab_7
 {
     public class Blue_4
     {
-
         public abstract class Team
         {
-
             private string _name;
             private int[] _scores;
 
@@ -18,26 +22,25 @@ namespace Lab_7
                 get
                 {
                     if (_scores == null) return null;
-                    int[] newarr = new int[_scores.Length];
-                    for (int i = 0; i < newarr.Length; i++)
+                    int[] New = new int[_scores.Length];
+                    for (int i = 0; i < New.Length; i++)
                     {
-                        newarr[i] = _scores[i];
+                        New[i] = _scores[i];
                     }
-                    return newarr;
+                    return New;
                 }
             }
             public int TotalScore
             {
                 get
                 {
-                    int time;
-                    time = 0;
+                    int score = 0;
                     if (_scores == null) return 0;
                     for (int i = 0; i < _scores.Length; i++)
                     {
-                        time += _scores[i];
+                        score += _scores[i];
                     }
-                    return time;
+                    return score;
                 }
             }
 
@@ -50,14 +53,13 @@ namespace Lab_7
             public void PlayMatch(int result)
             {
                 if (_scores == null) return;
-
-                var newarr = new int[_scores.Length + 1];
+                var New = new int[_scores.Length + 1];
                 for (int i = 0; i < _scores.Length; i++)
                 {
-                    newarr[i] = _scores[i];
+                    New[i] = _scores[i];
                 }
-                newarr[newarr.Length - 1] = result;
-                _scores = newarr;
+                New[New.Length - 1] = result;
+                _scores = New;
             }
 
             public void Print()
@@ -76,7 +78,7 @@ namespace Lab_7
 
         public class Group
         {
-
+           
             private string _name;
             private ManTeam[] _ManTeams;
             private WomanTeam[] _WomanTeams;
@@ -89,7 +91,7 @@ namespace Lab_7
             public Team[] WomanTeams => _WomanTeams;
             public int countM => _countM;
             public int countW => _countW;
-
+        
             public Group(string Name)
             {
                 _name = Name;
@@ -171,27 +173,36 @@ namespace Lab_7
                 Group New = new Group("Финалисты");
                 int i = 0, j = 0;
                 if (len <= 0) return null;
+
                 while (i < len / 2 && j < len / 2)
                 {
-                    if (Team1[i] == null || Team2[j] == null) continue;
+                    if (Team1[i] == null || Team2[j] == null)
+                    {
+                        if (Team1[i] == null) i++;
+                        if (Team2[j] == null) j++;
+                        continue;
+                    }
+
                     if (Team1[i].TotalScore >= Team2[j].TotalScore)
                     {
-                        New.Add(Team2[i++]);
+                        New.Add(Team1[i++]); 
                     }
                     else
                     {
                         New.Add(Team2[j++]);
                     }
                 }
-                while (i < len / 2)
+
+                while (i < len / 2 && Team1[i] != null)
                 {
                     New.Add(Team1[i++]);
                 }
 
-                while (j < len / 2)
+                while (j < len / 2 && Team2[j] != null)
                 {
                     New.Add(Team2[j++]);
                 }
+
                 return New;
             }
 
