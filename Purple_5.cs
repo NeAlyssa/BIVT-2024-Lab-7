@@ -109,19 +109,7 @@ namespace Lab_7
                 _name = name;
                 _responses = new Response[0];
             }
-            public int FindEmpty()
-            {
-                if (_responses == null) return 0;
-                int res = 0;
-                for (int i =0;i<_responses.Length;i++)
-                {
-                    if (_responses[i].Animal == null || _responses[i].CharacterTrait == null || _responses[i].Concept == null)
-                    {
-                        res++;
-                    }
-                }
-                return res;
-            }
+            
 
             public void Add(string[] answers)
             {
@@ -255,6 +243,7 @@ namespace Lab_7
             }
             public Research MakeResearch()
             {
+                if (_researches == null) return default;
                 string a = $"No_{k++}_{DateTime.Now.ToString("MM")}/{DateTime.Now.ToString("yy")}";
                 Research b = new Research(a);
                 var copy = new Research[_researches.Length+1];
@@ -265,13 +254,16 @@ namespace Lab_7
             }
             public (string,double)[] GetGeneralReport(int question)
             {
-                if (_researches == null || question<1 || question > 3) return null;
+                if (_researches == null || _researches.Length == 0 || question<1 || question > 3) return null;
                 Research Rsum = new Research("");
                 foreach (var a in _researches)
                 {
-                    foreach (var res in a.Responses)
+                    if (a.Responses != null)
                     {
-                        Rsum.Add(new string[] {res.Animal, res.CharacterTrait, res.Concept});
+                        foreach (var res in a.Responses)
+                        {
+                            Rsum.Add(new string[] {res.Animal, res.CharacterTrait, res.Concept});
+                        }
                     }
                 }
                 var count =0;
