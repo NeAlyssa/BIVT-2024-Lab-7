@@ -14,7 +14,7 @@ namespace Lab_7
             private string _name; //private для полей, которые должны быть скрыты от внешнего доступа (инкапсуляция)
             private string _surname;
             private int[,] _marks;
-            private int _cnt;
+            private bool[] _isjumped; //для проверки
 
             //svoystva
             public string Name => _name;
@@ -57,42 +57,32 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _marks = new int[2, 5]; //инициализация нулями
-                _cnt = 0;
+                _isjumped=new bool[2]; //
             }
             //method
             public void Jump(int[] result) //заполняет результат прыжка оценками, массив - прыжок
             {
                 if (result == null || _marks == null) return;
-                if (_cnt == 0)
+
+                int nulljump = Array.FindIndex(_isjumped, jump => !jump);
+                if (nulljump == -1) return;
+                for (int i=0; i<5; i++)
                 {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        _marks[0, j] = result[j];
-                    }
-                    _cnt++;
+                    _marks[nulljump, i] = result[i];
                 }
-                else if (_cnt == 1)
-                {
-                    for (int j=0;j<5; j++)
-                    {
-                        _marks[1,j] = result[j];
-                    }
-                    _cnt++;
-                }
+                _isjumped[nulljump] = true;
             }
 
             public static void Sort(Participant[] array) //пузырьком <3 суммарного результата спортсмена по местам
             {
-                if (array == null || array.Length == 0) return;
+                if (array == null || array.Length <=1) return;
                 for (int i = 0; i < array.Length -1; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
                         if (array[j].TotalScore < array[j + 1].TotalScore)
                         {
-                            Participant temp = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = temp;
+                            (array[j + 1], array[j]) = (array[j], array[j+ 1]);
                         }
                     }
                 }
@@ -118,7 +108,6 @@ namespace Lab_7
             private string _name;
             private int _bank;
             private Participant[] _participants;
-            private int _cnt;
 
 
             public string Name => _name;
@@ -132,7 +121,6 @@ namespace Lab_7
                 _name = name;
                 _bank = bank;
                 _participants = new Participant[0];
-                _cnt = 0;
             }
 
             public void Add(Participant participant) //добавление объекта типа Тим в массив тимс
@@ -140,16 +128,19 @@ namespace Lab_7
                 if (_participants == null) return;
 
                 Participant[] newArr=new Participant[_participants.Length+1];
-                Array.Copy(_participants, newArr, _participants.Length);
-                newArr[newArr.Length-1] = participant;
+                for (int i = 0; i < _participants.Length; i++)
+                {
+                    newArr[i] = _participants[i];
+                }
+                newArr[_participants.Length] = participant;
                 _participants = newArr;
             }
             public void Add(Participant[] participants) //добавление массива объектов типа Тим в массив тимс
             {
                 if (_participants == null || participants == null || participants.Length == 0) return;
-                foreach (Participant participant in participants)
+                foreach (Participant team in participants)
                 {
-                    Add(participant);
+                    Add(team);
                 }
             }
         }
@@ -160,8 +151,9 @@ namespace Lab_7
             {
                 get
                 {
-                    if (this.Participants.Length < 3 || this.Participants == null) return null;
                     double[] prizes = new double[3];
+                    if (this.Participants.Length < 3 || this.Participants == null) return null;
+                    
                     prizes[0] = (double)this.Bank * 0.5;
                     prizes[1] = (double)this.Bank * 0.3;
                     prizes[2] = (double)this.Bank * 0.2;
@@ -176,26 +168,29 @@ namespace Lab_7
             {
                 get
                 {
-                    if (this.Participants.Length < 3 || this.Participants == null) return null;
-                    int mid = this.Participants.Length / 2;
-                    int n;
-                    if (mid>10)
+                    if (this.Participants == null || this.Participants.Length < 3) return null;
+                    int cnt;
+                    double[] prizes;
+                    if (Participants.Length / 2 < 10)
                     {
-                        n=10;
+                        prizes = new double[Participants.Length / 2];
+                        cnt = Participants.Length / 2;
                     }
                     else
-                    {    
-                        n=mid;
-                    }
-                    double N = 20.0 / (double)n;
-                    double[] prizes = new double[n];
-                    for (int i = 3; i < mid - 1; i++)
                     {
-                        prizes[i] = Math.Round((double)this.Bank * (N / 100),5);
+                        prizes = new double[10];
+                        cnt = 10;
                     }
-                    prizes[0] += (double)this.Bank * 0.4;
-                    prizes[1] += (double)this.Bank * 0.25;
-                    prizes[2] += (double)this.Bank * 0.15;
+                    double N = 20.0 / cnt;
+                    for (int i = 0; i < cnt; i++)
+                    {
+                        prizes[i] = this.Bank * (N / 100);
+                    }
+
+                    prizes[0] += (double)this.Bank * 0.4; 
+                    prizes[1] += (double)this.Bank * 0.25; 
+                    prizes[2] += (double)this.Bank * 0.15; 
+
                     return prizes;
                 }
             }
