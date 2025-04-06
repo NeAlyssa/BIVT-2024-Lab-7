@@ -22,6 +22,7 @@ namespace Lab_7
             public string Trainer => _trainer;
             public double Result => _result;
             public static int PassedTheStandard => _passedCount;
+            private static bool _Printed = false;
             public bool HasPassed => _resultFilled && _result > 0 && _result <= _standard;
             static Participant()
             {
@@ -61,30 +62,6 @@ namespace Lab_7
                 _group = group;
                 _result = 0;
                 _resultFilled = false;
-            }
-            public string Surname 
-            {
-                get { return _surname; }
-            }
-            public string Trainer  
-            {
-                get { return _trainer; }
-            }
-            public string Group 
-            {
-                get { return _group; }
-            }
-            public double Result 
-            {
-                get { return _result; }
-            }
-            public bool HasPassed  
-            {
-                get { return _resultFilled && _result <= _standard && _result > 0; }
-            }
-            public static int PassedTheStandard 
-            {
-                get { return _passedCount; }
             }
             public void Run(double res)
             {

@@ -177,7 +177,7 @@ namespace Lab_7
                 Console.WriteLine("{0,-12} {1,-15:F2}", Name, AvgMark);
             }
         }
-        public class EliteGroup : Group.
+        public class EliteGroup : Group
         {
             private string _name;
             public EliteGroup(string name) : base(name)
