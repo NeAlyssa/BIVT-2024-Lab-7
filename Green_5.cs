@@ -41,7 +41,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_marks.Length == 0 || _marks == null)
+                    if (_marks == null || _marks.Length == 0)
                     {
                         return 0;
                     }
@@ -55,7 +55,7 @@ namespace Lab_7
             }
             public void Exam(int mrk)
             {
-                if (_marks.Length == 0 || _marks == null)
+                if (_marks == null || _marks.Length == 0)
                 {
                     return;
                 }
@@ -94,7 +94,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_studentCount == 0 || _students == null)
+                    if (_students == null || _studentCount == 0)
                     {
                         return 0;
                     }
@@ -188,7 +188,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Students.Length == 0 || Students == null)
+                    if (Students == null || Students.Length == 0)
                     {
                         return 0;
                     }
@@ -246,7 +246,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (Students.Length == 0 || Students == null)
+                    if (Students == null || Students.Length == 0)
                     {
                         return 0;
                     }

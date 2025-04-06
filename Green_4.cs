@@ -109,7 +109,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_jumps.Length == 0 || _jumps == null)
+                    if (_jumps == null || _jumps.Length == 0)
                     {
                         return 0;
                     }
@@ -125,7 +125,7 @@ namespace Lab_7
             }
             public void Jump(double res)
             {
-                if (_jumps.Length == 0 || _jumps == null)
+                if (_jumps == null || _jumps.Length == 0)
                 {
                     return;
                 }
