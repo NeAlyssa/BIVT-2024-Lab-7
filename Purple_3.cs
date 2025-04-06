@@ -74,135 +74,54 @@ namespace Lab_7
                 _marks[_kolvo] = result;
                 _kolvo ++;
             }
+            private int Top
+            {
+                get
+                {
+                    if (_places == null) return 0;
+                    int max = int.MaxValue;
+                    for (int i =0;i<_places.Length;i++)
+                    {
+                        if (_places[i] < max) max = _places[i]; 
+                    }
+                    return max;
+                }
+            }
+            private double Sum
+            {
+                get
+                {
+                    if (_marks == null) return 0;
+                    double a =0;
+                    for (int i =0;i<+Marks.Length;i++) a+=_marks[i];
+                    return a;
+                }
+            }
             public static void SetPlaces(Participant[] participants)
             {
-                if (participants == null || participants.Length == 0) return ;
-                int n = participants.Length;
-                foreach (var participant in participants)
+                if (participants == null) return;
+                Participant[] copy = new Participant[participants.Length];
+                Array.Copy(participants, copy, participants.Length);
+                for (int i =0;i<7;i++)
                 {
-                    if (participant._marks == null || participant._places == null) return;
-                }
-
-                double [,] marks = new double[n,7];
-                for (int i =0;i<n;i++)
-                {
-                    for (int j =0;j<7;j++)
+                    copy = copy.OrderByDescending(x => x._marks != null ? x._marks[i] : int.MinValue).ToArray();
+                    for (int j =0;j<participants.Length;j++)
                     {
-                        marks[i,j] = participants[i]._marks[j];
-                    }
-                }
-
-                double [,] copy = new double [n,7];
-                Array.Copy(marks,copy,marks.Length);
-
-                for (int j =0;j<7;j++)
-                {
-                    for (int i =1, g=2;i<n;)
-                    {
-                        if(i == 0 || copy[i - 1, j] >= copy[i, j])
+                        if (copy[j]._places != null)
                         {
-                            i = g;
-                            g++;
-                        }
-                        else
-                        {
-                            double temp = copy[i-1,j];
-                            copy[i-1,j] = copy[i,j];
-                            copy[i,j] = temp;
-                            i--;
+                            copy[j]._places[i] = j+1;
                         }
                     }
                 }
-
-                double [,] places = new double[n,7];
-                for (int j =0;j<7;j++)
-                {
-                    double ex = copy[0,j];
-                    int place = 1;
-                    places[0,j] = place;
-                    for (int i = 1;i< n;i++)
-                    {
-                        if (copy[i,j] != ex)
-                        {
-                            ex = copy[i,j];
-                            places[i,j] = place+1;
-                            place++;
-                        }
-                        else
-                        {
-                            places[i,j] = places[i-1,j];
-                        }
-                    }
-                }
-
-                for (int j = 0;j<7;j++)
-                {
-                    for (int i =0;i<n;i++)
-                    {
-                        for (int p =0; p<n;p++)
-                        {
-                            if (marks[i,j] == copy[p,j])
-                            {
-                                marks[i,j] = places[p,j];
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    for(int j = 0; j < 7; j++)
-                    {
-                        participants[i]._places[j] = (int)marks[i, j];
-                    }
-                }
-
-                for(int j = 1, k = 2; j < n; )
-                {
-                    if(j == 0 || marks[j - 1, 6] <= marks[j, 6])
-                    {
-                        j = k;
-                        k++;
-                    }
-                    else
-                    {
-                        (marks[j - 1, 6], marks[j, 6]) = (marks[j, 6], marks[j - 1, 6]);
-                        (participants[j - 1], participants[j]) = (participants[j], participants[j - 1]);
-                        j--;
-                    }
-                } 
-
+                Array.Copy(copy,participants,copy.Length);
             }
 
             public static void Sort (Participant[] array)
             {
-                if (array == null) return;
-                foreach(var participant in array)
-                {
-                    if (participant._marks == null || participant._places == null) return;
-                }
-
-                Array.Sort(array, (a,b) =>
-                {
-                    if (a.Score > b.Score)
-                        return 1;
-                    else if (a.Score < b.Score) return -1;
-                    
-                    //минимальное место
-                    if (a._places.Min() > b._places.Min())
-                        return 1;
-                    else if(a._places.Min() < b._places.Min())
-                        return -1;
-
-                    //по сумме очков
-                    if (a._marks.Sum() > b._marks.Sum())
-                        return -1;
-                    else if (a._marks.Sum() < b._marks.Sum())
-                        return 1;
-                    
-                    return 0;
-                });
+                Participant[] cop = new Participant[array.Length];
+                Array.Copy(array, cop, array.Length);
+                cop = cop.OrderBy(a => a._places != null ? a.Score : int.MaxValue).ThenBy(b => b.Top).ThenByDescending(c => c.Sum).ToArray();
+                Array.Copy(cop, array, array.Length);
             }
 
             public void Print()
@@ -279,7 +198,7 @@ namespace Lab_7
                 if (_moods == null) return;
                 for (int i =0;i < _moods.Length;i++)
                 {
-                    _moods[i] *= 1 + (i+1)/10.0;
+                    _moods[i] += (_moods[i] * (1+i)/100.0);
                 }
             }
         }
