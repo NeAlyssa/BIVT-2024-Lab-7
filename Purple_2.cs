@@ -52,7 +52,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_distance == -1 || _marks == null) return 0;
+                    if (_distance == 0 || _marks == null || _marks.Length == 0) return 0;
                     int res =0;
                     int imax =0,imin =0;
                     for (int i =0;i < _marks.Length;i++)
@@ -76,7 +76,7 @@ namespace Lab_7
                     }
                     res+=60;
                     res+=(_distance -_target) *2;
-                    return res;
+                    return Math.Max(res,0);
                 }
             }
             public Participant(string name, string surname)
@@ -136,22 +136,23 @@ namespace Lab_7
             }
             public void Add(Participant a)
             {
+                if (_participants == null) return;
                 Array.Resize(ref _participants,_participants.Length +1);
                 _participants[_participants.Length -1] = a;
             }
             public void Add(Participant[] a)
             {
-                if (a == null) return;
+                if (a == null || _participants == null) return;
                 foreach (var x in a) Add(x);
             }
             public void Jump(int distance, int[] marks)
             {
-                if (_participants == null) return;
+                if (_participants == null || marks == null) return;
                 for (int i =0;i<_participants.Length;i++)
                 {
                     if (_participants[i].Distance == 0)
                     {
-                        _participants[i].Jump(distance,marks,Standard);
+                        _participants[i].Jump(distance,marks,_standard);
                         break;
                     }
                 }
