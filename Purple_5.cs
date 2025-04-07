@@ -97,7 +97,6 @@ namespace Lab_7
                 get
                 {
                     if (_responses == null) return null;
-
                     var copy = new Response[_responses.Length];
                     Array.Copy(_responses, copy, _responses.Length);
                     return copy;
@@ -248,13 +247,13 @@ namespace Lab_7
                 Research b = new Research(a);
                 var copy = new Research[_researches.Length+1];
                 Array.Copy(_researches,copy,_researches.Length);
-                copy[_researches.Length] = b;
+                copy[copy.Length - 1] = b;
                 _researches = copy;
                 return b;
             }
             public (string,double)[] GetGeneralReport(int question)
             {
-                if (_researches == null || _researches.Length == 0 || question<1 || question > 3) return null;
+                if (_researches == null || question<1 || question > 3) return null;
                 Research Rsum = new Research("");
                 foreach (var a in _researches)
                 {
