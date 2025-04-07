@@ -83,23 +83,13 @@ namespace Lab_7
             public static void Sort(Participant[] array) //пузырьком <3  по возрастанию штрафного времени
             {
                 if (array == null || array.Length == 0) return;
-                for (int i = 0; i < array.Length - 1; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
                         if (array[j + 1] == null) continue;
-                        else if (array[j] == null)
-                        {
-                            Participant temp = array[j];
-                            array[j] = array[j+1];
-                            array[j+1] = temp;
-                        }
-                        if (array[j].Total > array[j + 1].Total)
-                        {
-                            Participant temp = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = temp;
-                        }
+                        else if (array[j] == null) (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        else if (array[j].Total > array[j + 1].Total) (array[j], array[j + 1]) = (array[j + 1], array[j]);
                     }
                 }
             }
@@ -123,8 +113,8 @@ namespace Lab_7
                     {
                         if (penalty >= 5) falls++;
                     }
-                    return (falls > 0.1 * cnt || this.Total >= 2 * cnt);
-                    
+                    if (falls > 0.1 * cnt || this.Total > 2 * cnt) return true;
+                    return false;
                 }
             }
 
@@ -145,11 +135,19 @@ namespace Lab_7
         {
             private static int _cntPlayers=0;
             private static int _totalPenaltyMinutesAll=0;
+           
+
+            public HockeyPlayer(string name, string surname) : base(name, surname)
+            {
+                _penalties = new int[0];
+                _cntPlayers++;
+            }
+            private int TotalMinutes => _totalPenaltyMinutesAll;
             public override bool IsExpelled
             {
                 get
                 {
-                    if (_penalties == null || _penalties.Length==0) return false;
+                    if (_penalties == null || _penalties.Length == 0) return false;
                     foreach (int penalty in _penalties)
                     {
                         if (penalty >= 10)
@@ -157,24 +155,14 @@ namespace Lab_7
                             return true;
                         }
                     }
-                    return (Total > (_totalPenaltyMinutesAll / _cntPlayers) *0.1);
+                    return (Total > (_totalPenaltyMinutesAll / _cntPlayers) * 0.1);
                 }
-            }
-
-            public HockeyPlayer(string name, string surname) : base(name, surname)
-            {
-                _penalties = new int[0];
-                _cntPlayers++;
             }
             public override void PlayMatch(int penaltyMinutes)
             {
                 if (_penalties == null) return;
                 base.PlayMatch(penaltyMinutes);
-                if (penaltyMinutes >= 0)
-                {
-                    _totalPenaltyMinutesAll += penaltyMinutes;
-                    
-                }
+                _totalPenaltyMinutesAll += penaltyMinutes;
             }
         }
     }
