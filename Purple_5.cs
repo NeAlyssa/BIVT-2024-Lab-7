@@ -123,8 +123,8 @@ namespace Lab_7
                 if(_responses == null) return null;
 
                 string[] array = new string[0];
-                string[] answers = new string[1];
-                int[] kAnswers = new int[1];
+                string[] answers = new string[0];
+                int[] kAnswers = new int[0];
 
                 switch(question)
                 {
@@ -167,7 +167,9 @@ namespace Lab_7
                         }
                     default: return null;
                 }
-
+                if (array.Length ==0 ) return null;
+                Array.Resize(ref answers, 1);
+                Array.Resize(ref kAnswers,1);
                 answers[0] = array[0];
                 kAnswers[0] = 1;
 
@@ -213,9 +215,10 @@ namespace Lab_7
                         i--;
                     }
                 }
-
-                Array.Resize(ref answers, 5);
-
+                if (answers.Length > 5)
+                {
+                    Array.Resize(ref answers, 5);
+                }
                 return answers;
             }
 
