@@ -143,7 +143,7 @@ namespace Lab_7
 
             public Research MakeResearch()
             {
-                if (_researches == null) return;
+                if (_researches == null) return default(Research);
                 var res = new Research($"No_{_number}_{DateTime.Now.Month}/{DateTime.Now.Year % 100}");
                 Array.Resize(ref _researches, _researches.Length + 1);
                 _researches[_researches.Length - 1] = res;
