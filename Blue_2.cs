@@ -49,11 +49,12 @@ namespace Lab_7
 
             public void Jump(int[] result)
             {
-                if (result == null || _marks == null || result.Length != 5 || _count >= _marks.GetLength(0))
-                    return;
+                if (result == null || _marks == null) return;
 
                 for (int i = 0; i < 5; i++)
+                {
                     _marks[_count, i] = result[i];
+                }
                 _count++;
             }
 
@@ -97,15 +98,7 @@ namespace Lab_7
             public string Name => _name;
             public int Bank => _bank;
 
-            public Participant[] Participants
-            {
-                get
-                {
-                    Participant[] result = new Participant[_count];
-                    Array.Copy(_participants, result, _count);
-                    return result;
-                }
-            }
+            public Participant[] Participants => _participants;
 
             public abstract double[] Prize { get; }
 
@@ -150,6 +143,7 @@ namespace Lab_7
             {
                 get
                 {
+                    if (this.Participants == null) return null;
                     if (Participants.Length < 3) return null;
                     return new double[] { 0.5 * Bank, 0.3 * Bank, 0.2 * Bank };
                 }
