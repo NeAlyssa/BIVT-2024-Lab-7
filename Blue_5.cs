@@ -48,14 +48,8 @@ namespace Lab_7
             private Sportsman[] _sportsmen;
 
             public string Name => _name;
-            public Sportsman[] Sportsmen
-            {
-                get
-                {
-                    if (_sportsmen == null) return null;
-                    return _sportsmen;
-                }
-            }
+            public Sportsman[] Sportsmen => _sportsmen;
+           
 
             //свойство
             public int SummaryScore
@@ -67,7 +61,7 @@ namespace Lab_7
                     int sum = 0;
                     for (int i = 0; i < _count; i++)
                     {
-                        if (_sportsmen[i].Place <= 5 && _sportsmen[i].Place != 0)
+                        if (_sportsmen[i] != null && _sportsmen[i].Place <= 5)
                         {
                             sum += 6 - _sportsmen[i].Place;
                         }
@@ -201,8 +195,8 @@ namespace Lab_7
                 {
                     mid += sportsman.Place; f++;
                 }
-               
-                return 100/(mid/f);
+                double sr = mid / f;
+                return 100/sr;
             }
         }
 
@@ -218,7 +212,7 @@ namespace Lab_7
                     {
                         
                     sum = sum + sportsman.Place;
-                        mark = mark * sportsman.Place;
+                    mark = mark * sportsman.Place;
                     }
                 otv = 100.0 * sum * Sportsmen.Length / mark; 
                     return otv;
@@ -227,3 +221,8 @@ namespace Lab_7
 
         }
 }
+
+
+       
+   
+
