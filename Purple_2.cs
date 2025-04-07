@@ -64,7 +64,7 @@ namespace Lab_7
             public void Jump(int distance, int[] marks, int target)
             {
                 _distance = distance;
-                if (marks != null)
+                if (marks != null && _marks != null)
                 {
                     if (marks.Length > 5) Array.Resize(ref marks, 5);
                     for (int i = 0; i < marks.Length; i++)
