@@ -24,39 +24,32 @@ namespace Lab_7
             public static int PassedTheStandard => _passedCount;
             private static bool _Printed = false;
             public bool HasPassed => _resultFilled && _result > 0 && _result <= _standard;
-
             static Participant()
             {
                 _passedCount = 0;
             }
-
             public static Participant[] GetTrainerParticipants(Participant[] participants, Type participantType, string trainer)
             {
                 int cnt = 0;
-                int i = 0;
-                while (i < participants.Length)
+                for (int i = 0; i < participants.Length; i++)
                 {
                     if (participants[i] != null && participants[i].GetType() == participantType && participants[i].Trainer == trainer)
                     {
                         cnt++;
                     }
-                    i++;
                 }
-
                 Participant[] res = new Participant[cnt];
                 int ind = 0;
-                i = 0;
-                while (i < participants.Length)
+                for (int i = 0; i < participants.Length; i++)
                 {
                     if (participants[i] != null && participants[i].GetType() == participantType && participants[i].Trainer == trainer)
                     {
-                        res[ind++] = participants[i];
+                        res[ind] = participants[i];
+                        ind++;
                     }
-                    i++;
                 }
                 return res;
             }
-
             public Participant(string surname, string trainer, string group)
             {
                 _standard = 100;
@@ -66,7 +59,6 @@ namespace Lab_7
                 _result = 0;
                 _resultFilled = false;
             }
-
             public void Run(double res)
             {
                 if (res <= 0)
@@ -83,7 +75,6 @@ namespace Lab_7
                     }
                 }
             }
-
             public void Print()
             {
                 if (!_Printed)
@@ -94,7 +85,6 @@ namespace Lab_7
                 Console.WriteLine("{0,-12} {1,-10} {2,-12} {3,-10} {4,-10}", Surname, Group, Trainer, Result.ToString("F2"), HasPassed);
             }
         }
-
         public class Participant100M : Participant
         {
             public Participant100M(string surname, string trainer, string group) : base(surname, trainer, group)
@@ -102,7 +92,6 @@ namespace Lab_7
                 _standard = 12;
             }
         }
-
         public class Participant500M : Participant
         {
             public Participant500M(string surname, string trainer, string group) : base(surname, trainer, group)
