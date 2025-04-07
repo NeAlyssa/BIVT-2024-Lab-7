@@ -29,7 +29,7 @@ namespace Lab_7
 
             public int CountVotes(Response[] responses, int questionNumber)
             {
-                if (responses == null || questionNumber < 1 || questionNumber > 3) return;
+                if (responses == null || questionNumber < 1 || questionNumber > 3) return 0;
                 int c = 0;
                 if (questionNumber == 1)
                 {
@@ -143,6 +143,7 @@ namespace Lab_7
 
             public Research MakeResearch()
             {
+                if (_researches == null) return;
                 var res = new Research($"No_{_number}_{DateTime.Now.Month}/{DateTime.Now.Year % 100}");
                 Array.Resize(ref _researches, _researches.Length + 1);
                 _researches[_researches.Length - 1] = res;
@@ -175,6 +176,7 @@ namespace Lab_7
                 foreach (var r in All.Responses)
                 {
                     double res = r.CountVotes(All.Responses, question) / count * 100;
+                    if (res == 0) continue;
                     var ans = new string[] { r.Animal, r.CharacterTrait, r.Concept };
                     if (AnsArray.Count(x => x == (ans[question - 1], res)) == 0 && ans[question - 1] != null)
                     {
