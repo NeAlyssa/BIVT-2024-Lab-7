@@ -112,16 +112,15 @@ namespace Lab_7
 
             public void Add(Participant participant)
             {
+                
                 if (_participants == null) return;
-
-                if (_count >= _participants.Length)
+                Participant[] newarr = new Participant[_participants.Length + 1];
+                for (int i = 0; i < _participants.Length; i++)
                 {
-                    Participant[] newArray = new Participant[_participants.Length * 2];
-                    Array.Copy(_participants, newArray, _participants.Length);
-                    _participants = newArray;
+                   newarr[i] = _participants[i];
                 }
-
-                _participants[_count++] = participant;
+                newarr[_participants.Length] = participant;
+                _participants = newarr;
             }
 
             public void Add(Participant[] participants)
