@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Lab_7
 {
@@ -14,6 +15,7 @@ namespace Lab_7
 			private string _name;
 			private string _surname;
 			private double _time;
+			private bool _time_set = true;
 
 			// свойства
 			public string Name => _name;
@@ -32,8 +34,12 @@ namespace Lab_7
 			//методы
 			public void Run(double time)
 			{
-				if (_time != 0.0) { return; }
+				if (!_time_set)
+				{
+					return;
+				}
 				_time = time;
+				_time_set = false;
 				
 			}
 			public static void Sort(Sportsman[] array)
@@ -42,7 +48,7 @@ namespace Lab_7
 				{
 					return;
 				}
-				var sorted = array.OrderBy(t => t.Time).ToArray();
+				var sorted = array.OrderBy(a => a.Time).ToArray();
 				Array.Copy(sorted, array, sorted.Length);
 			}
 			public void Print()
@@ -79,15 +85,7 @@ namespace Lab_7
 			//свойства
 			public string Name => _name;
 			public Sportsman[] Sportsmen => _sportsmen;
-			//{
-			//	get
-			//	{
-			//		if (_sportsmen == null) { return null; }
-			//		Sportsman[] sportsmen = new Sportsman[_sportsmen.Length];
-			//		Array.Copy(_sportsmen, sportsmen, _sportsmen.Length);
-			//		return sportsmen;
-			//	}
-			//}
+			
 
 			//конструкторы
 
@@ -106,11 +104,8 @@ namespace Lab_7
 					_sportsmen = new Sportsman[0];
 					return;
 				}
-				else
-				{
-					_sportsmen = new Sportsman[group.Sportsmen.Length];
-					Array.Copy(group.Sportsmen, _sportsmen, group.Sportsmen.Length);
-				}
+				_sportsmen = new Sportsman[group.Sportsmen.Length];
+				Array.Copy(group.Sportsmen, _sportsmen, group.Sportsmen.Length);
 			}
 
 			//методы
@@ -152,8 +147,8 @@ namespace Lab_7
 				if (g1.Sportsmen == null && g2.Sportsmen == null)
 				{
 
-					return new Group("Финалисты");
-				}
+					return default(Group);
+				}	
                 Group ng = new Group("Финалисты");
 
                 g1.Sort();
@@ -198,8 +193,8 @@ namespace Lab_7
 					women = null;
 					return;
 				}
-				men = _sportsmen.Where(t => t is SkiMan).ToArray();
-				women = _sportsmen.Where(t => t is SkiWoman).ToArray();
+				men = _sportsmen.Where(s => s is SkiMan).ToArray();
+				women = _sportsmen.Where(s => s is SkiWoman).ToArray();
 
 			}
 
@@ -238,7 +233,7 @@ namespace Lab_7
 
                 if (rem > 0 && m < men.Length) 
                 {
-                    _sportsmen[i++] = men[m++];
+                    _sportsmen[i++] = men[w++];
                 }
                 else if (rem < 0 && w < women.Length) 
                 {
@@ -246,6 +241,15 @@ namespace Lab_7
                 }
             }
 
-		}
+            public void Print()
+            {
+                Console.WriteLine($"Group name: {_name}");
+                foreach (Sportsman sportsman in _sportsmen)
+                {
+                    sportsman.Print();
+                }
+            }
+
+        }
 	}
 }
