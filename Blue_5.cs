@@ -113,7 +113,7 @@ namespace Lab_7
             }
 
             // method void Remove(int count)
-            public void Remove(int count)
+            protected void Remove(int count)
             {
                 if (_sportsmen == null ) return;
                 var newarray = new Sportsman[_sportsmen.Length - count];
