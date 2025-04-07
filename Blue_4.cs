@@ -179,40 +179,40 @@ namespace Lab_7
                 Group result = new Group("Финалисты");
                 group1.Sort();
                 group2.Sort();
-                Group manTeam=MergeTeams(group1.ManTeams, group2.ManTeams, group1.ManTeams.Length+group2.ManTeams.Length);
-                Group womanTeam = MergeTeams(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length + group2.WomanTeams.Length);
+                Team[] manTeam=MergeTeams(group1.ManTeams, group2.ManTeams, size);
+                Team[] womanTeam = MergeTeams(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length + group2.WomanTeams.Length);
 
-                result.Add(manTeam.ManTeams);
-                result.Add(womanTeam.WomanTeams);
+                result.Add(manTeam);
+                result.Add(womanTeam);
 
                 return result;
 
             }
 
-            private static Group MergeTeams(Team[] firstteam, Team[] secondteam, int size)
+            private static Team[] MergeTeams(Team[] firstteam, Team[] secondteam, int size)
             {
                 if (firstteam==null || secondteam==null || firstteam.Length == 0 || secondteam.Length == 0 || size<=0) return null;
-                Group result = new Group("Финалисты");
+                Team[] result = new Team[size];
 
-                int i = 0, j = 0;
-                while (i < (size/2) && j < (size/2))
+                int i = 0, j = 0,k=0;
+                while (i < (size/2) && j < (size/2) && firstteam[i]!=null && secondteam[j]!=null)
                 {
                     if (firstteam[i].TotalScore >= secondteam[j].TotalScore)
                     {
-                        result.Add(firstteam[i++]);
+                        result[k++]=(firstteam[i++]);
                     }
                     else
                     {
-                        result.Add(secondteam[j++]);
+                        result[k++] = (secondteam[j++]);
                     }
                 }
                 while (i < size/2)
                 {
-                    result.Add(firstteam[i++]);
+                    result[k++] = (firstteam[i++]);
                 }
                 while (j < size/2)
                 {
-                    result.Add(secondteam[j++]);
+                    result[k++] = (secondteam[j++]);
                 }
                 return result;
             }
