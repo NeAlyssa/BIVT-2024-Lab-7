@@ -19,7 +19,7 @@ namespace Lab_7
             // свойства
             public string Name { get { return _name; } }
             
-            protected int Votes { get { return _votes; } }
+            public int Votes { get { return _votes; } }
 
             // конструктор
             public Response(string name)

@@ -144,63 +144,64 @@ namespace Lab_7
                     Add(participant);
                 }
             }
+        }
 
-            public class WaterJump3m : WaterJump
+        public class WaterJump3m : WaterJump
+        {
+            public WaterJump3m(string name, int bank) : base(name, bank) { }
+
+            public override double[] Prize
             {
-                public WaterJump3m(string name, int bank) : base(name, bank) {}
-
-                public override double[] Prize
+                get
                 {
-                    get
-                    {
-                        if (this.Participants == null || this.Participants.Length < 3) return null;
+                    if (this.Participants == null || this.Participants.Length < 3) return null;
 
-                        double[] prizes = new double[3];
-                        double bank = (double)this.Bank;
-                        prizes[0] = bank * 0.5;
-                        prizes[1] = bank * 0.3;
-                        prizes[2] = bank * 0.2;
+                    double[] prizes = new double[3];
+                    double bank = (double)this.Bank;
+                    prizes[0] = bank * 0.5;
+                    prizes[1] = bank * 0.3;
+                    prizes[2] = bank * 0.2;
 
-                        return prizes;
-                    }
+                    return prizes;
                 }
-
             }
 
-            public class WaterJump5m : WaterJump
+        }
+
+        public class WaterJump5m : WaterJump
+        {
+            public WaterJump5m(string name, int bank) : base(name, bank) {}
+
+            public override double[] Prize
             {
-                public WaterJump5m(string name, int bank) : base(name, bank) {}
-
-                public override double[] Prize
+                get
                 {
-                    get
+                    if (this.Participants == null || this.Participants.Length < 3) return null;
+
+                    int aboveMid = this.Participants.Length / 2;
+                    double N = 20.0 / (aboveMid);
+
+                    int len;
+                    if (aboveMid > 10)
+                        len = 10;
+                    else
+                        len = aboveMid;
+
+                    double bank = (double)this.Bank;
+                    double[] prizes = new double[len];
+                    for (int i = 0; i < len; i++)
                     {
-                        if (this.Participants == null || this.Participants.Length < 3) return null;
-
-                        int aboveMid = this.Participants.Length / 2;
-                        double N = 20.0 / (aboveMid);
-
-                        int len;
-                        if (aboveMid > 10)
-                            len = 10;
-                        else
-                            len = aboveMid;
-
-                        double bank = (double)this.Bank;
-                        double[] prizes = new double[len];
-                        for (int i = 0; i < len; i++)
-                        {
-                            prizes[i] = N / 100 * bank;
-                        }
-                        prizes[0] += 0.4 * bank;
-                        prizes[1] += 0.25 * bank;
-                        prizes[2] += 0.15 * bank;
-
-                        return prizes;
+                        prizes[i] = N / 100 * bank;
                     }
+                    prizes[0] += 0.4 * bank;
+                    prizes[1] += 0.25 * bank;
+                    prizes[2] += 0.15 * bank;
+
+                    return prizes;
                 }
             }
         }
+        
     }
 
 }
