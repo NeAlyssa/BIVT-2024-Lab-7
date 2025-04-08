@@ -87,6 +87,7 @@ namespace Lab_7
 
             public string[] GetTopResponses(int question)
             {
+                if (_responses == null) return null;
                 var NewArray = new Response[_responses.Length];
                 Array.Copy(_responses, NewArray, _responses.Length);
                 for (int k = 0; k < NewArray.Length; k++)
