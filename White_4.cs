@@ -109,7 +109,7 @@ namespace Lab_7
             }
 
             //метод Print
-            public void Print()
+            public override void Print()
             {
                 Console.WriteLine($"Имя: {Name}, Фамилия: {Surname}, Очки: {TotalScore:F1}");
             }
