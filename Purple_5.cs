@@ -158,7 +158,7 @@ namespace Lab_7
                 double count = 0;
                 var All = new Research("All");
                 var AnsArray = new (string, double)[0];
-
+            
                 foreach (var r in _researches)
                 {
                     if (r.Responses != null)
@@ -171,13 +171,27 @@ namespace Lab_7
                         }
                     }
                 }
-
+            
                 if (count == 0) return null;
-
-                foreach (var r in All.Responses)
+            
+                var NewArray = new Response[All.Responses.Length];
+                Array.Copy(All.Responses, NewArray, All.Responses.Length);
+                for (int k = 0; k < NewArray.Length; k++)
                 {
-                    double res = r.CountVotes(All.Responses, question) / count * 100;
-                    if (res == 0) continue;
+                    for (int j = 0; j < NewArray.Length - k - 1; j++)
+                    {
+                        if (NewArray[j].CountVotes(NewArray, question) < NewArray[j + 1].CountVotes(NewArray, question))
+                        {
+                            var p = NewArray[j];
+                            NewArray[j] = NewArray[j + 1];
+                            NewArray[j + 1] = p;
+                        }
+                    }
+                }
+            
+                foreach (var r in NewArray)
+                {
+                    double res = r.CountVotes(NewArray, question) / count * 100;
                     var ans = new string[] { r.Animal, r.CharacterTrait, r.Concept };
                     if (AnsArray.Count(x => x == (ans[question - 1], res)) == 0 && ans[question - 1] != null)
                     {
@@ -185,7 +199,7 @@ namespace Lab_7
                         AnsArray[AnsArray.Length - 1] = (ans[question - 1], res);
                     }
                 }
-
+            
                 return AnsArray;
             }
         }
