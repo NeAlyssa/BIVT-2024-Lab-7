@@ -73,7 +73,7 @@ namespace Lab_7
             }
 
             // свойство для среднего балла
-            public double Average
+            private double Average
             {
                 get
                 {
@@ -109,7 +109,7 @@ namespace Lab_7
             }
 
             //метод Print
-            public override void Print()
+            public void Print()
             {
                 Console.WriteLine($"Имя: {Name}, Фамилия: {Surname}, Очки: {TotalScore:F1}");
             }
