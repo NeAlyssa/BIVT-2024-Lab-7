@@ -180,7 +180,7 @@ namespace Lab_7
                 group1.Sort();
                 group2.Sort();
                 Team[] manTeam=MergeTeams(group1.ManTeams, group2.ManTeams, size);
-                Team[] womanTeam = MergeTeams(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length + group2.WomanTeams.Length);
+                Team[] womanTeam = MergeTeams(group1.WomanTeams, group2.WomanTeams, size);
 
                 result.Add(manTeam);
                 result.Add(womanTeam);
