@@ -106,7 +106,7 @@ namespace Lab_7
             {
                 _name = name;
                 _bank = bank;
-                _participants = new Participant[10];
+                _participants = new Participant[0];
                 _count = 0;
             }
 
