@@ -138,7 +138,7 @@ namespace Lab_7
             }
 
             //практика защиты
-            public void RemoveLast()
+            private void RemoveLast()
             {
                 if (_sportsmen == null || _sportsmen.Length == 0) return;
 
@@ -147,7 +147,7 @@ namespace Lab_7
                 _sportsmen = sportsmen;
             }
 
-            public void RemoveLast(int count)
+            private void RemoveLast(int count)
             {
                 if (_sportsmen == null || _sportsmen.Length == 0 || count <= 0) return;
 

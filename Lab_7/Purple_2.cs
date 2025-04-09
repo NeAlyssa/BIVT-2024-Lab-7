@@ -14,6 +14,7 @@ namespace Lab_7
             private string _surname;
             private int _distance;
             private int[] _marks;
+            private int _target;
 
             public string Name => _name;
             public string Surname => _surname;
@@ -55,7 +56,7 @@ namespace Lab_7
 
                     result -= minMark + maxMark;
                     result += 60;
-                    result += (_distance - 120) * 2;
+                    result += (_distance - _target) * 2;
 
                     return result;
                 }
@@ -67,6 +68,7 @@ namespace Lab_7
                 _surname = surname;
                 _distance = 0;
                 _marks = new int[5] { 0, 0, 0, 0, 0 };
+                _target = 0;
             }
 
             public void Jump(int distance, int[] marks, int target)
@@ -74,33 +76,25 @@ namespace Lab_7
                 if (marks == null || _marks == null || marks.Length != _marks.Length || _distance != 0) return;
 
                 _distance = distance;
+                _target = target;
                 Array.Copy(marks, _marks, marks.Length);
-
-                if (distance >= target)
-                {
-                    _distance += 60; 
-                }
             }
 
             public static void Sort(Participant[] array)
             {
                 if (array == null) return;
 
-                int index = 0;
-
-                while (index < array.Length)
+                for (int i = 0; i < array.Length; i++)
                 {
-                    if (index == 0 || array[index].Result <= array[index - 1].Result)
+                    Participant key = array[i];
+                    int j = i - 1;
+
+                    while (j >= 0 && array[j].Result < key.Result)
                     {
-                        index++;
+                        array[j + 1] = array[j];
+                        j = j - 1;
                     }
-                    else
-                    {
-                        Participant temp = array[index];
-                        array[index] = array[index - 1];
-                        array[index - 1] = temp;
-                        index--;
-                    }
+                    array[j + 1] = key;
                 }
             }
 
