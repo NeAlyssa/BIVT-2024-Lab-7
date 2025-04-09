@@ -32,7 +32,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_pT == null) return 0;
+                    if (_pT == null || _pT.Length == 0) return 0;
                     int counter = 0;
                     for (int i = 0; i < _pT.Length; i++) { counter += _pT[i]; }
                     return counter;
@@ -42,17 +42,12 @@ namespace Lab_7
             {
                 get
                 {
-                    bool b = true;
-                    if (_pT == null) return true;
+                    if (_pT == null) return false;
                     for (int i = 0; i < _pT.Length; i++)
                     {
-                        if (_pT[i] == 10)
-                        {
-                            b = false;
-                            break;
-                        }
+                        if (_pT[i] == 10) return true;
                     }
-                    return b;
+                    return false;
                 }
             }
             // конструктор
@@ -66,21 +61,48 @@ namespace Lab_7
             // методы
             public virtual void PlayMatch(int time)
             {
-                if (_pT == null) return;
-                int[] new_pT = new int[_pT.Length + 1];
-                for (int i = 0; i < new_pT.Length - 1; i++) { new_pT[i] = _pT[i]; }
-                new_pT[_pT.Length] = time;
-                _pT = new_pT;
-
+                if (_pT == null || time < 0) return;
+                if (_pT.Length == 0) { _pT = new int[] { time }; }
+                else
+                {
+                    int[] _arr = new int[_pT.Length + 1];
+                    Array.Copy(_pT, _arr, _pT.Length);
+                    _arr[_arr.Length - 1] = time;
+                    _pT = _arr;
+                }
             }
             public static void Sort(Participant[] array)
             {
-                if (array == null || array.Length == 0) return;
+                if (array == null) return;
+                int counter = 0;
                 for (int i = 0; i < array.Length; i++)
                 {
-                    for (int j = 0; j < array.Length - i - 1; j++)
+                    if (array[i] != null)
                     {
-                        if (array[j].Total > array[j + 1].Total) { (array[j], array[j + 1]) = (array[j + 1], array[j]); }
+                        array[counter] = array[i];
+                        counter++;
+                    }
+                }
+                while (counter < array.Length)
+                {
+                    array[counter] = null;
+                    counter++;
+                }
+
+                // сортировка по штрафному времени
+                for (int i = 1, j = 2; i < counter;)
+                {
+                    if (i == 0 || array[i - 1].Total <= array[i].Total)
+                    {
+                        i = j;
+                        j++;
+                    }
+                    else
+                    {
+                        Participant t = array[i];
+                        array[i] = array[i - 1];
+                        array[i - 1] = t;
+                        i--;
                     }
                 }
             }
@@ -94,20 +116,21 @@ namespace Lab_7
         // наследник класса
         public class BasketballPlayer : Participant
         {
-            public BasketballPlayer(string name, string surname) : base(name, surname) { }
+            public BasketballPlayer(string name, string surname) : base(name, surname) 
+            {
+                _pT = new int[0];
+            }
             public override bool IsExpelled
             {
                 get
                 {
-                    if (Penalties == null) return false;
-                    int counterf = 0;
-                    foreach (var f in Penalties)
-                    {
-                        if (f == 5) counterf++;
-                    }
-                    if (Total > 2 * Penalties.Length || counterf > Penalties.Length * 0.1) return true;
-                    else return false;
+                    if (_pT == null || _pT.Length == 0) return false;
 
+                    int t = this.Penalties.Length;
+                    int counter = 0;
+                    for (int i = 0; i < t; i++) { if (this.Penalties[i] >= 5) counter++; }
+                    if ((counter * 100 / t) > 10 || this.Total > t * 2) return true;
+                    return false;
                 }
             }
             public override void PlayMatch(int f)
@@ -119,42 +142,37 @@ namespace Lab_7
         // ещё один наследник класса
         public class HockeyPlayer : Participant
         {
-            // приватные статические поля
-            private static int _timePlayers;
-            private static int _players;
+            private static int _numberPlayer;
+            private static int _allPT; 
 
-            // конструктор для статик.
-            static HockeyPlayer()
-            {
-                _timePlayers = 0;
-                _players = 0;
-            }
-
-            // конструктор
             public HockeyPlayer(string name, string surname) : base(name, surname)
             {
-                _players++;
+                _pT = new int[0];
+                _numberPlayer++;
             }
 
-            // свойства
+            // Переопределенный метод 
             public override bool IsExpelled
             {
                 get
                 {
-                    if (Penalties == null) return false;
-                    foreach (var f in Penalties)
+                    if (_pT == null) return false;
+                    int t = this.Penalties.Length;
+                    for (int i = 0; i < t; i++)
                     {
-                        if (f == 10) return true;
+                        if (this.Penalties[i] >= 10) return true;
                     }
-                    if (Total > 0.1 * _timePlayers / _players) return true;
-                    else return false;
+                    if (this.Total > 0.1 * _allPT / _numberPlayer) return true;
+                    return false;
                 }
             }
-            public override void PlayMatch(int f)
+
+            public override void PlayMatch(int penaltyTime)
             {
-                if (f < 0 || f > 10) return;
-                base.PlayMatch(f);
-                _timePlayers += f;
+                if (_pT == null) return;
+                if (penaltyTime < 0 || penaltyTime > 10) return;
+                base.PlayMatch(penaltyTime);
+                _allPT += penaltyTime; 
             }
         }
     }

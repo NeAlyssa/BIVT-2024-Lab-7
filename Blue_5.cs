@@ -15,6 +15,7 @@ namespace Lab_7
             private string _name;
             private string _surname;
             private int _place;
+            private bool _placeS;
 
             // свойства
             public string Name => _name;
@@ -27,13 +28,18 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _place = 0;
+                _placeS = false;
             }
 
             // методы
             public void SetPlace(int place)
             {
-                if (_place != 0) return;
-                _place = place;
+                if (!_placeS)
+                {
+                    _place = place;
+                    _placeS = true;
+                }
+                else { Console.WriteLine("Место можно установить только один раз"); }
             }
             public void Print()
             {
@@ -60,30 +66,22 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
-                    int sm = 0;
-                    for (int i = 0; i < _sportsmen.Length; i++)
-                    {
-                        if (_sportsmen[i].Place == 1) sm += 5;
-                        else if (_sportsmen[i].Place == 2) sm += 4;
-                        else if (_sportsmen[i].Place == 3) sm += 3;
-                        else if (_sportsmen[i].Place == 4) sm += 2;
-                        else if (_sportsmen[i].Place == 5) sm += 1;
-                    }
-                    return sm;
+                    if (_sportsmen == null || _sportsmen.Length == 0 || _sportsmen[0] == null) return 0;
+                    int[] scr = { 0, 5, 4, 3, 2, 1 };
+                    return _sportsmen.Sum(sm => (sm != null && sm.Place >= 1 && sm.Place <= 5) ? scr[sm.Place] : 0);
                 }
             }
             public int TopPlace
             {
                 get
                 {
-                    if (_sportsmen == null) return 0;
-                    int min_sp = 18;
-                    foreach (Sportsman sportsman in _sportsmen)
+                    if (_sportsmen == null || _sportsmen[0] == null) return 18;
+                    int tP = _sportsmen[0].Place;
+                    for (int i = 1; i < _counter; i++)
                     {
-                        if (sportsman.Place != 0 && sportsman.Place < min_sp) { min_sp = sportsman.Place; }
+                        if (_sportsmen[i].Place < tP) { tP = _sportsmen[i].Place; }
                     }
-                    return min_sp;
+                    return tP;
                 }
             }
 
@@ -96,20 +94,20 @@ namespace Lab_7
             }
 
             // методы
-            public void Add(Sportsman sportsman)
+            public void Add(Sportsman nsportsmen)
             {
-                if (_sportsmen == null || sportsman == null || _sportsmen.Length == 0 || _counter >= _sportsmen.Length) return;
-                _sportsmen[_counter] = sportsman;
+                if (_sportsmen == null || nsportsmen == null || _sportsmen.Length == 0 || _counter >= _sportsmen.Length) return;
+                _sportsmen[_counter] = nsportsmen;
                 _counter++;
             }
-            public void Add(Sportsman[] sportsman)
+            public void Add(Sportsman[] n_sportsmen)
             {
-                if (_sportsmen == null || sportsman == null || sportsman.Length == 0 || _sportsmen.Length == 0 || _counter >= _sportsmen.Length) return;
+                if (_sportsmen == null || n_sportsmen == null || n_sportsmen.Length == 0 || _sportsmen.Length == 0 || _counter >= _sportsmen.Length) return;
                 int i = 0;
-                while (_counter < _sportsmen.Length && i < sportsman.Length)
+                while (_counter < _sportsmen.Length && i < n_sportsmen.Length)
                 {
-                    if (sportsman[i] == null) continue;
-                    _sportsmen[_counter] = sportsman[i];
+                    if (n_sportsmen[i] == null) continue;
+                    _sportsmen[_counter] = n_sportsmen[i];
                     _counter++;
                     i++;
                 }
@@ -121,8 +119,10 @@ namespace Lab_7
                 {
                     for (int j = 0; j < teams.Length - i - 1; j++)
                     {
-                        if (teams[j + 1].SummaryScore > teams[j].SummaryScore) { (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]); }
-                        else if (teams[j].SummaryScore == teams[j + 1].SummaryScore && teams[j].TopPlace > teams[j + 1].TopPlace) { (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]); }
+                        if (teams[j] == null) { (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]); }
+                        else if (teams[j + 1] == null) { continue; }
+                        else if (teams[j].SummaryScore < teams[j + 1].SummaryScore) { (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]); }
+                        else if (teams[j + 1].SummaryScore == teams[j].SummaryScore && teams[j + 1].TopPlace < teams[j].TopPlace) { (teams[j], teams[j + 1]) = (teams[j + 1], teams[j]); }
                     }
                 }
             }
@@ -130,19 +130,22 @@ namespace Lab_7
             protected abstract double GetTeamStrength();
             public static Team GetChampion(Team[] teams)
             {
-                if (teams == null || teams.Length == 0) return null;
-                double maxt = 0;
-                if (teams[0] != null) { maxt = teams[0].GetTeamStrength(); }
-                int maxind = 0;
-                for (int i = 0; i < teams.Length; i++)
+                if (teams == null) return null;
+                double maxind;
+                Team athlete = teams[0];
+                if (teams[0] == null) { maxind = 0; }
+                else { maxind = teams[0].GetTeamStrength(); }
+                foreach (Team team in teams)
                 {
-                    if (teams[i] != null && teams[i].GetTeamStrength() > maxt)
+                    if (team == null) { continue; }
+                    double pw = team.GetTeamStrength();
+                    if (pw > maxind)
                     {
-                        maxt = teams[i].GetTeamStrength();
-                        maxind = i;
+                        athlete = team;
+                        maxind = pw;
                     }
                 }
-                return teams[maxind];
+                return athlete;
             }
             public void Print()
             {
@@ -159,18 +162,11 @@ namespace Lab_7
             public ManTeam(string name) : base(name) { }
             protected override double GetTeamStrength()
             {
-                double plases = 0;
-                int counter = 0;
-                for (int i = 0; i < this.Sportsmen.Length; i++)
-                {
-                    if (this.Sportsmen[i] != null)
-                    {
-                        plases += this.Sportsmen[i].Place;
-                        counter++;
-                    }
-                }
-                double middle = plases / counter;
-                return 100 / middle;
+                double res = 0;
+                foreach (Sportsman man in Sportsmen) { res += man.Place; }
+                res /= 2;
+                res = 100.0 / res;
+                return res;
             }
         }
         public class WomanTeam : Team
@@ -179,19 +175,14 @@ namespace Lab_7
             public WomanTeam(string name) : base(name) { }
             protected override double GetTeamStrength()
             {
-                double plases1 = 0;
-                int counter = 0;
-                double plases2 = 1;
-                for (int i = 0; i < this.Sportsmen.Length; i++)
+                double res = 0, sm = 0, prz = 1;
+                foreach (Sportsman woman in Sportsmen)
                 {
-                    if (this.Sportsmen[i] != null)
-                    {
-                        plases1 += this.Sportsmen[i].Place;
-                        plases2 *= this.Sportsmen[i].Place;
-                        counter++;
-                    }
+                    sm += woman.Place;
+                    prz *= woman.Place;
                 }
-                return 100 * plases1 * counter / plases2;
+                res = 100 * sm * Sportsmen.Length / prz;
+                return res;
             }
         }
     }
