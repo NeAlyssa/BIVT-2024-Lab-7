@@ -50,7 +50,7 @@ namespace Lab_7
                 }
                 return res;
             }
-            public Participant(string surname, string trainer, string group)
+            public Participant(string surname, string group, string trainer)
             {
                 _standard = 100;
                 _surname = surname;
@@ -87,14 +87,14 @@ namespace Lab_7
         }
         public class Participant100M : Participant
         {
-            public Participant100M(string surname, string trainer, string group) : base(surname, trainer, group)
+            public Participant100M(string surname, string group, string trainer) : base(surname, group, trainer)
             {
                 _standard = 12;
             }
         }
         public class Participant500M : Participant
         {
-            public Participant500M(string surname, string trainer, string group) : base(surname, trainer, group)
+            public Participant500M(string surname, string group, string trainer) : base(surname, group, trainer)
             {
                 _standard = 90;
             }
