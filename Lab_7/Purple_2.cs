@@ -141,7 +141,7 @@ namespace Lab_7
                 {
                     if (_participants[i].Distance == 0)
                     {
-                        _participants[i].Jump(distance, marks, _standard);
+                        _participants[i].Jump(distance, marks, Standard);
                         break;
                     }
                 }
