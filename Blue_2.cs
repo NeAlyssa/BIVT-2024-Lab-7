@@ -76,7 +76,11 @@ namespace Lab_7
                 for (int i = 0; i < array.Length - 1; i++)
                     for (int j = 0; j < array.Length - i - 1; j++)
                         if (array[j].TotalScore < array[j + 1].TotalScore)
-                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        {
+                            Participant temp = array[j + 1];
+                            array[j + 1] = array[j];
+                            array[j] = temp;
+                        }
 
             }
 
@@ -95,7 +99,7 @@ namespace Lab_7
                 Console.WriteLine();
             }
 
-        }
+        } // end of struct Participant
 
         abstract public class WaterJump
         {
@@ -129,8 +133,14 @@ namespace Lab_7
                 if (_participants == null) return;
 
                 Participant[] array = new Participant[_participants.Length + 1];
-                Array.Copy(_participants, array, _participants.Length);
-                array[array.Length - 1] = participant;
+                for (int i = 0; i < _participants.Length; i++) 
+                    array[i] = _participants[i];
+
+                array[_participants.Length] = participant;
+
+                //Participant[] array = new Participant[_participants.Length + 1];
+                //Array.Copy(_participants, array, _participants.Length);
+                //array[array.Length - 1] = participant;
 
                 _participants = array;
             }
@@ -144,7 +154,7 @@ namespace Lab_7
                     Add(participant);
                 }
             }
-        }
+        } // end of abstract public class WaterJump
 
         public class WaterJump3m : WaterJump
         {
@@ -154,10 +164,11 @@ namespace Lab_7
             {
                 get
                 {
-                    if (this.Participants == null || this.Participants.Length < 3) return null;
+                    if (Participants == null || Participants.Length < 3) return null;
 
                     double[] prizes = new double[3];
-                    double bank = (double)this.Bank;
+
+                    double bank = (double)Bank;
                     prizes[0] = bank * 0.5;
                     prizes[1] = bank * 0.3;
                     prizes[2] = bank * 0.2;
@@ -166,7 +177,7 @@ namespace Lab_7
                 }
             }
 
-        }
+        }// end of class WaterJump3m
 
         public class WaterJump5m : WaterJump
         {
@@ -176,10 +187,9 @@ namespace Lab_7
             {
                 get
                 {
-                    if (this.Participants == null || this.Participants.Length < 3) return null;
+                    if (Participants == null || Participants.Length < 3) return null;
 
-                    int aboveMid = this.Participants.Length / 2;
-                    double N = 20.0 / (aboveMid);
+                    int aboveMid = Participants.Length / 2;
 
                     int len;
                     if (aboveMid > 10)
@@ -187,8 +197,11 @@ namespace Lab_7
                     else
                         len = aboveMid;
 
-                    double bank = (double)this.Bank;
+                    double N = 20.0 / (double)len;
+
+                    double bank = (double)Bank;
                     double[] prizes = new double[len];
+
                     for (int i = 0; i < len; i++)
                     {
                         prizes[i] = N / 100 * bank;
@@ -200,8 +213,8 @@ namespace Lab_7
                     return prizes;
                 }
             }
-        }
-        
+        } // end of class WaterJump5m
+
     }
 
 }

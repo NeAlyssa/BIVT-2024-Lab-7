@@ -15,7 +15,6 @@ namespace Lab_7
             private string _name;
             private string _surname;
             protected int[] _penaltyTimes;
-            private bool _expelled;
 
             // свойства
             public string Name { get { return _name; } }
@@ -51,7 +50,13 @@ namespace Lab_7
                 get
                 {
                     if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
-                    return _expelled;
+                    
+                    for (int i = 0; i < _penaltyTimes.Length; i++)
+                    {
+                        if (_penaltyTimes[i] == 10)
+                            return true;
+                    }
+                    return false;
                 }
             }
 
@@ -61,7 +66,6 @@ namespace Lab_7
                 _name = name;
                 _surname = surname;
                 _penaltyTimes = new int[0];
-                _expelled = true;
             }
 
             // методы
@@ -69,7 +73,6 @@ namespace Lab_7
             public virtual void PlayMatch(int time)
             {
                 if (_penaltyTimes == null) return;
-                if (time == 10) _expelled = false;
 
                 int[] newArr = new int[_penaltyTimes.Length + 1];
                 for (int i = 0; i < newArr.Length - 1; i++)
@@ -89,7 +92,11 @@ namespace Lab_7
                 for (int i = 0; i < array.Length; i++)
                     for (int j = 0; j < array.Length - i - 1; j++)
                         if (array[j].Total > array[j + 1].Total)
-                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        {
+                            var temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
             }
 
             public void Print()
@@ -109,9 +116,9 @@ namespace Lab_7
                     int matches = _penaltyTimes.Length, lostMatches = 0;
                     foreach (int pen in _penaltyTimes)
                         if (pen >= 5)
-                            matches++;
+                            lostMatches++;
 
-                    if (lostMatches > 0.1 * matches || this.Total >= 2 * matches) return true;
+                    if (lostMatches > 0.1 * matches || Total > 2 * matches) return true;
 
                     return false;
                 }
@@ -130,18 +137,19 @@ namespace Lab_7
         public class HockeyPlayer : Participant
         {
             private static int _playerCnt = 0;
-            private static double _penaltyAllCnt = 0;
+            private static int _penaltyAllCnt = 0;
 
             public override bool IsExpelled
             {
                 get
                 {
                     if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
+                    if (_playerCnt == 0) return false;
 
                     foreach (var pen in _penaltyTimes)
                         if (pen >= 10) return true;
 
-                    if (this.Total > 0.1 * _penaltyAllCnt / _playerCnt) return true;
+                    if (Total > (_penaltyAllCnt / _playerCnt) * 0.1) return true;
 
                     return false;
                 }

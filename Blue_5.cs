@@ -210,15 +210,18 @@ namespace Lab_7
                 double places = 0;
                 int cnt = 0;
 
-                foreach (Sportsman sportsman in this.Sportsmen)
+                foreach (var sportsman in Sportsmen)
                 {
                     if (sportsman == null) continue;
 
                     places += sportsman.Place;
                     cnt++;
                 }
-                double average = places / cnt;
-                return 100 / average;
+
+                if (cnt <= 0) return 0;
+
+                double average = places / (double)cnt;
+                return 100.0 / average;
             }
         }
 
@@ -231,7 +234,7 @@ namespace Lab_7
                 double sum = 0;
                 int cnt = 0, mult = 1;
 
-                foreach (Sportsman sportsman in this.Sportsmen)
+                foreach (var sportsman in Sportsmen)
                 {
                     if (sportsman == null) continue;
 
@@ -239,7 +242,10 @@ namespace Lab_7
                     mult *= sportsman.Place;
                     cnt++;
                 }
-                double res = 100 * sum * cnt / mult;
+
+                if (mult == 0) return 0;
+
+                double res = (100 * sum * cnt) / mult;
                 return res;
             }
         }
