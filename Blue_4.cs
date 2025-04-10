@@ -133,31 +133,33 @@ namespace Lab_7
 
             public static Group Merge(Group group1, Group group2, int size)
             {
-                Group final = new Group("Финалисты");
-                Group ManTeam = TeamMerge(group1.ManTeams, group2.ManTeams, group1.ManTeams.Length + group2.ManTeams.Length);
-                Group WomanTeam = TeamMerge(group1.WomanTeams, group2.WomanTeams, group1.WomanTeams.Length + group2.WomanTeams.Length);
-                final.Add(ManTeam.ManTeams);
-                final.Add(WomanTeam.WomanTeams);
-                return final;
-
-
+                if (size < -1) return default(Group);
+                Group new_arr = new Group("Финалисты");
+                Team[] manTeam = MergeTeam(group1._manTeams, group2._manTeams, size);
+                Team[] WomanTeam = MergeTeam(group1._womanTeams, group2._womanTeams, size);
+                new_arr.Add(manTeam);
+                new_arr.Add(WomanTeam);
+                return new_arr;
             }
-            public static Group TeamMerge(Team[] team_1, Team[] team_2, int size)
+
+            private static Team[] MergeTeam(Team[] team1, Team[] team2, int size)
             {
-                if (team_1 == null || team_2 == null) return null;
-                Group final = new Group("Финалисты");
-                int i = 0, j = 0;
-                while ((i < size / 2) && (j < size / 2))
+                if (size < -1) return default(Team[]);
+                Team[] new_team = new Team[size];
+                int i = 0, j = 0, n = 0;
+                while (i < size / 2 && j < size / 2)
                 {
-                    if ((team_1[i] != null) && (team_2[j] != null))
+                    if (team1[i] != null && team2[j] != null)
                     {
-                        if (team_1[i].TotalScore >= team_2[j].TotalScore) { final.Add(team_1[i++]); }
-                        else { final.Add(team_2[j++]); }
+                        if (team1[i].TotalScore >= team2[j].TotalScore) new_team[n++] = team1[i++];
+                        else new_team[n++] = team2[j++];
                     }
+                    else if (team1[i] != null) new_team[n++] = team1[i++];
+                    else if (team2[j] != null) new_team[n++] = team2[j++];
                 }
-                while (i < size / 2) { final.Add(team_1[i++]); }
-                while (j < size / 2) { final.Add(team_2[j++]); }
-                return final;
+                while (i < size / 2 && team1[i] != null) new_team[n++] = team1[i++];
+                while (j < size / 2 && team2[j] != null) new_team[n++] = team2[j++];
+                return new_team;
             }
 
             public void Print()
