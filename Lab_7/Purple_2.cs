@@ -58,7 +58,7 @@ namespace Lab_7
                     result += 60;
                     result += (_distance - _target) * 2;
 
-                    return result;
+                    return Math.Max(result, 0);
                 }
             }
 
