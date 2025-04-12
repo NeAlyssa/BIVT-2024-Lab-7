@@ -16,7 +16,7 @@ namespace Lab_7
             private string _name;
             private string _surname;
             private int _place;
-
+            
             // свойства
             public string Name { get { return _name; } }
             public string Surname { get { return _surname; } }
@@ -33,7 +33,7 @@ namespace Lab_7
             // методы
             public void SetPlace(int place)
             {
-                if (_place != 0 ) return;
+                if (_place != 0 || place < 1 ) return;
                 _place = place;
             }
 
@@ -57,11 +57,13 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
+                    if (_sportsmen == null) return 0;
 
                     int sum = 0;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
+                        if (_sportsmen[i] == null) continue;
+
                         switch (_sportsmen[i].Place)
                         {
                             case 1: sum += 5; break;
@@ -84,7 +86,7 @@ namespace Lab_7
                     int top = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
-                        if (top > _sportsmen[i].Place && _sportsmen[i].Place != 0)
+                        if (_sportsmen[i] != null && top > _sportsmen[i].Place && _sportsmen[i].Place != 0)
                             top = _sportsmen[i].Place;
                     }
 
@@ -103,38 +105,21 @@ namespace Lab_7
             // методы
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null)
-                    _sportsmen = new Sportsman[6];
-
-                if (_sportsmenPlace < 6)
-                    _sportsmen[_sportsmenPlace++] = sportsman;
+                if (_sportsmen == null || sportsman == null || _sportsmen.Length == 0 || _sportsmenPlace == 6) return;
+                
+                _sportsmen[_sportsmenPlace++] = sportsman;
             }
 
             public void Add(Sportsman[] sportsmen)
             {
-                if (_sportsmen == null || sportsmen == null || sportsmen.Length == 0 || _sportsmenPlace >= _sportsmen.Length) return;
+                if (_sportsmen == null || sportsmen == null) return;
 
                 foreach (var sportsman in sportsmen)
-                    Add(sportsman);
-                
-            }
-
-            // void Remove(int count) 
-            public void Remove(int count)
-            {
-                if (_sportsmen == null) return;
-                int n = 0;
-                foreach (var i in _sportsmen)
-                    n++;
-
-                if (count > n || count == 0) return;
-                Sportsman[] new_team = new Sportsman[n - count];
-                for (int i = 0; i < n - count; i++)
                 {
-                    new_team[i] = _sportsmen[i];
+                    if (sportsman != null)
+                        Add(sportsman);
                 }
-                _sportsmen = new_team;
-
+                
             }
 
             public static void Sort(Team[] teams)
