@@ -103,15 +103,28 @@ namespace Lab_7
                     }
                 }
 
-                string[] Arr = new string[5];
+                string[] Arr = new string[0];
                 int i = 0;
                 foreach (Response r in NewArray)
                 {
-                    if (question == 1 && Arr.Count(a => a == r.Animal) == 0 && r.Animal != null) Arr[i++] = r.Animal;
-                    if (question == 2 && Arr.Count(a => a == r.CharacterTrait) == 0 && r.CharacterTrait != null) Arr[i++] = r.CharacterTrait;
-                    if (question == 3 && Arr.Count(a => a == r.Concept) == 0 && r.Concept != null) Arr[i++] = r.Concept;
+                    if (question == 1 && Arr.Count(a => a == r.Animal) == 0 && r.Animal != null)
+                    {
+                        Array.Pesize(ref Arr, i + 1);
+                        Arr[i++] = r.Animal;
+                    }
+                    if (question == 2 && Arr.Count(a => a == r.CharacterTrait) == 0 && r.CharacterTrait != null)
+                    {
+                        Array.Pesize(ref Arr, i + 1);
+                        Arr[i++] = r.CharacterTrait;
+                    }
+                    if (question == 3 && Arr.Count(a => a == r.Concept) == 0 && r.Concept != null)
+                    {
+                        Array.Pesize(ref Arr, i + 1);
+                        Arr[i++] = r.Concept;
+                    }
                     if (i == 5) break;
                 }
+                
                 return Arr;
             }
 
@@ -172,7 +185,7 @@ namespace Lab_7
                     }
                 }
             
-                if (count == 0) return null;
+                if (count == 0) return new (string, double)[0];
             
                 var NewArray = new Response[All.Responses.Length];
                 Array.Copy(All.Responses, NewArray, All.Responses.Length);
