@@ -61,6 +61,7 @@ namespace Lab_7
                     if (_sportsmen == null) return 0;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
+                        if (_sportsmen[i] == null) continue;
                         if (_sportsmen[i].Place == 1) sum += 5;
                         if (_sportsmen[i].Place == 2) sum += 4;
                         if (_sportsmen[i].Place == 3) sum += 3;
