@@ -109,17 +109,17 @@ namespace Lab_7
                 {
                     if (question == 1 && Arr.Count(a => a == r.Animal) == 0 && r.Animal != null)
                     {
-                        Array.Pesize(ref Arr, i + 1);
+                        Array.Resize(ref Arr, i + 1);
                         Arr[i++] = r.Animal;
                     }
                     if (question == 2 && Arr.Count(a => a == r.CharacterTrait) == 0 && r.CharacterTrait != null)
                     {
-                        Array.Pesize(ref Arr, i + 1);
+                        Array.Resize(ref Arr, i + 1);
                         Arr[i++] = r.CharacterTrait;
                     }
                     if (question == 3 && Arr.Count(a => a == r.Concept) == 0 && r.Concept != null)
                     {
-                        Array.Pesize(ref Arr, i + 1);
+                        Array.Resize(ref Arr, i + 1);
                         Arr[i++] = r.Concept;
                     }
                     if (i == 5) break;
