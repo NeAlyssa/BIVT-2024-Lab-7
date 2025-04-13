@@ -83,7 +83,7 @@ namespace Lab_7
 
             public static void Sort(Participant[] array)
             {
-                if (array == null || array.Length == 0) return;
+                if (array == null) return;
                 for (int i = 0; i < array.Length; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
@@ -114,7 +114,7 @@ namespace Lab_7
                     {
                         if (_penalty[i] >= 5) countP++;
                     }
-                    if (countP > 0.1 * countM || this.Total >= 2 * countP) return true;
+                    if (countP > 0.1 * countM || this.Total >= 2 * countM) return true;
                     return false;
                 }
             }

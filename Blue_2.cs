@@ -112,7 +112,6 @@ namespace Lab_7
             private int _bank;
             private Participant[] _participants;
 
-            private int index;
 
             public string Name => _name;
             public int Bank => _bank;
@@ -128,24 +127,25 @@ namespace Lab_7
                 _name = name;
                 _bank = bank;
                 _participants = new Participant[0];
-                index = 0;
             }
             public void Add(Participant participant)
             {
-                if (_participants == null || _participants.Length == 0 || index >= _participants.Length) return;
-                _participants[index] = participant;
-                index++;
+                if (_participants == null) return;
+                Participant[] p = new Participant[_participants.Length + 1];
+                for (int i = 0; i < _participants.Length; i++)
+                {
+                    p[i] = _participants[i];
+                }
+                p[_participants.Length] = participant;
+                _participants = p;
             }
             public void Add(Participant[] participants)
             {
   
-                if (participants == null || participants.Length == 0 || _participants == null || _participants.Length == 0 || index >= _participants.Length) return;
-                int count = 0;
-                while (index < _participants.Length && count < participants.Length)
+                if (participants == null || _participants == null) return;
+                foreach (Participant p in participants)
                 {
-                    participants[index] = participants[count];
-                    count++;
-                    index++;
+                    Add(p);
                 }
             }
         }

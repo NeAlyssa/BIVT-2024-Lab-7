@@ -51,7 +51,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
+                    if (_sportsmen == null) return 0;
                     int summary_score = 0;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
@@ -70,7 +70,7 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null || _sportsmen.Length == 0) return 0;
+                    if (_sportsmen == null) return 18;
                     int top_place = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
@@ -146,9 +146,10 @@ namespace Lab_7
                 if (teams[0] == null) max = 0;
                 else max = teams[0].GetTeamStrength();
 
-                for (int i = 0; i < teams.Length; i++)
+                for (int i = 1; i < teams.Length; i++)
                 {
-                    if (teams[i].GetTeamStrength() > max && teams[i] != null)
+                    if (teams[i] == null) continue;
+                    if (teams[i].GetTeamStrength() > max)
                     {
                         max = teams[i].GetTeamStrength();
                         ind = i;
