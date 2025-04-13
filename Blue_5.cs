@@ -79,6 +79,7 @@ namespace Lab_7
                     int max = 18;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
+                        if (_sportsmen[i] == null) continue;
                         if (_sportsmen[i].Place < max && _sportsmen[i].Place > 0) max = _sportsmen[i].Place;
                     }
                     return max;
@@ -128,7 +129,7 @@ namespace Lab_7
             }
 
             protected abstract double GetTeamStrength();
-           
+
             public static Team GetChampion(Team[] teams)
             {
                 if (teams == null || teams.Length == 0) return null;
@@ -150,46 +151,46 @@ namespace Lab_7
                     _sportsmen[i].Print();
                 }
             }
+        }
 
-            public class ManTeam : Team
+        public class ManTeam : Team
+        {
+            public ManTeam(string name) : base(name) { }
+            protected override double GetTeamStrength()
             {
-                public ManTeam(string name) : base(name) { }
-                protected override double GetTeamStrength()
+                if (Sportsmen == null || Sportsmen.Length == 0) return 0;
+                double sum = 0, cnt = 0;
+                foreach (var s in Sportsmen)
                 {
-                    if (Sportsmen == null || Sportsmen.Length == 0) return 0;
-                    double sum = 0, cnt = 0;
-                    foreach (var s in Sportsmen)
+                    if (s != null && s.Place > 0)
                     {
-                        if (s != null && s.Place > 0)
-                        {
-                            sum += s.Place;
-                            cnt++;
-                        }
+                        sum += s.Place;
+                        cnt++;
                     }
-                    if (cnt == 0) return 0;
-                    return 100.0 / (sum / cnt);
                 }
+                if (cnt == 0) return 0;
+                return 100.0 / (sum / cnt);
             }
+        }
 
-            public class WomanTeam : Team
+        public class WomanTeam : Team
+        {
+            public WomanTeam(string name) : base(name) { }
+            protected override double GetTeamStrength()
             {
-                public WomanTeam(string name) : base(name) { }
-                protected override double GetTeamStrength()
+                if (Sportsmen == null || Sportsmen.Length == 0) return 0;
+                double sum = 0, cnt = 0, mult = 1 ;
+                foreach (var s in Sportsmen)
                 {
-                    if (Sportsmen == null || Sportsmen.Length == 0) return 0;
-                    double sum = 0, cnt = 0, mult = 1 ;
-                    foreach (var s in Sportsmen)
+                    if (s != null && s.Place > 0)
                     {
-                        if (s != null && s.Place > 0)
-                        {
-                            sum += s.Place;
-                            cnt++;
-                            mult *= s.Place;
-                        }
+                        sum += s.Place;
+                        cnt++;
+                        mult *= s.Place;
                     }
-                    if (mult == 0) return 0;
-                    return 100.0 * (sum * cnt / mult);
                 }
+                if (mult == 0) return 0;
+                return 100.0 * (sum * cnt / mult);
             }
         }
     }
