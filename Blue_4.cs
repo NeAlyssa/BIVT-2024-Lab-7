@@ -131,8 +131,11 @@ namespace Lab_7
                     }
                 } else if (team is WomanTeam wt)
                 {
-                    _womanteams[_cntwoman++] = wt;
-                    return;
+                    if (_cntwoman < _womanteams.Length)
+                    {
+                        _womanteams[_cntwoman++] = wt;
+                        return;
+                    }
                 }
             }
 
