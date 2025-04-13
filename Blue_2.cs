@@ -168,7 +168,7 @@ namespace Lab_7
                     if (Participants == null || Participants.Length < 3) return null;
                     double[] prize = new double[Math.Min(Participants.Length/2, 10)];
                     double N = 20.0 / Math.Min(Participants.Length / 2, 10);
-                    prize[0] = Bank * 0.3;
+                    prize[0] = Bank * 0.4;
                     prize[1] = Bank * 0.25;
                     prize[2] = Bank * 0.15;
                     for (int i = 0; i < prize.Length; i++)
