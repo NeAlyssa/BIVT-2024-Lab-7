@@ -22,6 +22,7 @@ namespace Lab_7
                 get
                 {
                     if (_penaltytimes == null) return null;
+                    if (_penaltytimes.Length == 0) return _penaltytimes;
                     int[] copy = new int[_penaltytimes.Length];
                     for (int i = 0; i < copy.Length; i++)
                     {
@@ -120,13 +121,13 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltytimes == null) return false;
+                    if (Penalties == null) return false;
                     int cnt = 0;
-                    for (int i = 0; i < _penaltytimes.Length; i++)
+                    for (int i = 0; i < Penalties.Length; i++)
                     {
-                        if (_penaltytimes[i] >= 5) cnt++;
+                        if (Penalties[i] >= 5) cnt++;
                     }
-                    if (cnt * 100 / _penaltytimes.Length > 10 || this.Total > 2 * _penaltytimes.Length) return true;
+                    if (cnt * 100 / Penalties.Length > 10 || this.Total > 2 * Penalties.Length) return true;
                     return false;
                 }
             }
