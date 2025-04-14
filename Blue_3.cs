@@ -50,13 +50,13 @@ namespace Lab_7
             {
                 get
                 {
-                    bool k = true;
-                    if (_penaltytimes == null) return true;
+                    bool k = false;
+                    if (_penaltytimes == null) return false;
                     for (int i = 0; i < _penaltytimes.Length; i++)
                     {
                         if (_penaltytimes[i] == 10)
                         {
-                            k = false;
+                            k = true;
                             break;
                         }
                     }
@@ -120,14 +120,14 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltytimes == null) return true;
+                    if (_penaltytimes == null) return false;
                     int cnt = 0;
                     for (int i = 0; i < _penaltytimes.Length; i++)
                     {
-                        if (_penaltytimes[i] == 5) cnt++;
+                        if (_penaltytimes[i] >= 5) cnt++;
                     }
-                    if (cnt * 100 / _penaltytimes.Length > 10 || this.Total > 2 * _penaltytimes.Length) return false;
-                    return true;
+                    if (cnt * 100 / _penaltytimes.Length > 10 || this.Total > 2 * _penaltytimes.Length) return true;
+                    return false;
                 }
             }
             public override void PlayMatch(int fouls)
@@ -152,13 +152,13 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_penaltytimes == null) return true;
+                    if (_penaltytimes == null) return false;
                     for (int i = 0; i < Penalties.Length; i++)
                     {
-                        if (Penalties[i] >= 10) return false;
+                        if (Penalties[i] >= 10) return true;
                     }
-                    if (Total > _allpenalties / _cnt / 10.0) return false;
-                    return true;
+                    if (Total > _allpenalties / _cnt / 10.0) return true;
+                    return false;
                 }
             }
 
