@@ -122,6 +122,7 @@ namespace Lab_7
                 get
                 {
                     if (Penalties == null) return false;
+                    if (Penalties.Length == 0) return false;
                     int cnt = 0;
                     for (int i = 0; i < Penalties.Length; i++)
                     {
