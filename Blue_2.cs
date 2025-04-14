@@ -181,11 +181,11 @@ namespace Lab_7
                     {
                         count = 10;
                     }
-                    double N = 20 / count;
                     double[] prize = new double[count];
+                    double N = 20 / (double) count;
                     for (int i = 0; i < count; i++)
                     {
-                        prize[i] = (double)this.Bank * N/100;
+                        prize[i] = Math.Round((double)this.Bank * N/100, 5);
                     }
                     prize[0] += (double) this.Bank * 0.4;
                     prize[1] += (double) this.Bank * 0.25;

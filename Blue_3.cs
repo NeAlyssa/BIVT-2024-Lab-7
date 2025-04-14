@@ -141,7 +141,7 @@ namespace Lab_7
                     if (_penalty == null || _penalty.Length == 0) return false;
                     for (int i = 0; i < _penalty.Length; i++)
                     {
-                        if (_penalty[i] == 10) return true;
+                        if (_penalty[i] >= 10) return true;
                     }
                     if (this.Total > 0.1 * sum/count) return true;
                     return false;

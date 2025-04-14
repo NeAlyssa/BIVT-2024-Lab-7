@@ -91,14 +91,14 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null || _sportsmen.Length == 0 || index >= _sportsmen.Length) return;
+                if (_sportsmen == null) return;
                 _sportsmen[index] = sportsman;
                 index++;
             }
 
             public void Add(Sportsman[] sportsmen)
             {
-                if (sportsmen == null || sportsmen.Length == 0 || _sportsmen == null || _sportsmen.Length == 0 || index >= _sportsmen.Length) return;
+                if (sportsmen == null || _sportsmen == null) return;
                 int count = 0;
                 while (index < _sportsmen.Length && count < sportsmen.Length)
                 {
@@ -141,12 +141,11 @@ namespace Lab_7
             public static Team GetChampion(Team[] teams)
             {
                 if (teams == null || teams.Length == 0) return null;
-                double max;
+                double max = 0;
                 int ind = 0;
-                if (teams[0] == null) max = 0;
-                else max = teams[0].GetTeamStrength();
+                if (teams[0] != null) max = teams[0].GetTeamStrength();
 
-                for (int i = 1; i < teams.Length; i++)
+                for (int i = 0; i < teams.Length; i++)
                 {
                     if (teams[i] == null) continue;
                     if (teams[i].GetTeamStrength() > max)
@@ -165,7 +164,7 @@ namespace Lab_7
             protected override double GetTeamStrength()
             {
                 double am = 0;
-                int count = 0;
+                double count = 0;
                 for (int i = 0; i < Sportsmen.Length; i++)
                 {
                     if (Sportsmen[i] != null)
@@ -184,9 +183,9 @@ namespace Lab_7
 
             protected override double GetTeamStrength()
             {
-                int count = 0;
-                int mul = 1;
-                int sum = 0;
+                double count = 0;
+                double mul = 1;
+                double sum = 0;
                 for (int i = 0; i < Sportsmen.Length; i++)
                 {
                     if (Sportsmen[i] != null)
