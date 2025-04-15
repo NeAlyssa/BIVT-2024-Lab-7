@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Purple_3
     {
@@ -39,7 +39,7 @@ namespace Lab_6
             }
             public int Score => _places == null ? 0 : _places.Sum();
 
-            private int TopPlace => _places == null ? 0 : _places.Min();
+            private int TopPlace => _places == null ? int.MaxValue : _places.Min();
             private double TotalSum => _marks == null ? 0 : _marks.Sum();
 
             public Participant(string name, string surname)
@@ -53,11 +53,9 @@ namespace Lab_6
 
             public void Evaluate(double result)
             {
-                if (_judgeCount < 7)
-                {
-                    _marks[_judgeCount] = result;
-                    _judgeCount++;
-                }
+                if (_marks == null || _judgeCount >= 7) return;
+                _marks[_judgeCount] = result;
+                _judgeCount++;
             }
 
             public static void SetPlaces(Participant[] participants)
@@ -66,22 +64,18 @@ namespace Lab_6
 
                 for (int i = 0; i < 7; i++)
                 {
-                    Participant[] arr = participants
-                        .OrderByDescending(p => p._marks[i])
-                        .ThenBy(p => (p._places != null && p._places.Length > 0) ? p._places[p._places.Length - 1] : int.MaxValue)
+                    var sorted = participants
+                        .Select((p, index) => new { Participant = p, Index = index })
+                        .OrderByDescending(x => x.Participant._marks[i])
+                        .ThenBy(x => x.Participant.Score)
+                        .ThenByDescending(x => x.Participant.TotalSum)
                         .ToArray();
 
-                    Array.Copy(arr, participants, participants.Length);
-
-                    for (int j = 0; j < participants.Length; j++)
+                    for (int j = 0; j < sorted.Length; j++)
                     {
-                        participants[j]._places[i] = j + 1;
+                        participants[sorted[j].Index]._places[i] = j + 1;
                     }
                 }
-                Participant[] finalSorted = participants
-                    .OrderBy(p => (p._places != null && p._places.Length > 0) ? p._places[p._places.Length - 1] : int.MaxValue)
-                    .ToArray();
-                Array.Copy(finalSorted, participants, participants.Length);
             }
 
             public static void Sort(Participant[] array)
@@ -126,11 +120,11 @@ namespace Lab_6
             public Skating(double[] moods)
             {
                 _moods = new double[7];
-                _participants = new Participant[0];
                 for (int i = 0; i < 7 && i < moods.Length; i++)
                 {
                     _moods[i] = moods[i];
                 }
+                _participants = new Participant[0];
                 ModificateMood();
             }
 
@@ -139,6 +133,7 @@ namespace Lab_6
             public void Evaluate(double[] marks)
             {
                 if (_participants == null || marks == null || marks.Length != 7) return;
+
                 for (int i = 0; i < _participants.Length; i++)
                 {
                     if (_participants[i].Marks.All(x => x == 0))
@@ -156,6 +151,7 @@ namespace Lab_6
 
             public void Add(Participant p)
             {
+                if (_participants == null) _participants = new Participant[0];
                 Array.Resize(ref _participants, _participants.Length + 1);
                 _participants[^1] = p;
             }
